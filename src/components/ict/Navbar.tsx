@@ -1,9 +1,9 @@
 "use client";
-import React, { useState } from 'react';
-import { Link } from 'react-scroll';
-import { HamburgerMenuIcon } from '@radix-ui/react-icons';
-import { XCircleIcon } from 'lucide-react';
-
+import React, { useState } from "react";
+import { Link } from "react-scroll";
+import { HamburgerMenuIcon } from "@radix-ui/react-icons";
+import { XCircleIcon } from "lucide-react";
+import Image from "next/image";
 export const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -12,13 +12,22 @@ export const Navbar: React.FC = () => {
       <div className="container mx-auto px-6 py-4 flex justify-between items-center">
         {/* Logo Section */}
         <div className="flex items-center">
-          <img src="/path-to-logo.png" alt="Logo" className="h-8 w-8 mr-2" /> {/* Replace with your logo path */}
-          <span className="font-bold text-lg">Your Logo</span>
+          <Image
+            width={100}
+            height={100}
+            src="/favicon/aburayyan-logo.png"
+            alt="Logo"
+            className="h-8 w-8 mr-2"
+          />{" "}
+          {/* Replace with your logo path */}
         </div>
 
         {/* Mobile Menu Button */}
         <div className="ml-auto md:hidden">
-          <button onClick={() => setIsOpen(!isOpen)} className="focus:outline-none">
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="focus:outline-none"
+          >
             {isOpen ? (
               <XCircleIcon className="h-6 w-6 text-white" /> // Close icon
             ) : (
@@ -30,22 +39,22 @@ export const Navbar: React.FC = () => {
         {/* Menu Links */}
         <div
           className={`${
-            isOpen ? 'block' : 'hidden'
+            isOpen ? "block" : "hidden"
           } md:flex md:space-x-6 items-center w-full md:w-auto`}
         >
           <ul className="flex flex-col md:flex-row md:space-x-6 space-y-4 md:space-y-0 items-center">
             {[
-              'About',
-              'Program Details',
-              'Curriculum',
-              'Testimonials',
-              'Outcomes',
-              'FAQ',
-              'Register',
+              "About",
+              "Program Details",
+              "Curriculum",
+              "Testimonials",
+              "Outcomes",
+              "FAQ",
+              "Register",
             ].map((section) => (
               <li key={section}>
                 <Link
-                  to={section.toLowerCase().replace(' ', '')}
+                  to={section.toLowerCase().replace(" ", "")}
                   smooth={true}
                   duration={500}
                   className="block cursor-pointer hover:underline"
