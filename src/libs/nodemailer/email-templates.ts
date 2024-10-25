@@ -11,6 +11,7 @@ export const generateAdminNotificationTemplate = (
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           <meta http-equiv="X-UA-Compatible" content="ie=edge" />
           <title>New User Registration</title>
+          <script src="https://cdn.tailwindcss.com"></script>
           <style>
             body {
               margin: 0;
@@ -20,10 +21,10 @@ export const generateAdminNotificationTemplate = (
           </style>
         </head>
         <body class="bg-gray-100 text-gray-700">
-          <div class="max-w-xl mx-auto bg-white p-6 mt-6 rounded-lg shadow-lg">
+          <div class="max-w-xl mx-auto bg-white p-6 mt-6 rounded-lg shadow-lg" >
             <!-- Header -->
             <div class="text-center">
-              <img src="https://ict.aburayyanacademy.com/favicon/aburayyan-logo.png" alt="Aburayyan Academy Logo" class="w-32 mx-auto mb-4" />
+              <img src="https://ict.aburayyanacademy.com/favicon/aburayyan-logo.png" alt="Aburayyan Academy Logo" class="w-12 h-12 mx-auto mb-4" style="width:100px;height:auto" />
               <h1 class="text-xl font-bold text-gray-800">New User Registration</h1>
             </div>
   
@@ -37,7 +38,7 @@ export const generateAdminNotificationTemplate = (
               </p>
   
               <ul class="mt-4">
-                <li><strong>Parent/Guardian:</strong> ${studentDetails}</li>
+                <li><strong>Student's Details:</strong> ${studentDetails}</li>
                 <li><strong>Parent/Guadian:</strong> ${guardianDetails}</li>
                 <li><strong>Registration Date:</strong> ${registrationDate}</li>
               </ul>
