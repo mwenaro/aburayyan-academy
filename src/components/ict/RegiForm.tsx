@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -28,8 +28,8 @@ const schema = z.object({
   citizenship: z.string().min(1, "Citizenship is required"),
   school: z.string().min(1, "School is required"),
   grade: z.string().min(1, "Grade or Form is required"),
-  previousComputerTraining: z.boolean().default(false),
-  medicalCondition: z.enum(["Yes", "No"], {
+  previousComputerTraining: z.string().default("NO"),
+  medicalCondition: z.enum(["YES", "NO"], {
     required_error: "Medical condition is required",
   }),
   preferredHospital: z.string().optional(),
@@ -50,17 +50,37 @@ export const RegiForm = () => {
     handleSubmit,
     formState: { errors },
     watch,
+    reset,
     setValue,
   } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const onSubmit = async (data: FormData) => {
+    try {
+      setIsLoading(true);
+      const res = await fetch("/api/v1/ict/regi", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
 
-  const onSubmit = (data: FormData) => {
-    console.log(data);
+      if (!res.ok) {
+        throw new Error("Registration failed");
+      }
+
+      alert("Student Registered Successfully!");
+      reset(); // Reset form on successful submission
+    } catch (error: any) {
+      console.error("Error:", error);
+      alert(error.message || "An unexpected error occurred");
+    } finally {
+      setIsLoading(false); // Stop loading state once complete
+    }
   };
 
   // Watch medical condition field to show/hide the hospital field
-  const hasMedicalCondition = watch("medicalCondition") === "Yes";
+  const hasMedicalCondition = watch("medicalCondition") === "YES";
 
   return (
     <form
@@ -173,8 +193,8 @@ export const RegiForm = () => {
               <SelectValue placeholder="Any Computer Skills" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="false">NO</SelectItem>
-              <SelectItem value="true">YES</SelectItem>
+              <SelectItem value="NO">NO</SelectItem>
+              <SelectItem value="YES">YES</SelectItem>
             </SelectContent>
           </Select>
           {errors.gender && (
@@ -191,8 +211,8 @@ export const RegiForm = () => {
               <SelectValue placeholder="Select medical condition" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="No">No</SelectItem>
-              <SelectItem value="Yes">Yes</SelectItem>
+              <SelectItem value="NO">No</SelectItem>
+              <SelectItem value="YES">Yes</SelectItem>
             </SelectContent>
           </Select>
           {errors.medicalCondition && (
@@ -255,8 +275,8 @@ export const RegiForm = () => {
         </div>
       </div>
 
-      <Button type="submit" className="mt-4 w-full bg-green-500">
-        Submit Registration
+      <Button type="submit" disabled={isLoading} className="w-full bg-green-600">
+        {isLoading ? "Registering..." : "Submit"}
       </Button>
     </form>
   );
