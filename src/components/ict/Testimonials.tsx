@@ -12,7 +12,7 @@ export const Testimonials: React.FC = () => (
     <div className="space-y-4">
       {testimonials.map((quote, index) => (
         <blockquote key={index} className="italic text-gray-600">
-          "{quote}"
+          &quot;{quote}&quot;
         </blockquote>
       ))}
     </div>
