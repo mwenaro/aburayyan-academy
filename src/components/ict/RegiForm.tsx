@@ -163,8 +163,12 @@ export const RegiForm = () => {
 
         <div>
           <label>Any Previous Computer Training?</label>
-          
-          <Select onValueChange={(value: any) => setValue("previousComputerTraining", value)}>
+
+          <Select
+            onValueChange={(value: any) =>
+              setValue("previousComputerTraining", value)
+            }
+          >
             <SelectTrigger>
               <SelectValue placeholder="Any Computer Skills" />
             </SelectTrigger>
@@ -209,9 +213,26 @@ export const RegiForm = () => {
           </div>
         )}
 
-        <h3 className="text-xl font-bold mt-4">Parent/Guardian Information</h3>
-
         <div>
+          <label>Session Time</label>
+          <Select onValueChange={(value: any) => setValue("session", value)}>
+            <SelectTrigger>
+              <SelectValue placeholder="Select Suitable Session" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="Morning">Morning Session</SelectItem>
+              <SelectItem value="Afternoon">Afternoon Session</SelectItem>
+            </SelectContent>
+          </Select>
+          {errors.session && (
+            <p className="text-red-500 text-sm">{errors.session.message}</p>
+          )}
+        </div>
+      </div>
+      {/* ------------------------- */}
+      <h3 className="text-xl font-bold mt-4">Parent/Guardian Information</h3>
+      <div className="grid md:grid-cols-2 gap-4">
+        <div className="">
           <label>Parent/Guardian Name</label>
           <Input
             {...register("parentName")}
@@ -232,24 +253,9 @@ export const RegiForm = () => {
             <p className="text-red-500">{errors.parentPhoneNumber.message}</p>
           )}
         </div>
-        <div>
-          <label>Any Medical Condition?</label>
-          <Select onValueChange={(value: any) => setValue("session", value)}>
-            <SelectTrigger>
-              <SelectValue placeholder="Select Session" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="Morning">Morning Session</SelectItem>
-              <SelectItem value="Afternoon">Afternoon Session</SelectItem>
-            </SelectContent>
-          </Select>
-          {errors.session && (
-            <p className="text-red-500 text-sm">{errors.session.message}</p>
-          )}
-        </div>
       </div>
 
-      <Button type="submit" className="mt-4 w-full bg-blue-500">
+      <Button type="submit" className="mt-4 w-full bg-green-500">
         Submit Registration
       </Button>
     </form>

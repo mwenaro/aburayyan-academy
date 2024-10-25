@@ -17,7 +17,7 @@ export const Navbar: React.FC = () => {
             height={100}
             src="/favicon/aburayyan-logo.png"
             alt="Logo"
-            className="h-8 w-8 mr-2"
+            className="h-12 w-12 mr-2"
           />{" "}
           {/* Replace with your logo path */}
         </div>
