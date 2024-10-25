@@ -1,0 +1,1 @@
+npx shadcn-ui@latest add alert accordion avatar calendar button card checkbox command dialog dropdown-menu input label menubar popover table toast select toggle tooltip
