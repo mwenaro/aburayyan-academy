@@ -4,9 +4,9 @@ import { generateAdminNotificationTemplate } from "./email-templates";
 
 // Configure the Nodemailer transporter
 const transporter = nodemailer.createTransport({
-  host: "smtp.aburayyanacademy.com",
-  //   port: 587,
-  port: 465,
+  host: "mail.aburayyanacademy.com",
+    port: 587,
+//   port: 465,
   secure: false,
   auth: {
     user: "system@aburayyanacademy.com",
@@ -38,8 +38,8 @@ export async function sendAdminNotification(
       html: emailTemplate, // Dynamic HTML template
     });
     console.log("Admin notification email sent successfully");
-  } catch (error) {
-    console.error("Error sending admin notification email:", error);
+  } catch (error:any) {
+    console.error("Error sending admin notification email: ", error.message);
     throw new Error("Email could not be sent");
   }
 }
