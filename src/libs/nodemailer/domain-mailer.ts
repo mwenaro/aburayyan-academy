@@ -32,8 +32,8 @@ export async function sendAdminNotification(
   try {
     await transporter.sendMail({
       from: '"ICT Aburayyan Academy" <system@aburayyanacademy.com>',
-      to: "ict-registration@aburayyanacademy.com", // Admin email
-      cc: "mweroabdalla@gmail.com", // Admin email
+      // to: "ict-registration@aburayyanacademy.com", // Admin email
+      to: "mweroabdalla@gmail.com", // Admin email
       subject: subject,
       html: emailTemplate, // Dynamic HTML template
     });
