@@ -21,22 +21,33 @@ export async function GET(req: NextRequest) {
 // regitsre
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json(),
-      { studentName, phoneNumber, parentName, parentPhoneNumber } = body;
+    const body = await req.json();
+    const { studentName, phoneNumber, parentName, parentPhoneNumber } = body;
+    
+    // Basic validation
+    if (!studentName || !phoneNumber || !parentName || !parentPhoneNumber) {
+      return NextResponse.json({ success: false, message: "All fields are required" }, { status: 400 });
+    }
+
     await dbCon();
-    const newREgistration = new Registration(body);
-    const savedRegistration = await newREgistration.save();
-    if (!savedRegistration) throw Error("Regitsration failed");
-    const studentDeatils = `${studentName}(${phoneNumber})`,
-      parentDeatils = `${parentName}(${parentPhoneNumber})`;
-    // send Notification to admin
-    await sendAdminNotification(studentDeatils, parentDeatils);
+    
+    const newRegistration = new Registration(body);
+    const savedRegistration = await newRegistration.save();
+    
+    if (!savedRegistration) throw Error("Registration failed");
+
+    const studentDetails = `${studentName}(${phoneNumber})`;
+    const parentDetails = `${parentName}(${parentPhoneNumber})`;
+    const registeredStudents = await Registration.countDocuments();
+    
+    // console.log({ registeredStudents });
+    
+    // Uncomment this if email notifications are required
+    await sendAdminNotification(studentDetails, parentDetails, registeredStudents);
+
     return NextResponse.json(savedRegistration, { status: 201 });
   } catch (error: any) {
     console.log({ regError: error.message });
-    return new NextResponse(
-      JSON.stringify({ success: false, error: error.message }),
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, error: `Error: ${error.message}` }, { status: 500 });
   }
 }

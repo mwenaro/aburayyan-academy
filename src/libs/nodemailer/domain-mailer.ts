@@ -17,7 +17,8 @@ const transporter = nodemailer.createTransport({
 // Send admin notification function
 export async function sendAdminNotification(
   studentDetails: string,
-  guardianDeatils: string
+  guardianDeatils: string,
+  totalNoStudents:any,
 ): Promise<void> {
   const subject: string = "New User Registration Notification"; // Declare subject type
   const registrationDate: string = new Date().toLocaleDateString(); // Declare registrationDate type
@@ -26,7 +27,8 @@ export async function sendAdminNotification(
   const emailTemplate: string = generateAdminNotificationTemplate(
     studentDetails,
     guardianDeatils,
-    registrationDate
+    registrationDate,
+    totalNoStudents
   );
 
   try {

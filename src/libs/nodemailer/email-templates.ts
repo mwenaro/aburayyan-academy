@@ -1,7 +1,8 @@
 export const generateAdminNotificationTemplate = (
   studentDetails: string,
   guardianDetails: string,
-  registrationDate: string
+  registrationDate: string,
+  totalNoStudents:any
 ): string => {
   return `
       <!DOCTYPE html>
@@ -34,7 +35,7 @@ export const generateAdminNotificationTemplate = (
                 Dear Admin,
               </p>
               <p class="mt-2">
-                A new user has successfully registered on <strong>Aburayyan Academy</strong>. Please find the user details below:
+                A new user has successfully registered on <strong>the ICT Holiday Progeam</strong> raising the <strong>total Number to : ${totalNoStudents}</strong>. Please find the user details below:
               </p>
   
               <ul class="mt-4">
