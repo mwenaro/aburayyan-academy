@@ -59,7 +59,7 @@ export default function Dashboard() {
               <th className="p-2 border-b hidden md:table-cell">DOB</th>
               <th className="p-2 border-b">Gender</th>
               <th className="p-2 border-b">Session Time</th>
-              <th className="p-2 border-b  hidden ld:table-cell">Actions</th>
+              <th className="p-2 border-b  hidden lg:table-cell">Actions</th>
             </tr>
           </thead>
           <tbody>
