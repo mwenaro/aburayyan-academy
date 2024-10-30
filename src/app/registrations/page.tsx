@@ -79,7 +79,7 @@ export default function Dashboard() {
                 </td>
                 <td className="p-2">{reg.gender}</td>
                 <td className="p-2">{reg.session}</td>
-                <td className="p-2 hidden ld:table-cell">
+                <td className="p-2 hidden lg:table-cell">
                   <button
                     className="bg-red-500 text-white px-3 py-1 mr-2 rounded"
                     onClick={() => handleDelete(reg._id)}
