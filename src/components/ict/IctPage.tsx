@@ -1,22 +1,24 @@
+"use client"
 import React from "react";
-import { Navbar } from "./Navbar";
-import { Header } from "./Header";
+
 import { About } from "./About";
 import { ProgramDetails } from "./ProgrammDetails";
 import { WeeklySchedule } from "./WeeklySchedule";
 import { Testimonials } from "./Testimonials";
 import { ExpectedOutcomes } from "./ExpectedOutcomes";
 import { FAQ } from "./FAQ";
-import { RegistrationForm } from "./RegistrationForm";
-import { Footer } from "./Footer";
+
 import { RegiForm } from "./RegiForm";
+import { HeroSection } from "./HeroSection";
+import { Header } from "./Header";
+import { Footer } from "./Footer";
+
 
 export const IctPage: React.FC = () => (
   <div className="bg-gray-50 text-gray-800">
-    <Navbar />
-
-    <div id="about" className="">
-      <Header />
+    <Header />
+    <div id="home" className="">
+      <HeroSection />
     </div>
     <div className="max-w-5xl mx-auto">
       <div id="about" className="pt-10">

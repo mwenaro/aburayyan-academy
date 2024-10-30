@@ -19,6 +19,7 @@ export async function sendAdminNotification(
   studentDetails: string,
   guardianDeatils: string,
   totalNoStudents:any,
+  url:string
 ): Promise<void> {
   const subject: string = "New User Registration Notification"; // Declare subject type
   const registrationDate: string = new Date().toLocaleDateString(); // Declare registrationDate type
@@ -28,7 +29,8 @@ export async function sendAdminNotification(
     studentDetails,
     guardianDeatils,
     registrationDate,
-    totalNoStudents
+    totalNoStudents,
+    url
   );
 
   try {

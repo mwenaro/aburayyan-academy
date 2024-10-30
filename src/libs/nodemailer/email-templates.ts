@@ -2,7 +2,8 @@ export const generateAdminNotificationTemplate = (
   studentDetails: string,
   guardianDetails: string,
   registrationDate: string,
-  totalNoStudents:any
+  totalNoStudents: any,
+  url: string
 ): string => {
   return `
       <!DOCTYPE html>
@@ -45,8 +46,10 @@ export const generateAdminNotificationTemplate = (
               </ul>
   
               <p class="mt-4">
-                Kindly take any necessary actions regarding this new registration.
+                Kindly take any necessary actions regarding this new registration. <br>Click <a href="${url}"> Here to View List</a>
+                
               </p>
+              
             </div>
   
             <!-- Footer -->

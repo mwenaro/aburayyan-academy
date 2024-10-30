@@ -17,6 +17,7 @@ export type IRegistrationForm = {
   parentName: string;
   parentPhoneNumber: string;
   session: "Morning" | "Afternoon";
+  isDeleted?:boolean
 };
 
 const registrationSchema = new mongoose.Schema<IRegistrationForm>(
@@ -102,6 +103,7 @@ const registrationSchema = new mongoose.Schema<IRegistrationForm>(
       enum: ["Morning", "Afternoon"],
       required: true,
     },
+    isDeleted:{type:Boolean, default:false}
   },
   {
     timestamps: true,

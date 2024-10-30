@@ -2,7 +2,7 @@ import { dbCon } from "@/libs/mongoose/dbCon";
 import { Registration } from "@/models/RegistrationForm";
 import { NextRequest, NextResponse } from "next/server";
 type IQuery = {
-    params:{id:string}
+    params:{id:string, role:string}
 }
 // GET: Retrieve all registrations
 export async function GET(req: NextRequest, {params:{id}}:IQuery) {

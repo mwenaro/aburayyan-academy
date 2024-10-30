@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-const BASE_URL = '/api/v1/ict/regi';
+const BASE_URL = "/api/v1/ict/regi";
 
 interface Registration {
   _id: string;
@@ -44,14 +44,18 @@ export default function Dashboard() {
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Student Registrations</h1>
+      <h1 className="text-2xl font-bold mb-4">
+        Student Registrations({registrations.length})
+      </h1>
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border border-gray-200">
           <thead>
             <tr>
               <th className="p-2 border-b">Student Details</th>
-       
-              <th className="p-2 border-b hidden md:table-cell">Parent Details</th>
+
+              <th className="p-2 border-b hidden md:table-cell">
+                Parent Details
+              </th>
               <th className="p-2 border-b hidden md:table-cell">DOB</th>
               <th className="p-2 border-b">Gender</th>
               <th className="p-2 border-b">Session Time</th>
@@ -65,12 +69,14 @@ export default function Dashboard() {
                   <span className="block">{reg.studentName}</span>
                   <span className="text-sm text-gray-500 hidden sm:inline">{`(${reg.phoneNumber})`}</span>
                 </td>
-              
+
                 <td className="p-2 hidden md:table-cell">
                   <span className="block">{reg.parentName}</span>
                   <span className="text-sm text-gray-500 hidden sm:inline">{`(${reg.parentPhoneNumber})`}</span>
                 </td>
-                <td className="p-2 hidden md:table-cell">{new Date(reg.dob).toLocaleDateString()}</td>
+                <td className="p-2 hidden md:table-cell">
+                  {new Date(reg.dob).toLocaleDateString()}
+                </td>
                 <td className="p-2">{reg.gender}</td>
                 <td className="p-2">{reg.session}</td>
                 <td className="p-2 hidden ld:table-cell">
@@ -80,12 +86,12 @@ export default function Dashboard() {
                   >
                     Delete
                   </button>
-                  <button
+                  {/* <button
                     className="bg-blue-500 text-white px-3 py-1 rounded"
                     // Attach edit functionality as needed
                   >
                     Edit
-                  </button>
+                  </button> */}
                 </td>
               </tr>
             ))}
