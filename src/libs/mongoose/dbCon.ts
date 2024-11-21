@@ -17,7 +17,6 @@ export async function dbCon() {
   if (isConnected) {
     return;
   }
-
   try {
     await mongoose.connect(MONGO_DB_URI);
     isConnected = true;
