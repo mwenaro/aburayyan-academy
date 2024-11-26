@@ -5,8 +5,11 @@ import { cn } from "@/lib/utils";
 import { Metadata } from "next";
 import { PropsWithChildren } from "react";
 import { Footer } from "@/components/ict/Footer";
+import Providers from "@/components/layout/providers";
+import { Toaster } from "@/components/ui/toaster";
+import { auth } from "@/auth/auth";
 
-interface RootLayoutProps extends PropsWithChildren {}
+interface RootLayoutProps extends PropsWithChildren { }
 
 export const metadata: Metadata = {
   title: {
@@ -35,12 +38,19 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: RootLayoutProps) {
+  const session = auth
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={cn("min-h-screen bg-background font-sans antialiased")}>
         <Header />
-        <div className="min-h-screen mt-20">{children}</div>
+        <div className="min-h-screen mt-20"><Toaster />
+          <Providers session={session}>
+            {children}
+            </Providers>
+            </div>
         <Footer />
+
+
       </body>
     </html>
   );
