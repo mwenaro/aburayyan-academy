@@ -22,11 +22,11 @@ export function ShoppingCart({ isOpen, setIsOpen }: ShippingCartProps) {
 
   // Correctly calculate the total amount
   const getTotalAmount = () =>
-    cartItems.reduce((a, val) => a + val.price * val.quantity, 0);
+    cartItems.reduce((a:any, val:any) => a + val.price * val.quantity, 0);
 
   // Handle item increase
   const handleIncrease = (id: string) => {
-    const item = cartItems.find((i) => i._id === id);
+    const item = cartItems.find((i:any) => i._id === id);
     if (item) {
       dispatch(addToCart(item));
     }
@@ -54,7 +54,7 @@ export function ShoppingCart({ isOpen, setIsOpen }: ShippingCartProps) {
   const cartContainer = shoppingCart.length ? (
     <>
       <ul className="divide-y divide-gray-200">
-        {cartItems.map((item) => (
+        {cartItems.map((item:any) => (
           <li key={item._id} className="flex items-center py-4">
             <div className="flex justify-between w-full">
               <div className="flex items-center">

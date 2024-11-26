@@ -55,7 +55,7 @@ export const ProductList: React.FC<ProductListProps> = ({
 
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6">
         {(filteredProducts.length > 0 ? filteredProducts : products).map(
-          (prod: IProduct, index) => (
+          (prod: IProduct, index:number) => (
             <ProductCard
               onClick={() => handleAddToCart(prod)}
               key={index}
