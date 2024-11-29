@@ -39,7 +39,7 @@ const RegistrationInvitationSchema: Schema = new Schema<IRegistrationInvitation>
 }, { timestamps: true });
 
 // Create and export the model
-export const RegistrationInvitationModel: Model<IRegistrationInvitation> =mongoose.models.RegistrationInvitation || mongoose.model<IRegistrationInvitation>(
+export const RegistrationInvitation: Model<IRegistrationInvitation> =mongoose.models.RegistrationInvitation || mongoose.model<IRegistrationInvitation>(
   "RegistrationInvitation",
   RegistrationInvitationSchema
 );
