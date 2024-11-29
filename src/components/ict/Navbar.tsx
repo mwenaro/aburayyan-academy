@@ -8,7 +8,7 @@ import Image from "next/image";
 
 export const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const router = window.location
+  const router = location
   return (
     <nav className="bg-blue-600 text-white fixed top-0 left-0 w-full z-10 shadow">
       <div className="container mx-auto px-6 py-4 flex justify-between items-center">
