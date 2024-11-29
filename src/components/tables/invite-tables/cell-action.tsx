@@ -25,7 +25,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   // console.log("In cell Action ", data);
   const onConfirm = async () => {
     setLoading(true);
-    const res = await fetch(`/api/reg/invite/${data._id}`, {method:'DELETE'});
+    const res = await fetch(`/api/v1/reg/invite/${data._id}`, {method:'DELETE'});
     router.refresh()
     await res.json();
     setLoading(false);

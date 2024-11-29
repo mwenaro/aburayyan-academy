@@ -10,7 +10,7 @@ const breadcrumbItems = [
   { title: "invite", link: "/dashboard/invite" },
 ];
 export default async function page() {
-  const myData = await getData('/reg/invite');
+  const myData = await getData('/v1/reg/invite');
 
   return (
     <PageContainer>

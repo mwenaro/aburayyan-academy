@@ -51,13 +51,13 @@ export const RegistrationInviteForm: React.FC<RegistrationInviteFormProps> = ({
     try {
       setLoading(true);
       if (initialData) {
-        await axios.put(`/api/registration-invite/${initialData.email}`, data);
+        await axios.put(`/api/v1/reg/invite/${initialData.email}`, data);
         toast({
           title: "Success",
           description: "Registration invite updated.",
         });
       } else {
-        await axios.post("/api/registration-invite", data);
+        await axios.post("/api/v1/reg/invite", data);
         toast({
           title: "Success",
           description: "Registration invite created.",
