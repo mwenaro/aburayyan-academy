@@ -119,22 +119,22 @@ export const navItems: NavItem[] = [
     label: 'Dashboard'
   },
   {
-    title: 'Category',
-    href: '/dashboard/categories',
+    title: 'Teachers',
+    href: '/dashboard/teachers',
     icon: 'user',
-    label: 'category'
+    label: 'teacher'
   },
   {
-    title: 'SubCategory',
-    href: '/dashboard/sub-categories',
+    title: 'Students',
+    href: '/dashboard/students',
     icon: 'user',
-    label: 'sub-category'
+    label: 'student'
   },
   {
-    title: 'Product',
-    href: '/dashboard/products',
+    title: 'Invite',
+    href: '/dashboard/invite',
     icon: 'user',
-    label: 'product'
+    label: 'invite'
   },
   // {
   //   title: 'User',
