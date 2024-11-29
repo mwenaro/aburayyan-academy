@@ -1,3 +1,4 @@
+"use cleint"
 import React, { useState, useEffect, useState as useClientState } from "react";
 import { Link } from "react-scroll";
 import { default as NextLink } from "next/link";
