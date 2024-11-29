@@ -1,3 +1,4 @@
+export const revalidate=60
 import { dbCon } from "@/libs/mongoose/dbCon";
 import { TeacherSubject } from "@/models/TeacherSub";
 import React from "react";
