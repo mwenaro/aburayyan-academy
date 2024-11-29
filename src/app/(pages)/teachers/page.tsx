@@ -49,6 +49,7 @@ teachersData = (!trs || trs.length<1)?teachersData : trs
           <table className="min-w-full border-collapse border border-gray-200">
             <thead>
               <tr className="bg-gray-50">
+                <th  className="flex items-center justify-center p-4">#</th>
                 <th className="text-left p-3 border border-gray-200">Name</th>
                 <th className="text-left p-3 border border-gray-200">Subjects</th>
               </tr>
@@ -61,6 +62,7 @@ teachersData = (!trs || trs.length<1)?teachersData : trs
                     index % 2 === 0 ? "bg-gray-50" : "bg-white"
                   }`}
                 >
+                    <td className="flex items-center justify-center p-4">{1+index}</td>
                   <td className="p-3 border border-gray-200">{teacher.name}</td>
                   <td className="p-3 border border-gray-200">
                     <ul className="list-disc ml-4">
