@@ -124,11 +124,24 @@ export const navItems: NavItem[] = [
     icon: 'user',
     label: 'teacher'
   },
+ 
   {
     title: 'Students',
     href: '/dashboard/students',
     icon: 'user',
     label: 'student'
+  },
+  {
+    title: 'Subjects',
+    href: '/dashboard/subjects',
+    icon: 'user',
+    label: 'subject'
+  },
+   {
+    title: 'Classes',
+    href: '/dashboard/classes',
+    icon: 'user',
+    label: 'class'
   },
   {
     title: 'Invite',

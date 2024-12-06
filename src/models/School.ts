@@ -63,6 +63,6 @@ const SchoolSchema: Schema = new Schema<ISchool>({
 }, {timestamps:true});
 
 // Create and export the model
-export const SchoolModel: Model<ISchool> = mongoose.model<ISchool>("School", SchoolSchema);
+export const School: Model<ISchool> = mongoose.models.School ||  mongoose.model<ISchool>("School", SchoolSchema);
 
 

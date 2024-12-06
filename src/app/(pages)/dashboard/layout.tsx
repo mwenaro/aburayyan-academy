@@ -7,8 +7,8 @@ import { Toaster } from '@/components/ui/toaster';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Almahdi Dashboard',
-  description: 'The official Ecommerce Basic dashboard '
+  title: 'Abu-rayyan Academy Dashboard',
+  description: 'The official School Admin dashboard '
 };
 
 export default  function DashboardLayout({
