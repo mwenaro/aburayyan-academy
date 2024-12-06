@@ -6,7 +6,7 @@ function getDbURI(dbname: string) {
   const MONGO_DB_URI_DEV = `mongodb://127.0.0.1:27017/${dbname}?retryWrites=true&w=majority`;
   const LIVE_URI = `mongodb+srv://${process.env.NEXT_PUBLIC_MONGODB_USER}:${process.env.NEXT_PUBLIC_MONGODB_PWD}@cluster0.2f29nts.mongodb.net/${dbname}?retryWrites=true&w=majority`;
   const ENV = process.env.NODE_ENV || "developemnt";
-
+console.log({LIVE_URI})
   return ENV === "production" ? LIVE_URI : MONGO_DB_URI_DEV;
   // return LIVE_URI
 }
