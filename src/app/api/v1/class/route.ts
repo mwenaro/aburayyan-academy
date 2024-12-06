@@ -1,5 +1,6 @@
 import { dbCon } from "@/libs/mongoose/dbCon";
-import { ClassModel } from "@/models/Class";
+import { ClassModel, IClass } from "@/models/Class";
+import { School } from "@/models/School";
 
 import { NextRequest, NextResponse } from "next/server";
 
@@ -15,12 +16,30 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const body = await req.json();
+  let body = await req.json();
+  await dbCon();
+  body = Array.isArray(body) ? body : [body];
+  if (!Object.keys(body[0]).includes("school")) {
+    const school = await School.findOne({});
+    body = body.map((cls: any) => {
+      const { year, name,isGraduated, ...others } = cls;
+      return {
+        ...others,
+        name,
+        school: school?._id,
+        isGraduated:['true', true].includes(isGraduated)? true:false,
+        steps: [
+          {
+            year: year,
+            grade: +name.split(" ")[1].trim(),
+          },
+        ],
+      };
+    });
+  }
+  // return NextResponse.json({body})
   try {
-    await dbCon();
-    const savedClasses = await ClassModel.insertMany(
-      Array.isArray(body) ? body : [body]
-    );
+    const savedClasses = await ClassModel.insertMany(body);
 
     return NextResponse.json(
       { success: true, data: savedClasses },

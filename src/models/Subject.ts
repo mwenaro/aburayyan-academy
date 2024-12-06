@@ -37,4 +37,4 @@ SubjectSchema.pre<ISubject>("save", function (next) {
 });
 
 // Create and export the model
-export const SubjectModel: Model<ISubject> = mongoose.model<ISubject>("Subject", SubjectSchema);
+export const Subject: Model<ISubject> = mongoose.models.Subject ||  mongoose.model<ISubject>("Subject", SubjectSchema);
