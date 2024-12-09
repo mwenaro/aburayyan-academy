@@ -4,8 +4,6 @@ import { ColumnDef } from "@tanstack/react-table";
 import { CellAction } from "./cell-action";
 import { IClass } from "@/models/Class";
 
-
-
 export const columns: ColumnDef<IClass>[] = [
   {
     id: "select",
@@ -33,7 +31,12 @@ export const columns: ColumnDef<IClass>[] = [
   },
 
   {
-    accessorKey: "year",
+    cell: ({ row }) => {
+      const { steps } = row.original;
+      const last= steps.pop();
+      
+      return last?.year;
+    },
     header: "YEAR",
   },
 
