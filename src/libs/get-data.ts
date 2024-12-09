@@ -7,5 +7,5 @@ export const getData = async (path: string) => {
 
   const res = await axios.get(formatedUrl);
 
-  return (await res?.data?.data) || [];
+  return (await res?.data) || (await res?.data?.data) || [];
 };
