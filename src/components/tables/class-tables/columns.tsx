@@ -33,8 +33,8 @@ export const columns: ColumnDef<IClass>[] = [
   {
     cell: ({ row }) => {
       const { steps } = row.original;
-      const last= steps.pop();
-      
+      const last = steps.pop();
+
       return last?.year;
     },
     header: "YEAR",
