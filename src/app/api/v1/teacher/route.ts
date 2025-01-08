@@ -7,6 +7,8 @@ export async function GET(req: NextRequest) {
   try {
     await dbCon();
     const fetchedUsers = await User.find({ role: "teacher" });
+    // const fetchedUsers = await User.find({ });
+
 
     return NextResponse.json(fetchedUsers);
   } catch (error: any) {

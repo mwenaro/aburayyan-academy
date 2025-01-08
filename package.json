@@ -46,6 +46,7 @@
     "framer-motion": "^11.11.17",
     "lucide-react": "^0.390.0",
     "mds-daraja-sdk": "^1.1.11",
+    "mds-file-upload": "^1.0.1",
     "mongoose": "^8.7.0",
     "next": "^14.2.13",
     "next-auth": "^4.24.8",
