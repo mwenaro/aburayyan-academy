@@ -1,7 +1,9 @@
 'use client'
-import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 
 const contactSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -9,36 +11,20 @@ const contactSchema = z.object({
   message: z.string().min(1, "Message is required"),
 });
 
+type ContactFormData = z.infer<typeof contactSchema>;
+
 const ContactPage: React.FC = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<ContactFormData>({
+    resolver: zodResolver(contactSchema),
   });
-  const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const result = contactSchema.safeParse(formData);
-
-    if (!result.success) {
-      const validationErrors: Record<string, string> = {};
-      result.error.errors.forEach((error) => {
-        if (error.path[0]) {
-          validationErrors[error.path[0] as string] = error.message;
-        }
-      });
-      setErrors(validationErrors);
-    } else {
-      setErrors({});
-      console.log("Form submitted:", formData);
-      // Handle successful submission (e.g., send data to API)
-    }
+  const onSubmit = (data: ContactFormData) => {
+    console.log("Form Data:", data);
+    // Handle form submission logic (e.g., send data to API)
   };
 
   return (
@@ -46,54 +32,57 @@ const ContactPage: React.FC = () => {
       <h1 className="text-3xl font-bold text-blue-600">Contact Us</h1>
 
       {/* Contact Form */}
-      <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-4">
         <div>
           <input
             type="text"
-            name="name"
             placeholder="Your Name"
-            value={formData.name}
-            onChange={handleChange}
+            {...register("name")}
             className={`w-full px-4 py-2 border rounded ${
               errors.name ? "border-red-500" : "border-gray-300"
             }`}
           />
-          {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
+          {errors.name && (
+            <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
+          )}
         </div>
 
         <div>
           <input
             type="email"
-            name="email"
             placeholder="Your Email"
-            value={formData.email}
-            onChange={handleChange}
+            {...register("email")}
             className={`w-full px-4 py-2 border rounded ${
               errors.email ? "border-red-500" : "border-gray-300"
             }`}
           />
-          {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+          {errors.email && (
+            <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+          )}
         </div>
 
         <div>
           <textarea
-            name="message"
             placeholder="Your Message"
-            value={formData.message}
-            onChange={handleChange}
+            {...register("message")}
             className={`w-full px-4 py-2 border rounded ${
               errors.message ? "border-red-500" : "border-gray-300"
             }`}
             rows={4}
           />
-          {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message}</p>}
+          {errors.message && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.message.message}
+            </p>
+          )}
         </div>
 
         <button
           type="submit"
           className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          disabled={isSubmitting}
         >
-          Send Message
+          {isSubmitting ? "Sending..." : "Send Message"}
         </button>
       </form>
 
@@ -103,7 +92,8 @@ const ContactPage: React.FC = () => {
         <p className="mt-2">Sabasaba, Mombasa, Kenya</p>
       </div>
 
-      {/* Map (Embed without API Key) */}
+      {/* Map (Embed using Google Maps) */}
+
       <div className="mt-6">
         <h2 className="text-xl font-semibold">Our Location:</h2>
         <iframe
