@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState, useEffect, useState as useClientState } from "react";
 import { Link } from "react-scroll";
 import { default as NextLink } from "next/link";
@@ -76,17 +76,19 @@ export const Navbar: React.FC = () => {
                     </Link>
                   </li>
                 ))
-              : ["Home", "About", "Contact","ICT"].map((link: string, indx: number) => (
-                  <li key={indx}>
-                    <NextLink
-                      href={`/${
-                        link.includes("Home") ? "" : link.toLocaleLowerCase()
-                      }`}
-                    >
-                      {link}
-                    </NextLink>
-                  </li>
-                ))}
+              : ["Home", "About", "Contact", "ICT"].map(
+                  (link: string, indx: number) => (
+                    <li key={indx}>
+                      <NextLink
+                        href={`/${
+                          link.includes("Home") ? "" : link.toLocaleLowerCase()
+                        }`}
+                      >
+                        {link}
+                      </NextLink>
+                    </li>
+                  )
+                )}
           </ul>
         </div>
       </div>

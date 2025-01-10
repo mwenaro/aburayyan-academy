@@ -1,5 +1,6 @@
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { TeachersForm } from "@/components/forms/teacher-form";
+
 import PageContainer from "@/components/layout/page-container";
 
 import { User } from "@/models/User";
@@ -22,10 +23,7 @@ export default async function Page({ params: { categoryId } }: any) {
       <div className="space-y-4">
         <Breadcrumbs items={breadcrumbItems} />
         <TeachersForm
-          statusOptions={[
-            { _id: false, name: "InActive" },
-            { _id: true, name: "Active" },
-          ]}
+         
           
           initialData={initData}
           key={null}

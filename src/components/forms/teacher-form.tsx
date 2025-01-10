@@ -59,13 +59,13 @@ type teacherFormValues = z.infer<typeof formSchema>;
 
 interface teacherFormProps {
   initialData: any | null;
-  categories: any;
+ 
   // subCategories:any
 }
 
-export const teacherForm: React.FC<teacherFormProps> = ({
-  initialData,
-  categories
+export const TeachersForm: React.FC<teacherFormProps> = ({
+  initialData
+
 }) => {
   const params = useParams();
   const router = useRouter();
