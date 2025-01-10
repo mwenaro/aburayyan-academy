@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const AboutPage: React.FC = () => (
   <div className="p-10">
@@ -7,22 +7,27 @@ const AboutPage: React.FC = () => (
     {/* Motto */}
     <div className="mt-6">
       <h2 className="text-xl font-semibold">Our Motto:</h2>
-      <p className="mt-2 italic">&quot;Learners Today, Leaders Tomorrow.&quot;</p>
+      <p className="mt-2 italic">
+        &quot;Learners Today, Leaders Tomorrow.&quot;
+      </p>
     </div>
 
     {/* History */}
     <div className="mt-8">
       <h2 className="text-xl font-semibold">Our History:</h2>
       <p className="mt-2">
-        Aburayan Academy was established in 2010 with a vision to provide quality education 
-        that integrates modern learning techniques with Islamic values. Starting with a single classroom 
-        and just a handful of students, the academy has grown exponentially over the years, now serving hundreds of learners across various age groups.
+        Aburayan Academy was established in 2010 with a vision to provide
+        quality education that integrates modern learning techniques with
+        Islamic values. Starting with a single classroom and just a handful of
+        students, the academy has grown exponentially over the years, now
+        serving hundreds of learners across various age groups.
       </p>
       <p className="mt-2">
-        From humble beginnings, we have become a trusted educational institution in Mombasa, offering 
-        competency-based curriculum (CBC) seamlessly integrated with ICT and Islamic studies. 
-        Our commitment to holistic education has earned us a reputation for nurturing both academic excellence 
-        and moral integrity.
+        From humble beginnings, we have become a trusted educational institution
+        in Mombasa, offering competency-based curriculum (CBC) seamlessly
+        integrated with ICT and Islamic studies. Our commitment to holistic
+        education has earned us a reputation for nurturing both academic
+        excellence and moral integrity.
       </p>
     </div>
 
@@ -30,10 +35,11 @@ const AboutPage: React.FC = () => (
     <div className="mt-8">
       <h2 className="text-xl font-semibold">Our Mission:</h2>
       <p className="mt-2">
-        Our mission is to empower learners with knowledge, skills, and values to become competent, 
-        responsible, and innovative leaders of tomorrow. We strive to create a learning environment 
-        that fosters curiosity, creativity, and critical thinking while remaining rooted in moral 
-        and ethical teachings.
+        Our mission is to empower learners with knowledge, skills, and values to
+        become competent, responsible, and innovative leaders of tomorrow. We
+        strive to create a learning environment that fosters curiosity,
+        creativity, and critical thinking while remaining rooted in moral and
+        ethical teachings.
       </p>
     </div>
 
@@ -41,8 +47,9 @@ const AboutPage: React.FC = () => (
     <div className="mt-8">
       <h2 className="text-xl font-semibold">Our Vision:</h2>
       <p className="mt-2">
-        To be a beacon of educational excellence in Mombasa, inspiring students to achieve their full potential 
-        and contribute positively to society through leadership and service.
+        To be a beacon of educational excellence in Mombasa, inspiring students
+        to achieve their full potential and contribute positively to society
+        through leadership and service.
       </p>
     </div>
 

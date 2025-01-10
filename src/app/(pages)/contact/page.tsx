@@ -1,5 +1,5 @@
-import React from 'react';
-import Link from 'next/link';
+import React from "react";
+import Link from "next/link";
 
 const ContactPage: React.FC = () => (
   <div className="p-10">
@@ -22,7 +22,10 @@ const ContactPage: React.FC = () => (
         className="w-full px-4 py-2 border rounded"
         rows={4}
       />
-      <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">
+      <button
+        type="submit"
+        className="px-4 py-2 bg-blue-500 text-white rounded"
+      >
         Send Message
       </button>
     </form>
@@ -48,13 +51,25 @@ const ContactPage: React.FC = () => (
     <div className="mt-8">
       <h2 className="text-xl font-semibold">Follow Us:</h2>
       <div className="flex space-x-4 mt-2">
-        <Link href="https://facebook.com/aburayyanacademy" target="_blank" rel="noopener noreferrer">
+        <Link
+          href="https://facebook.com/aburayyanacademy"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <span className="text-blue-600 cursor-pointer">Facebook</span>
         </Link>
-        <Link href="https://twitter.com/aburayyanacademy" target="_blank" rel="noopener noreferrer">
+        <Link
+          href="https://twitter.com/aburayyanacademy"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <span className="text-blue-400 cursor-pointer">Twitter</span>
         </Link>
-        <Link href="https://instagram.com/aburayyanacademy" target="_blank" rel="noopener noreferrer">
+        <Link
+          href="https://instagram.com/aburayyanacademy"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <span className="text-pink-500 cursor-pointer">Instagram</span>
         </Link>
       </div>

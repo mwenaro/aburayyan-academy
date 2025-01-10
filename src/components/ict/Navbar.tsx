@@ -76,7 +76,7 @@ export const Navbar: React.FC = () => {
                     </Link>
                   </li>
                 ))
-              : ["Home", "About", "Contact"].map((link: string, indx: number) => (
+              : ["Home", "About", "Contact","ICT"].map((link: string, indx: number) => (
                   <li key={indx}>
                     <NextLink
                       href={`/${
