@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import Link from "next/link";
 import React, { useState } from "react";
 import { z } from "zod";
@@ -17,7 +17,9 @@ const ContactPage: React.FC = () => {
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
@@ -42,105 +44,124 @@ const ContactPage: React.FC = () => {
   };
 
   return (
-    <div className="p-10">
-      <h1 className="text-3xl font-bold text-blue-600">Contact Us</h1>
-
-      {/* Contact Form */}
-      <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-        <div>
-          <input
-            type="text"
-            name="name"
-            placeholder="Your Name"
-            value={formData.name}
-            onChange={handleChange}
-            className={`w-full px-4 py-2 border rounded ${
-              errors.name ? "border-red-500" : "border-gray-300"
-            }`}
-          />
-          {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
+    <div>
+      {/* Hero Section */}
+      <div
+        className="relative h-64 w-full bg-cover bg-center"
+        style={{
+          backgroundImage: `url('/school/about-hero-image.jpg')`, // Replace with your image URL
+        }}
+      >
+        <div className="absolute inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
+          <h1 className="text-4xl font-bold text-white">Contact Us</h1>
         </div>
-
-        <div>
-          <input
-            type="email"
-            name="email"
-            placeholder="Your Email"
-            value={formData.email}
-            onChange={handleChange}
-            className={`w-full px-4 py-2 border rounded ${
-              errors.email ? "border-red-500" : "border-gray-300"
-            }`}
-          />
-          {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
-        </div>
-
-        <div>
-          <textarea
-            name="message"
-            placeholder="Your Message"
-            value={formData.message}
-            onChange={handleChange}
-            className={`w-full px-4 py-2 border rounded ${
-              errors.message ? "border-red-500" : "border-gray-300"
-            }`}
-            rows={4}
-          />
-          {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message}</p>}
-        </div>
-
-        <button
-          type="submit"
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-        >
-          Send Message
-        </button>
-      </form>
-
-      {/* Physical Address */}
-      <div className="mt-8">
-        <h2 className="text-xl font-semibold">Visit Us:</h2>
-        <p className="mt-2">Sabasaba, Mombasa, Kenya</p>
       </div>
 
-      {/* Map (Embed without API Key) */}
-      <div className="mt-6">
-        <h2 className="text-xl font-semibold">Our Location:</h2>
-        <iframe
-          className="w-full h-64 mt-2"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d836.6690269640336!2d39.659403010462604!3d-4.042651684181943!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x184012b6536946a3%3A0xf121aa4ab5a0a1cc!2sAbu-Rayyan%20Academy!5e0!3m2!1sen!2ske!4v1736515654476!5m2!1sen!2ske"
-          style={{ border: 0 }}
-          allowFullScreen
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-        ></iframe>
-      </div>
+      {/* Content Section */}
+      <div className="p-10">
+        {/* Contact Form */}
+        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+          <div>
+            <input
+              type="text"
+              name="name"
+              placeholder="Your Name"
+              value={formData.name}
+              onChange={handleChange}
+              className={`w-full px-4 py-2 border rounded ${
+                errors.name ? "border-red-500" : "border-gray-300"
+              }`}
+            />
+            {errors.name && (
+              <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+            )}
+          </div>
 
-      {/* Social Media Handles */}
-      <div className="mt-8">
-        <h2 className="text-xl font-semibold">Follow Us:</h2>
-        <div className="flex space-x-4 mt-2">
-          <Link
-            href="https://facebook.com/aburayyanacademy"
-            target="_blank"
-            rel="noopener noreferrer"
+          <div>
+            <input
+              type="email"
+              name="email"
+              placeholder="Your Email"
+              value={formData.email}
+              onChange={handleChange}
+              className={`w-full px-4 py-2 border rounded ${
+                errors.email ? "border-red-500" : "border-gray-300"
+              }`}
+            />
+            {errors.email && (
+              <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+            )}
+          </div>
+
+          <div>
+            <textarea
+              name="message"
+              placeholder="Your Message"
+              value={formData.message}
+              onChange={handleChange}
+              className={`w-full px-4 py-2 border rounded ${
+                errors.message ? "border-red-500" : "border-gray-300"
+              }`}
+              rows={4}
+            />
+            {errors.message && (
+              <p className="text-red-500 text-sm mt-1">{errors.message}</p>
+            )}
+          </div>
+
+          <button
+            type="submit"
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
           >
-            <span className="text-blue-600 cursor-pointer">Facebook</span>
-          </Link>
-          <Link
-            href="https://twitter.com/aburayyanacademy"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <span className="text-blue-400 cursor-pointer">Twitter</span>
-          </Link>
-          <Link
-            href="https://instagram.com/aburayyanacademy"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <span className="text-pink-500 cursor-pointer">Instagram</span>
-          </Link>
+            Send Message
+          </button>
+        </form>
+
+        {/* Physical Address */}
+        <div className="mt-8">
+          <h2 className="text-xl font-semibold">Visit Us:</h2>
+          <p className="mt-2">Sabasaba, Mombasa, Kenya</p>
+        </div>
+
+        {/* Map */}
+        <div className="mt-6">
+          <h2 className="text-xl font-semibold">Our Location:</h2>
+          <iframe
+            className="w-full h-64 mt-2"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d836.6690269640336!2d39.659403010462604!3d-4.042651684181943!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x184012b6536946a3%3A0xf121aa4ab5a0a1cc!2sAbu-Rayyan%20Academy!5e0!3m2!1sen!2ske!4v1736515654476!5m2!1sen!2ske"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+
+        {/* Social Media */}
+        <div className="mt-8">
+          <h2 className="text-xl font-semibold">Follow Us:</h2>
+          <div className="flex space-x-4 mt-2">
+            <Link
+              href="https://facebook.com/aburayyanacademy"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span className="text-blue-600 cursor-pointer">Facebook</span>
+            </Link>
+            <Link
+              href="https://twitter.com/aburayyanacademy"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span className="text-blue-400 cursor-pointer">Twitter</span>
+            </Link>
+            <Link
+              href="https://instagram.com/aburayyanacademy"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span className="text-pink-500 cursor-pointer">Instagram</span>
+            </Link>
+          </div>
         </div>
       </div>
     </div>
