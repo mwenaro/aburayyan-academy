@@ -79,7 +79,7 @@ const LandingPage: React.FC = () => (
         <div className="bg-white p-6 shadow rounded">
           <h3 className="text-xl font-semibold mb-4">After-School Programs</h3>
           <p>
-            Enrichment activities including coding, robotics, and Quran
+            Enrichment activities including coding, swimming and Quran
             memorization to enhance student skills and knowledge.
           </p>
         </div>
@@ -124,23 +124,7 @@ const LandingPage: React.FC = () => (
       </Link>
     </div>
 
-    {/* Footer */}
-    {/* <footer className="bg-gray-800 text-white py-10">
-      <div className="container mx-auto text-center">
-        <p>&copy; {new Date().getFullYear()} Aburayan Academy. All rights reserved.</p>
-        <div className="flex justify-center mt-4 space-x-6">
-          <Link href="#"
-             className="hover:underline">Facebook
-          </Link>
-          <Link href="#"
-             className="hover:underline">Twitter
-          </Link>
-          <Link href="#"
-             className="hover:underline">Instagram
-          </Link>
-        </div>
-      </div>
-    </footer> */}
+    
   </div>
 );
 

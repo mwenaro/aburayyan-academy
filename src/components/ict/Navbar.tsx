@@ -1,12 +1,20 @@
 "use client";
-import React, { useState, useEffect, useState as useClientState } from "react";
+import React, {
+  useState,
+  useEffect,
+  useState as useClientState,
+  PropsWithChildren,
+} from "react";
 import { Link } from "react-scroll";
 import { default as NextLink } from "next/link";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { XCircleIcon } from "lucide-react";
 import Image from "next/image";
+import { Button } from "../ui/button";
 
-export const Navbar: React.FC = () => {
+interface NavbarProps extends PropsWithChildren {}
+
+export const Navbar: React.FC<NavbarProps> = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [routerPath, setRouterPath] = useClientState("");
 
@@ -21,7 +29,7 @@ export const Navbar: React.FC = () => {
     <nav className="bg-blue-600 text-white fixed top-0 left-0 w-full z-10 shadow">
       <div className="container mx-auto px-6 py-4 flex justify-between items-center">
         {/* Logo Section */}
-        <NextLink href="/" className="flex items-center">
+        <NextLink href="/" className="flex items-center space-x-4">
           <Image
             width={100}
             height={100}
@@ -30,11 +38,13 @@ export const Navbar: React.FC = () => {
             className="h-12 w-12 mr-2"
           />{" "}
           {/* Replace with your logo path */}
+          {/* put the children here */}
+          {children ? children : ""}
         </NextLink>
 
         {/* Mobile Menu Button */}
         <div className="ml-auto md:hidden">
-          <button
+          <Button
             onClick={() => setIsOpen(!isOpen)}
             className="focus:outline-none"
           >
@@ -43,7 +53,7 @@ export const Navbar: React.FC = () => {
             ) : (
               <HamburgerMenuIcon className="h-6 w-6 text-white" /> // Hamburger menu icon
             )}
-          </button>
+          </Button>
         </div>
 
         {/* Menu Links */}

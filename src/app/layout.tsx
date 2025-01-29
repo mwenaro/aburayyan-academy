@@ -34,6 +34,7 @@ export const metadata: Metadata = {
     "Private School Mombasa",
     "Islamic School Mombasa",
     "Education in Kenya",
+    "Intergrated School"
   ],
 };
 
@@ -43,11 +44,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="en" suppressHydrationWarning>
       <body className={cn("min-h-screen bg-background font-sans antialiased")}>
         <Header />
-        <div className="min-h-screen mt-20"><Toaster />
+        <main className="min-h-screen mt-20"><Toaster />
           <Providers session={session}>
             {children}
             </Providers>
-            </div>
+            </main>
         <Footer />
 
 
