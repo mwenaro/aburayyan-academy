@@ -3,7 +3,7 @@ import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import { Task, useTaskStore } from '@/lib/store';
-import { hasDraggableData } from '@/lib/utils';
+
 import {
   Announcements,
   DndContext,
@@ -22,6 +22,7 @@ import type { Column } from './board-column';
 import { BoardColumn, BoardContainer } from './board-column';
 import NewSectionDialog from './new-section-dialog';
 import { TaskCard } from './task-card';
+import { hasDraggableData } from '@/lib/dashboard-util';
 // import { coordinateGetter } from "./multipleContainersKeyboardPreset";
 
 const defaultCols = [
