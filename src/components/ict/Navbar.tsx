@@ -27,7 +27,7 @@ export const Navbar: React.FC<NavbarProps> = ({ children }) => {
 
   return (
     <nav className="bg-blue-600 text-white fixed top-0 left-0 w-full z-10 shadow">
-      <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+      <div className="container mx-auto px-6 py-4 flex justify-between items-center relative max-w-7xl">
         {/* Logo Section */}
         <NextLink href="/" className="flex items-center space-x-4">
           <Image
@@ -42,19 +42,7 @@ export const Navbar: React.FC<NavbarProps> = ({ children }) => {
           {children ? children : ""}
         </NextLink>
 
-        {/* Mobile Menu Button */}
-        <div className="ml-auto md:hidden">
-          <Button
-            onClick={() => setIsOpen(!isOpen)}
-            className="focus:outline-none"
-          >
-            {isOpen ? (
-              <XCircleIcon className="h-6 w-6 text-white" /> // Close icon
-            ) : (
-              <HamburgerMenuIcon className="h-6 w-6 text-white" /> // Hamburger menu icon
-            )}
-          </Button>
-        </div>
+       
 
         {/* Menu Links */}
         <div
@@ -100,6 +88,20 @@ export const Navbar: React.FC<NavbarProps> = ({ children }) => {
                   )
                 )}
           </ul>
+        </div>
+
+        {/* Mobile Menu Button */}
+        <div className="ml-auto md:hidden absolute right-5 top-2 w-6">
+          <Button
+            onClick={() => setIsOpen(!isOpen)}
+            className="focus:outline-none"
+          >
+            {isOpen ? (
+              <XCircleIcon className="h-6 w-6 text-white" /> // Close icon
+            ) : (
+              <HamburgerMenuIcon className="h-6 w-6 text-white" /> // Hamburger menu icon
+            )}
+          </Button>
         </div>
       </div>
     </nav>

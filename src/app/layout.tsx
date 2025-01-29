@@ -9,7 +9,7 @@ import Providers from "@/components/layout/providers";
 import { Toaster } from "@/components/ui/toaster";
 import { auth } from "@/auth/auth";
 
-interface RootLayoutProps extends PropsWithChildren { }
+interface RootLayoutProps extends PropsWithChildren {}
 
 export const metadata: Metadata = {
   title: {
@@ -34,24 +34,21 @@ export const metadata: Metadata = {
     "Private School Mombasa",
     "Islamic School Mombasa",
     "Education in Kenya",
-    "Intergrated School"
+    "Intergrated School",
   ],
 };
 
 export default function RootLayout({ children }: RootLayoutProps) {
-  const session = auth
+  const session = auth;
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={cn("min-h-screen bg-background font-sans antialiased")}>
         <Header />
-        <main className="min-h-screen mt-20"><Toaster />
-          <Providers session={session}>
-            {children}
-            </Providers>
-            </main>
+        <main className="min-h-screen mt-20 max-w-7xl mx-auto">
+          <Toaster />
+          <Providers session={session}>{children}</Providers>
+        </main>
         <Footer />
-
-
       </body>
     </html>
   );

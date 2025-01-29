@@ -1,5 +1,8 @@
 import React from "react";
 import Link from "next/link";
+import { MyShineBorder } from "@/components/custom/MyShinyBorder";
+import { MyMagicCard } from "@/components/custom/MyMagicCard";
+import { MyShimmerButton } from "@/components/custom/MyShimmerButton";
 
 const LandingPage: React.FC = () => (
   <div className="bg-gray-100">
@@ -10,12 +13,15 @@ const LandingPage: React.FC = () => (
         Empowering learners today to become the leaders of tomorrow with a blend
         of CBC, ICT, and Islamic education.
       </p>
-      <Link
-        href="/about"
-        className="px-6 py-3 bg-white text-blue-600 font-semibold rounded hover:bg-gray-200"
-      >
-        Learn More About Us
-      </Link>
+      <MyShimmerButton shimmerSize="0.5em" shimmerColr="purple">
+        <Link
+          href="/about"
+          // className="px-6 py-3 bg-white text-blue-600 font-semibold rounded hover:bg-gray-200"
+          className=" bg-white text-blue-600 font-semibold rounded hover:bg-gray-200"
+        >
+          Learn More About Us
+        </Link>
+      </MyShimmerButton>
     </div>
 
     {/* Why Choose Us Section */}
@@ -24,7 +30,7 @@ const LandingPage: React.FC = () => (
         Why Choose Aburayan Academy?
       </h2>
       <div className="grid md:grid-cols-3 gap-8">
-        <div className="bg-white p-6 shadow rounded">
+        <MyShineBorder className="bg-white p-6 shadow rounded">
           <h3 className="text-xl font-semibold mb-4">
             Competency-Based Curriculum
           </h3>
@@ -32,8 +38,8 @@ const LandingPage: React.FC = () => (
             We provide a modern CBC curriculum designed to nurture critical
             thinking, creativity, and innovation in students.
           </p>
-        </div>
-        <div className="bg-white p-6 shadow rounded">
+        </MyShineBorder>
+        <MyShineBorder className="bg-white p-6 shadow rounded">
           <h3 className="text-xl font-semibold mb-4">
             Integrated ICT Learning
           </h3>
@@ -41,8 +47,8 @@ const LandingPage: React.FC = () => (
             Our ICT-integrated programs ensure students gain essential digital
             skills to excel in a technology-driven world.
           </p>
-        </div>
-        <div className="bg-white p-6 shadow rounded">
+        </MyShineBorder>
+        <MyShineBorder className="bg-white p-6 shadow rounded">
           <h3 className="text-xl font-semibold mb-4">
             Strong Islamic Foundation
           </h3>
@@ -50,7 +56,7 @@ const LandingPage: React.FC = () => (
             We instill Islamic values alongside academics to nurture morally
             upright and responsible individuals.
           </p>
-        </div>
+        </MyShineBorder>
       </div>
     </div>
 
@@ -60,7 +66,7 @@ const LandingPage: React.FC = () => (
         Our Programs
       </h2>
       <div className="grid md:grid-cols-3 gap-8">
-        <div className="bg-white p-6 shadow rounded">
+        <MyMagicCard>
           <h3 className="text-xl font-semibold mb-4">
             Early Childhood Education
           </h3>
@@ -68,21 +74,21 @@ const LandingPage: React.FC = () => (
             A nurturing environment where young learners explore and grow
             through play-based and structured activities.
           </p>
-        </div>
-        <div className="bg-white p-6 shadow rounded">
+        </MyMagicCard>
+        <MyMagicCard>
           <h3 className="text-xl font-semibold mb-4">Primary School</h3>
           <p>
             Comprehensive academic programs that combine CBC, ICT, and Islamic
             studies to prepare students for the future.
           </p>
-        </div>
-        <div className="bg-white p-6 shadow rounded">
+        </MyMagicCard>
+        <MyMagicCard>
           <h3 className="text-xl font-semibold mb-4">After-School Programs</h3>
           <p>
             Enrichment activities including coding, swimming and Quran
             memorization to enhance student skills and knowledge.
           </p>
-        </div>
+        </MyMagicCard>
       </div>
     </div>
 
@@ -123,8 +129,6 @@ const LandingPage: React.FC = () => (
         Contact Us
       </Link>
     </div>
-
-    
   </div>
 );
 
