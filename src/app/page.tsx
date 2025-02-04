@@ -87,7 +87,7 @@ const LandingPage: React.FC = () => (
       <div className="grid md:grid-cols-2 gap-8">
         <div className="bg-gray-100 p-6 shadow rounded text-center">
           <Image src="/images/parent1.jpg" alt="Parent Testimonial" width={2050} height={2050} className="rounded-full mx-auto mb-4 w-full h-auto" />
-          <p className="italic">&quot;Abu-Rayyan Academy has transformed my child's learning experience. The CBC approach combined with ICT and Islamic studies is exceptional!&quot;</p>
+          <p className="italic">&quot;Abu-Rayyan Academy has transformed my child&apos;s learning experience. The CBC approach combined with ICT and Islamic studies is exceptional!&quot;</p>
           <p className="text-right mt-4 font-bold">- Aisha Ahmed</p>
         </div>
         <div className="bg-gray-100 p-6 shadow rounded text-center">
