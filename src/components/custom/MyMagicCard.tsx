@@ -8,7 +8,7 @@ export function MyMagicCard({children}:PropsWithChildren) {
   return (
     <MagicCard
     //   className="w-full  cursor-pointer flex-col items-center justify-center whitespace-nowrap shadow-2xl"
-    className="bg-white p-6 shadow rounded"
+    className="bg-white px-2 py-1 shadow rounded overflow-hidden text-wrap"
       gradientColor={theme === "dark" ? "#262626" : "#D9D9D955"}
     >
     {children}

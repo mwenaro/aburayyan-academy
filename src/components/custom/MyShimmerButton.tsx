@@ -21,6 +21,7 @@ export function MyShimmerButton({
       background={background}
       shimmerColor={shimmerColr}
       shimmerSize={shimmerSize}
+      
     >
      
       {children}
