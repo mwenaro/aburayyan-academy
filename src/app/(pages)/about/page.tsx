@@ -1,23 +1,31 @@
+import Image from "next/image";
 import React from "react";
 
 const AboutPage: React.FC = () => (
   <div>
     {/* Hero Section */}
     <div
-      className="relative h-64 w-full bg-cover bg-center"
-      style={{
-        backgroundImage: `url('/school/about-hero-image.jpg')`, // Replace with your image URL
-      }}
+    className="relative min-h-96 h-full w-full bg-cover bg-center "
+    // style={{
+    //   backgroundImage: `url('/school/about-us-hero-image.jpg')`, // Replace with your image URL
+    // }}
     >
-      <div className="absolute inset-0 bg-blue-900 bg-opacity-50 flex items-center justify-center">
-        <h1 className="text-4xl font-bold text-white">
-          About Us
-        </h1>
-      </div>
+      <Image
+        src="/school/about-us-hero-image.jpg"
+        alt="School Environment"
+        layout="fill"
+        objectFit="cover"
+        className="absolute inset-0  w-full "
+      />
+      {/* <div className="absolute inset-0 bg-blue-900 bg-opacity-25 flex items-center justify-center">
+        <h1 className="text-4xl font-bold text-white">About Us</h1> 
+      </div> */}
     </div>
 
     {/* Content Section */}
-    <div className="p-10">
+    <div className="py-4 px-2 ">
+    <h1 className="text-4xl font-bold text-black ">About Us</h1>
+ 
       {/* Motto */}
       <div className="mt-6">
         <h2 className="text-xl font-semibold">Our Motto:</h2>
@@ -37,11 +45,11 @@ const AboutPage: React.FC = () => (
           serving hundreds of learners across various age groups.
         </p>
         <p className="mt-2">
-          From humble beginnings, we have become a trusted educational institution
-          in Mombasa, offering competency-based curriculum (CBC) seamlessly
-          integrated with ICT and Islamic studies. Our commitment to holistic
-          education has earned us a reputation for nurturing both academic
-          excellence and moral integrity.
+          From humble beginnings, we have become a trusted educational
+          institution in Mombasa, offering competency-based curriculum (CBC)
+          seamlessly integrated with ICT and Islamic studies. Our commitment to
+          holistic education has earned us a reputation for nurturing both
+          academic excellence and moral integrity.
         </p>
       </div>
 
@@ -49,9 +57,9 @@ const AboutPage: React.FC = () => (
       <div className="mt-8">
         <h2 className="text-xl font-semibold">Our Mission:</h2>
         <p className="mt-2">
-          Our mission is to empower learners with knowledge, skills, and values to
-          become competent, responsible, and innovative leaders of tomorrow. We
-          strive to create a learning environment that fosters curiosity,
+          Our mission is to empower learners with knowledge, skills, and values
+          to become competent, responsible, and innovative leaders of tomorrow.
+          We strive to create a learning environment that fosters curiosity,
           creativity, and critical thinking while remaining rooted in moral and
           ethical teachings.
         </p>
@@ -61,9 +69,9 @@ const AboutPage: React.FC = () => (
       <div className="mt-8">
         <h2 className="text-xl font-semibold">Our Vision:</h2>
         <p className="mt-2">
-          To be a beacon of educational excellence in Mombasa, inspiring students
-          to achieve their full potential and contribute positively to society
-          through leadership and service.
+          To be a beacon of educational excellence in Mombasa, inspiring
+          students to achieve their full potential and contribute positively to
+          society through leadership and service.
         </p>
       </div>
 
