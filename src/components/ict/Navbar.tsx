@@ -26,7 +26,7 @@ export const Navbar: React.FC<NavbarProps> = ({ children }) => {
   }, []);
 
   return (
-    <nav className="bg-blue-600 text-white fixed top-0 left-0 w-full z-10 shadow">
+    <nav className="bg-blue-600 text-white fixed top-0 left-0 w-full z-50 shadow">
       <div className="container mx-auto px-6 py-4 flex justify-between items-center relative max-w-7xl">
         {/* Logo Section */}
         <NextLink href="/" className="flex items-center space-x-4">
