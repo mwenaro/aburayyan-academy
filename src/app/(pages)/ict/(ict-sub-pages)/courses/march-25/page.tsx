@@ -46,12 +46,12 @@ export default function ComputerFundamentals() {
             </p>
           </div>
 
-          <h2 className="text-3xl font-bold text-yellow-400 text-center">
+          <h2 className="text-2xl md:text-3xl font-bold text-yellow-400 text-center">
             Learn Computer Fundamentals <br />&<br />
             Kickstart Your ICT Journey!
           </h2>
 
-          <ul className="mt-4 text-lg text-gray-300 space-y-2">
+          <ul className="mt-4 text-base md:text-lg text-gray-300 space-y-2">
             <li>✅ Are you preparing for tertiary studies?</li>
             <li>✅ Dreaming of starting a cyber café or ICT business?</li>
             <li>
@@ -59,14 +59,14 @@ export default function ComputerFundamentals() {
             </li>
           </ul>
 
-          <div className="text-center mt-6 bg-yellow-500 text-gray-900 font-bold py-3 rounded-lg text-xl">
+          <div className="text-center mt-6 bg-yellow-500 text-gray-900 font-bold py-3 rounded-lg text-base md:text-xl">
             Join Our Comprehensive 2-Month Training!
           </div>
 
           <h3 className="text-2xl font-bold text-yellow-400 mt-6">
             Skills You Will Gain:
           </h3>
-          <ul className="mt-4 text-lg text-white space-y-2 bg-gray-600 bg-opacity-30 p-4 rounded-lg">
+          <ul className="mt-4 text-base md:text-lg text-white space-y-2 bg-gray-600 bg-opacity-30 p-4 rounded-lg">
             <li>
               💻{" "}
               <span className="font-bold text-yellow-300">
@@ -116,7 +116,7 @@ export default function ComputerFundamentals() {
             </li>
           </ul>
 
-          <p className="text-lg text-white mt-6">
+          <p className="text-base md:text-lg text-white mt-6">
             These skills are crucial for success in today’s tech-driven world,
             whether you’re looking to advance your studies, start a business, or
             improve productivity at work.
@@ -136,14 +136,14 @@ export default function ComputerFundamentals() {
 
           <Button
             onClick={() => setOpen(true)}
-            className="w-full mt-6 bg-yellow-500 text-gray-900 font-bold py-3 text-xl rounded-lg"
+            className="flex flex-col md:flex-row w-full mt-6 hover:bg-yellow-800 bg-yellow-500 text-gray-900 font-bold py-3 text-base md:text-xl rounded-lg"
           >
-            Limited Slots Available – Secure Yours Now!
+            <span>Limited Slots Available - </span> <span>Secure Yours Now!</span>
           </Button>
 
           <Button
             onClick={() => setOpen(true)}
-            className="w-full mt-6 bg-green-500 text-gray-900 font-bold py-3 text-xl rounded-lg"
+            className="w-full mt-6 bg-green-500 hover:bg-green-800 text-white font-bold py-3 text-xl rounded-lg"
           >
             Register Here
           </Button>
