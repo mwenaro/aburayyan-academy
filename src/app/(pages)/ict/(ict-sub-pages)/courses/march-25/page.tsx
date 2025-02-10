@@ -136,7 +136,7 @@ export default function ComputerFundamentals() {
 
           <Button
             onClick={() => setOpen(true)}
-            className="flex flex-col md:flex-row w-full mt-6 hover:bg-yellow-800 bg-yellow-500 text-gray-900 font-bold py-3 text-base md:text-xl rounded-lg"
+            className="flex flex-col md:flex-row md:gap-2 w-full mt-6 hover:bg-yellow-800 bg-yellow-500 text-gray-900 font-bold py-3 text-base md:text-xl rounded-lg"
           >
             <span>Limited Slots Available - </span> <span>Secure Yours Now!</span>
           </Button>
