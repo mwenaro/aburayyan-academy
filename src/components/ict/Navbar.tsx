@@ -52,7 +52,7 @@ export const Navbar: React.FC<NavbarProps> = ({ children }) => {
         >
           {/* show normal nav */}
           <ul className="flex flex-col md:flex-row md:space-x-6 space-y-4 md:space-y-0 items-center">
-            {routerPath.includes("/ict")
+            {routerPath.includes("/ict/dec-24")
               ? [
                   "About",
                   "Program Details",
