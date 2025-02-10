@@ -50,7 +50,7 @@ export default function ComputerFundamentals() {
           </div>
 
           <div className="mt-8">
-            <h2 className="text-xl font-bold text-yellow-400">What You'll Learn:</h2>
+            <h2 className="text-xl font-bold text-yellow-400">What You&apos;ll Learn:</h2>
             <ul className="mt-4 space-y-2 text-gray-300">
               <li>✅ Introduction to Computers & Hardware</li>
               <li>✅ Microsoft Office Suite (Word, Excel, PowerPoint, Publisher)</li>
