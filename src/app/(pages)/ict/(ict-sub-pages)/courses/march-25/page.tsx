@@ -41,7 +41,7 @@ export default function ComputerFundamentals() {
             <h1 className="text-5xl font-bold text-gray-300 text-center">
               Abu-Rayyan Academy
             </h1>
-            <p className="text-lg font-semibold text-gray-400 text-center mb-4">
+            <p className="text-lg font-semibold text-gray-400 text-center my-4">
               The center of ICT and Artificial Intelligence(AI)
             </p>
           </div>
