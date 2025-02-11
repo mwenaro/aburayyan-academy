@@ -1,5 +1,4 @@
 "use client";
-
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -42,7 +41,7 @@ export default function ComputerFundamentals() {
               Abu-Rayyan Academy
             </h1>
             <p className="text-lg font-semibold text-gray-400 text-center my-4">
-              The center of ICT and Artificial Intelligence(AI)
+              The Center of ICT and Artificial Intelligence(AI)
             </p>
           </div>
 
