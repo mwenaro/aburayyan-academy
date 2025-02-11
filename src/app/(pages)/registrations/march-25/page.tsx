@@ -5,9 +5,6 @@ import axios from "axios";
 import { ICourseRegistration } from "@/models/CourseRegistration";
 const BASE_URL = "/api/v1/ict/courses/march-25";
 
-
-
-
 export default function Dashboard() {
   const [registrations, setRegistrations] = useState<ICourseRegistration[]>([]);
 
@@ -18,7 +15,8 @@ export default function Dashboard() {
 
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this student?")) return;
-    await axios.put(`${BASE_URL}/${id}`, { isDeleted: true });
+    // await axios.put(`${BASE_URL}/${id}`, { isDeleted: true });
+    await axios.delete(`${BASE_URL}/${id}`);
     setRegistrations((prev) => prev.filter((reg) => reg._id !== id));
   };
 
@@ -37,9 +35,7 @@ export default function Dashboard() {
             <tr>
               <th className="p-2 border-b">Student Details</th>
 
-              <th className="p-2 border-b hidden md:table-cell">
-                Residence
-              </th>
+              <th className="p-2 border-b hidden md:table-cell">Residence</th>
               <th className="p-2 border-b hidden md:table-cell">DOB</th>
               <th className="p-2 border-b">Gender</th>
               {/* <th className="p-2 border-b">Session Time</th> */}
