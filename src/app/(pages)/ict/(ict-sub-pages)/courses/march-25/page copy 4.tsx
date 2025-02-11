@@ -71,94 +71,48 @@ export default function ComputerFundamentals() {
               <span className="font-bold text-yellow-300">
                 Basic Computer Operations
               </span>{" "}
-              – Master the essentials of using a computer, including hardware and software basics.
+              – Understand how to efficiently use a computer.
             </li>
             <li>
               🖥️{" "}
               <span className="font-bold text-yellow-300">
                 Operating Systems & File Management
               </span>{" "}
-              – Learn to install windows, navigate  and manage files efficiently.
+              – Navigate and manage digital files effectively.
             </li>
             <li>
               📄{" "}
               <span className="font-bold text-yellow-300">Word Processing</span>{" "}
-              – Create, edit, and format professional documents using Microsoft Word or Google Docs.
+              – Create professional documents using Microsoft Word or Google
+              Docs.
             </li>
             <li>
               📊 <span className="font-bold text-yellow-300">Spreadsheets</span>{" "}
-              – Organize, analyze, and visualize data using Excel or Google Sheets.
+              – Learn data organization and analysis using Excel or Google
+              Sheets.
             </li>
             <li>
               🎨{" "}
               <span className="font-bold text-yellow-300">
                 Presentation Skills
               </span>{" "}
-              – Design compelling presentations using PowerPoint or Google Slides.
+              – Create engaging slideshows for business and education.
             </li>
             <li>
               🌍{" "}
               <span className="font-bold text-yellow-300">
                 Internet & Digital Communication
               </span>{" "}
-              – Use the internet effectively for research, communication, and collaboration.
+              – Safe and effective use of the web for research and
+              collaboration.
             </li>
             <li>
               🔒{" "}
               <span className="font-bold text-yellow-300">
-                Online Safety
+                Cybersecurity & Online Safety
               </span>{" "}
-              – Protect your data and privacy online with best practices in cybersecurity.
+              – Protect yourself and your data in the digital world.
             </li>
-            <li>
-              🤖{" "}
-              <span className="font-bold text-yellow-300">
-                Introduction to AI & Machine Learning
-              </span>{" "}
-              – Understand the basics of AI and how it’s transforming industries.
-            </li>
-            <li>
-              🛠️{" "}
-              <span className="font-bold text-yellow-300">
-                Troubleshooting & Technical Support
-              </span>{" "}
-              – Learn to diagnose and fix common computer issues.
-            </li>
-            {/* <li>
-              📱{" "}
-              <span className="font-bold text-yellow-300">
-                Mobile Device Management
-              </span>{" "}
-              – Effectively use and manage smartphones and tablets for productivity.
-            </li> */}
-            <li>
-              🖼️{" "}
-              <span className="font-bold text-yellow-300">
-                Graphic Design Basics
-              </span>{" "}
-              – Create simple graphics and designs using tools like Publisher & Canva.
-            </li>
-            <li>
-              📈{" "}
-              <span className="font-bold text-yellow-300">
-                Data Analysis Fundamentals
-              </span>{" "}
-              – Learn to interpret and present data for decision-making.
-            </li>
-            <li>
-              🧠{" "}
-              <span className="font-bold text-yellow-300">
-                Critical Thinking & Problem Solving
-              </span>{" "}
-              – Develop skills to tackle ICT challenges creatively.
-            </li>
-            {/* <li>
-              🤝{" "}
-              <span className="font-bold text-yellow-300">
-                Collaboration Tools
-              </span>{" "}
-              – Use tools like Slack, Trello, and Microsoft Teams for team projects.
-            </li> */}
           </ul>
 
           <p className="text-base md:text-lg text-white mt-6">
