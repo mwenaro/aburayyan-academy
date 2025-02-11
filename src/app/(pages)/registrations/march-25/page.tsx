@@ -15,8 +15,8 @@ export default function Dashboard() {
 
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this student?")) return;
-    // await axios.put(`${BASE_URL}/${id}`, { isDeleted: true });
-    await axios.delete(`${BASE_URL}/${id}`);
+    await axios.put(`${BASE_URL}/${id}`, { isDeleted: true });
+    // await axios.delete(`${BASE_URL}/${id}`);
     setRegistrations((prev) => prev.filter((reg) => reg._id !== id));
   };
 
@@ -61,6 +61,7 @@ export default function Dashboard() {
                 {/* <td className="p-2">{reg.session}</td> */}
                 <td className="p-2 hidden lg:table-cell">
                   <button
+                  disabled
                     className="bg-red-500 text-white px-3 py-1 mr-2 rounded"
                     onClick={() => handleDelete(reg._id as string)}
                   >
