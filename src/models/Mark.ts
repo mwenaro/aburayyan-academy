@@ -7,7 +7,7 @@ export interface IMark extends Document {
     exam: string; // Exam name or identifier
     score: number; // Actual score
     outOf: number; // Maximum possible score
-    grade?: string; // Grade based on CBC grading
+    grade?: {name:string, points:number}; // Grade based on CBC grading
     remark?: string; // Optional remarks
 }
 
@@ -36,8 +36,8 @@ const MarkSchema: Schema = new Schema<IMark>({
         default: 100
     },
     grade: {
-        type: String,
-        default: "", // Computed field for CBC grading
+        type: {name:String, points:Number},
+        default: {name:'B', points:1}, // Computed field for CBC grading
     },
     remark: {
         type: String,
@@ -52,10 +52,14 @@ MarkSchema.pre<IMark>("save", function (next) {
         const percentage = (this.score / this.outOf) * 100;
 
         // Assign grade based on CBC bands
-        if (percentage >= 80) this.grade = "Exceeding Expectations (E)";
-        else if (percentage >= 70) this.grade = "Meeting Expectations (M)";
-        else if (percentage >= 50) this.grade = "Approaching Expectations (A)";
-        else this.grade = "Below Expectations (B)";
+        // if (percentage >= 80) this.grade = "Exceeding Expectations (E)";
+        // else if (percentage >= 70) this.grade = "Meeting Expectations (M)";
+        // else if (percentage >= 50) this.grade = "Approaching Expectations (A)";
+        // else this.grade = "Below Expectations (B)";
+        if (percentage >= 80) this.grade = {name:'E', points:4} ;
+        else if (percentage >= 70) this.grade = {name:'M', points:3};
+        else if (percentage >= 50) this.grade = {name:'A', points:2};
+        else this.grade = {name:'B', points:1};
     }
     next();
 });
