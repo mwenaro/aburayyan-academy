@@ -1,11 +1,15 @@
 export const generateAdminNotificationTemplate = (
-    studentDetails: string,
-    guardianDetails: string,
-    registrationDate: string,
-    totalNoStudents: any,
-    url: string
-  ): string => {
-    return `
+  studentDetails: string,
+  guardianDetails: string | null,
+  registrationDate: string,
+  totalNoStudents: any,
+  url: string
+): string => {
+  const parentDetails = !guardianDetails
+    ? ""
+    : ` <li><strong>Parent/Guadian:</strong> ${guardianDetails}</li>`;
+
+  return `
         <!DOCTYPE html>
         <html lang="en">
           <head>
@@ -41,7 +45,7 @@ export const generateAdminNotificationTemplate = (
     
                 <ul class="mt-4">
                   <li><strong>Student's Details:</strong> ${studentDetails}</li>
-                  <li><strong>Parent/Guadian:</strong> ${guardianDetails}</li>
+                 ${parentDetails}
                   <li><strong>Registration Date:</strong> ${registrationDate}</li>
                 </ul>
     
@@ -62,13 +66,13 @@ export const generateAdminNotificationTemplate = (
           </body>
         </html>
       `;
-  };
-  
-  export const generateUserRegistrationTemplate = (
-    userName: string,
-    registrationLink: string
-  ): string => {
-    return `
+};
+
+export const generateUserRegistrationTemplate = (
+  userName: string,
+  registrationLink: string
+): string => {
+  return `
         <!DOCTYPE html>
         <html lang="en">
           <head>
@@ -117,4 +121,4 @@ export const generateAdminNotificationTemplate = (
           </body>
         </html>
       `;
-  };
+};

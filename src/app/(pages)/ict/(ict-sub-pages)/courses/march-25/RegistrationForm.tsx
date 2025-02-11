@@ -20,7 +20,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import Swal from "sweetalert2";
+// import Swal from "sweetalert2";
+import { useState } from "react";
 
 const phoneRegex = /^((\+254|0)7\d{8})$/;
 
@@ -52,13 +53,29 @@ export default function RegistrationForm() {
     },
   });
 
-  const onSubmit = (data: any) => {
-    Swal.fire({
-      title: "Registration Successful!",
-      text: "You have successfully registered for the course.",
-      icon: "success",
-    });
-    console.log("Form submitted:", data);
+  const {reset, handleSubmit} = form
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const onSubmit = async (data:any) => {
+    try {
+      setIsLoading(true);
+      const res = await fetch("/api/v1/ict/courses/march-25", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (!res.ok) {
+        throw new Error("Registration failed");
+      }
+
+      alert("Student Registered Successfully!");
+      reset(); // Reset form on successful submission
+    } catch (error: any) {
+      console.error("Error:", error);
+      alert(error.message || "An unexpected error occurred");
+    } finally {
+      setIsLoading(false); // Stop loading state once complete
+    }
   };
 
   return (
