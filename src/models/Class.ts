@@ -18,7 +18,8 @@ const ClassSchema = new Schema<IClass & Document>(
   {
     name: { type: String, required: true },
     ukey: {
-      String,
+      type:String,
+      required: true,
       default: function () {
         if (!this.steps.length) return this.name;
         return this.name.toLowerCase().includes("grade")
