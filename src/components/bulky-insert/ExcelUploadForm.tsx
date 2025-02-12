@@ -2,29 +2,17 @@
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { z} from "zod";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Swal from "sweetalert2";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-// const schema = z.object({
-//   file: z
-//     .instanceof(FileList)
-//     .refine((files) => files.length > 0, { message: "File is required" })
-//     .refine(
-//       (files) =>
-//         files[0]?.type ===
-//         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-//       {
-//         message: "Only Excel files (.xlsx) are allowed",
-//       }
-//     ),
-// });
-
 const schema = z.object({
   file: z
-    .custom<FileList>((val) => val instanceof FileList, { message: "Invalid file" })
+    .custom<FileList>((val) => val instanceof FileList, {
+      message: "Invalid file",
+    })
     .refine((files) => files.length > 0, { message: "File is required" })
     .refine(
       (files) =>
@@ -35,7 +23,6 @@ const schema = z.object({
       }
     ),
 });
-
 
 interface ExcelUploadFormProps {
   apiUrl?: string;
