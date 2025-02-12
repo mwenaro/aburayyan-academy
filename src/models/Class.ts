@@ -2,8 +2,7 @@ import mongoose, { Schema, Document } from "mongoose";
 import { ISchool } from "./School";
 
 // IClass Interface
-export interface IClass {
-  _id: mongoose.Types.ObjectId;
+export interface IClass extends Document {
   name: string;
   ukey: string;
   school: mongoose.Types.ObjectId | ISchool; // Reference to a School document
@@ -14,17 +13,16 @@ export interface IClass {
 }
 
 // Mongoose Schema
-const ClassSchema = new Schema<IClass & Document>(
+const ClassSchema = new Schema<IClass>(
   {
     name: { type: String, required: true },
     ukey: {
-      type:String,
-      required: true,
+      type: String,
       default: function () {
-        if (!this.steps.length) return this.name;
+        if (!this.steps || this.steps.length === 0) return this.name;
         return this.name.toLowerCase().includes("grade")
-          ? "Grade 1 "
-          : "PP 1" + Math.min(...this.steps.map((step) => step.year));
+          ? `Grade 1`
+          : `PP 1 ${Math.min(...this.steps.map((step) => step.year))}`;
       },
     },
     school: {
@@ -47,5 +45,4 @@ const ClassSchema = new Schema<IClass & Document>(
 
 // Mongoose Model
 export const ClassModel =
-  mongoose.models.Class ||
-  mongoose.model<IClass & Document>("Class", ClassSchema);
+  mongoose.models.Class || mongoose.model<IClass>("Class", ClassSchema);
