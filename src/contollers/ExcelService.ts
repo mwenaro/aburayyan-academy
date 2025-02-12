@@ -37,41 +37,7 @@ export class ExcelService {
   /**
    * Extracts data from an uploaded Excel file and converts it into JSON objects.
    */
-  static extractDataFromExcel2(fileBuffer: Buffer) {
-    // Read the workbook from buffer
-    const workbook = XLSX.read(fileBuffer, { type: "buffer" });
-
-    // Get the first sheet name
-    const sheetName = workbook.SheetNames[0];
-
-    if (!sheetName) {
-      throw new Error("No sheet found in the uploaded file.");
-    }
-
-    // Get the worksheet
-    const worksheet = workbook.Sheets[sheetName];
-
-    // Convert worksheet to JSON with raw data
-    const rawData: any[][] = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-
-    if (rawData.length < 3) {
-      throw new Error("Invalid Excel structure. Headers should be in row 3.");
-    }
-
-    // Extract headers from Row 3
-    const headers = rawData[2];
-
-    // Convert remaining rows into JSON objects
-    const jsonData = rawData.slice(3).map((row) =>
-      headers.reduce((obj, key, index) => {
-        obj[key] = row[index] || ""; // Assign value, default to empty string if undefined
-        return obj;
-      }, {} as Record<string, any>)
-    );
-
-    return jsonData;
-  }
-
+  
   static async extractData(file: File) {
     // Convert file to buffer
     const bytes = await file.arrayBuffer();
