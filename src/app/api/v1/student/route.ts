@@ -1,6 +1,6 @@
 import { dbCon } from "@/libs/mongoose/dbCon";
+import { School } from "@/models/School";
 import { Student } from "@/models/Student";
-
 
 import { NextRequest, NextResponse } from "next/server";
 
@@ -16,12 +16,20 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const body = await req.json();
+  let body = await req.json();
   try {
     await dbCon();
-    const savedStudents = await Student.insertMany(
-      Array.isArray(body) ? body : [body]
-    );
+    body = Array.isArray(body) ? body : [body];
+    if (!Object.keys(body[0]).includes("school")) {
+      const school = await School.findOne({});
+      body = body.map((stud: any) => {
+        return {
+          ...stud,
+          school: school?._id,
+        };
+      });
+    }
+    const savedStudents = await Student.insertMany(body);
 
     return NextResponse.json(
       { success: true, data: savedStudents },

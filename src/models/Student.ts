@@ -1,11 +1,13 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
 import { IUser } from "./User";
 
+
 // Define the TypeScript interface for a Student document
 export interface IStudent extends Document {
   name: string; // Student's full name
   dob: Date; // Date of Birth
-  gen: "Male" | "Female" | "Other"; // Gender
+  gen: "Male" | "Female"; // Gender
+  class: mongoose.Schema.Types.ObjectId;
   contactDetails: {
     phone: string; // Phone number
   };
@@ -24,17 +26,22 @@ export interface IStudent extends Document {
 const StudentSchema: Schema<IStudent> = new Schema(
   {
     name: { type: String, required: true },
-    dob: { type: Date, required: true },
+    dob: { type: Date, required: true, default: Date.now },
     gen: {
       type: String,
-      enum: ["Male", "Female", "Other"], // Allow only these values for gender
+      enum: ["Male", "Female"], // Allow only these values for gender
+      required: true,
+    },
+    class: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Class",
       required: true,
     },
     contactDetails: {
       phone: { type: String, required: true, default: "" },
     },
     guardians: [
-      { type: mongoose.Schema.Types.ObjectId, ref: "IUser", required: true },
+      { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     ],
     address: {
       town: { type: String, required: true, default: "Mombasa" },

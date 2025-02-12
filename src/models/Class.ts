@@ -3,8 +3,9 @@ import { ISchool } from "./School";
 
 // IClass Interface
 export interface IClass {
-  _id:mongoose.Types.ObjectId
+  _id: mongoose.Types.ObjectId;
   name: string;
+  ukey: string;
   school: mongoose.Types.ObjectId | ISchool; // Reference to a School document
   steps: { grade: string; year: number }[]; // Array of steps
   isGraduated: boolean; // Graduation status
@@ -16,7 +17,21 @@ export interface IClass {
 const ClassSchema = new Schema<IClass & Document>(
   {
     name: { type: String, required: true },
-    school: { type: mongoose.Schema.Types.ObjectId, ref: "School", required: true },
+    ukey: {
+      String,
+      required: true,
+      default: function () {
+        if (!this.steps.length) return this.name;
+        return this.name.toLowerCase().includes("grade")
+          ? "Grade 1 "
+          : "PP 1" + Math.min(...this.steps.map((step) => step.year));
+      },
+    },
+    school: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "School",
+      required: true,
+    },
     steps: [
       {
         grade: { type: String, required: true },
@@ -31,4 +46,6 @@ const ClassSchema = new Schema<IClass & Document>(
 );
 
 // Mongoose Model
-export const ClassModel = mongoose.models.Class || mongoose.model<IClass & Document>("Class", ClassSchema);
+export const ClassModel =
+  mongoose.models.Class ||
+  mongoose.model<IClass & Document>("Class", ClassSchema);
