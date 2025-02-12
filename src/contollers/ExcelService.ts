@@ -37,7 +37,7 @@ export class ExcelService {
   /**
    * Extracts data from an uploaded Excel file and converts it into JSON objects.
    */
-  static extractDataFromExcel(fileBuffer: Buffer) {
+  static extractDataFromExcel2(fileBuffer: Buffer) {
     // Read the workbook from buffer
     const workbook = XLSX.read(fileBuffer, { type: "buffer" });
 
@@ -70,5 +70,43 @@ export class ExcelService {
     );
 
     return jsonData;
+  }
+
+  static async extractData(file: File) {
+    // Convert file to buffer
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+
+    // Read workbook
+    const workbook = XLSX.read(buffer, { type: "buffer" });
+    const sheetName = workbook.SheetNames[0]; // Read first sheet
+    const sheet = workbook.Sheets[sheetName];
+
+    // Convert sheet to array
+    const rows: any[] = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+
+    // Ensure the file has at least 3 rows
+    if (rows.length < 3) {
+      throw new Error(
+        "Excel file must have at least 3 rows (title, headers, data)."
+      );
+    }
+
+    // Extract headers from row 3 (index 2)
+    const headers = rows[2].map((h: any) => h.toString().trim());
+
+    // Extract data starting from row 4 (index 3)
+    const formattedData = rows
+      .slice(3)
+      .map((row) =>
+        Object.fromEntries(
+          headers.map((key: any, index: any) => [key, row[index] || ""])
+        )
+      );
+
+    return {
+      headers,
+      data: formattedData,
+    };
   }
 }

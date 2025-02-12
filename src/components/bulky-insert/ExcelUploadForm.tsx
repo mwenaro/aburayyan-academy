@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import {  useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Swal from "sweetalert2";
@@ -37,9 +37,9 @@ export default function ExcelUploadForm({
     reset,
   } = useForm({ resolver: zodResolver(schema) });
 
-//   interface MyFormValues extends FieldValues {
-//     file: FileList;
-//   }
+  //   interface MyFormValues extends FieldValues {
+  //     file: FileList;
+  //   }
 
   const onSubmit: any = async (data: { file: FileList }) => {
     setLoading(true);
@@ -47,19 +47,19 @@ export default function ExcelUploadForm({
     formData.append("file", data.file[0]);
 
     try {
-      const response = await fetch(apiUrl, {
+      const res = await fetch(apiUrl, {
         method: "POST",
         body: formData,
       });
 
-      if (!response.ok) throw new Error("Upload failed");
+      if (!res.ok) throw new Error("Upload failed");
 
       Swal.fire({
         icon: "success",
         title: "Success!",
         text: "File uploaded successfully.",
       });
-
+      console.log(await res.json());
       reset();
     } catch (error) {
       Swal.fire({
