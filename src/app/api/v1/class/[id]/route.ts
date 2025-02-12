@@ -26,13 +26,13 @@ export async function PUT(req: NextRequest, { params: { id } }: Query) {
   const body = await req.json();
   try {
     await dbCon();
-    const deletedClass = await ClassModel.findByIdAndUpdate(id, body);
-    if (!deletedClass)
+    const updatedClass = await ClassModel.findByIdAndUpdate(id, body);
+    if (!updatedClass)
       return NextResponse.json(
         { success: false, message: "Not Found" },
         { status: 404 }
       );
-    return NextResponse.json({ success: true, data: deletedClass });
+    return NextResponse.json({ success: true, data: updatedClass });
   } catch (error: any) {
     return NextResponse.json(
       { success: false, message: error.message },
@@ -44,10 +44,10 @@ export async function PUT(req: NextRequest, { params: { id } }: Query) {
 export async function DELETE(req: NextRequest, { params: { id } }: Query) {
   try {
     await dbCon();
-    const updatedClasss = await ClassModel.findByIdAndDelete(id);
+    const deletedClasss = await ClassModel.findByIdAndDelete(id);
 
     return NextResponse.json(
-      { success: true, data: updatedClasss },
+      { success: true, data: deletedClasss },
       { status: 201 }
     );
   } catch (error: any) {
