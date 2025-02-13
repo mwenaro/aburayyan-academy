@@ -38,4 +38,4 @@ ResponsibilitySchema.pre<IResponsibility>("save", function (next) {
 });
 
 // Create and export the model
-export const ResponsibilityModel: Model<IResponsibility> = mongoose.model<IResponsibility>("Responsibility", ResponsibilitySchema);
+export const Responsibility: Model<IResponsibility> = mongoose.model<IResponsibility>("Responsibility", ResponsibilitySchema);

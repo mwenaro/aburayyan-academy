@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
-    const { columns, title } = await req.json();
+    const { columns, title, defaultData } = await req.json();
     // console.log({ columns, title });
     if (!Array.isArray(columns) || columns.length === 0) {
       return NextResponse.json(
@@ -12,7 +12,7 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
-    const excelBuffer = ExcelService.generateExcel(title, columns);
+    const excelBuffer =Object.keys(defaultData).length? ExcelService.generateExcelWidthDefaultColumns(title, columns,defaultData):ExcelService.generateExcel(title, columns);
 
     return new Response(excelBuffer, {
       headers: {

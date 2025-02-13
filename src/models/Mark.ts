@@ -65,4 +65,4 @@ MarkSchema.pre<IMark>("save", function (next) {
 });
 
 // Create and export the model
-export const MarkModel: Model<IMark> = mongoose.model<IMark>("Mark", MarkSchema);
+export const Mark: Model<IMark> = mongoose.model<IMark>("Mark", MarkSchema);

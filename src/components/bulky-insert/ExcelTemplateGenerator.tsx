@@ -1,19 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { PropsWithChildren, useState } from "react";
 import { Button } from "@/components/ui/button";
 import Swal from "sweetalert2";
 
-interface ExcelTemplateGeneratorProps {
+interface ExcelTemplateGeneratorProps extends PropsWithChildren {
   title: string;
   columnNames: string;
   apiUrl?: string;
+  defaultData?: Object;
 }
 
 export default function ExcelTemplateGenerator({
   title,
   columnNames,
   apiUrl = "/api/generate-excel",
+  defaultData = {},
+  children,
 }: ExcelTemplateGeneratorProps) {
   const [loading, setLoading] = useState(false);
 
@@ -27,6 +30,7 @@ export default function ExcelTemplateGenerator({
         body: JSON.stringify({
           title,
           columns: columnNames.split(",").map((str) => str.trim()),
+          defaultData,
         }),
       });
 
@@ -42,11 +46,11 @@ export default function ExcelTemplateGenerator({
       a.click();
       document.body.removeChild(a);
 
-    //   Swal.fire({
-    //     icon: "success",
-    //     title: "Success!",
-    //     text: "Template generated successfully. Fill the it then upload",
-    //   });
+      //   Swal.fire({
+      //     icon: "success",
+      //     title: "Success!",
+      //     text: "Template generated successfully. Fill the it then upload",
+      //   });
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -58,6 +62,12 @@ export default function ExcelTemplateGenerator({
     }
   };
 
+  if (children)
+    return (
+      <Button onClick={generateTemplate} disabled={loading}>
+        {loading ? "Generating..." : children}
+      </Button>
+    );
   return (
     <div className="p-4 border rounded-lg shadow-md">
       <h2 className="text-xl font-semibold mb-2">Generate Excel Template</h2>
