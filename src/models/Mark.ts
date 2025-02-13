@@ -1,9 +1,11 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
 import { ISubject } from "./Subject"; // Import the ISubject interface
+import { IStudent } from "./Student";
 
 // Define the TypeScript interface for the Mark document
 export interface IMark extends Document {
     subject: mongoose.Types.ObjectId | ISubject; // Reference to a Subject document
+    student: mongoose.Types.ObjectId | IStudent;
     exam: string; // Exam name or identifier
     score: number; // Actual score
     outOf: number; // Maximum possible score

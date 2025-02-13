@@ -11,6 +11,7 @@ export interface IStudent extends Document {
   contactDetails: {
     phone: string; // Phone number
   };
+  password:string,
   guardians: (mongoose.Types.ObjectId | IUser)[];
   address: {
     town: string; // Town name
@@ -26,28 +27,29 @@ export interface IStudent extends Document {
 const StudentSchema: Schema<IStudent> = new Schema(
   {
     name: { type: String, required: true },
-    dob: { type: Date, required: true, default: Date.now },
+    dob: { type: Date,  default: Date.now },
     gen: {
       type: String,
-      enum: ["Male", "Female"], // Allow only these values for gender
+      enum: ["male", "female"], // Allow only these values for gender
       required: true,
     },
+    password: { type: String, default: "12345", trim: true },
     class: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Class",
       required: true,
     },
     contactDetails: {
-      phone: { type: String, required: true, default: "" },
+      phone: { type: String, default: "" },
     },
     guardians: [
-      { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+      { type: mongoose.Schema.Types.ObjectId, ref: "User"},
     ],
     address: {
-      town: { type: String, required: true, default: "Mombasa" },
-      county: { type: String, required: true, default: "Mombasa" },
-      nationality: { type: String, required: true, default: "kenyan" },
-      street: { type: String, required: true, default: "" },
+      town: { type: String,  default: "Mombasa" },
+      county: { type: String,  default: "Mombasa" },
+      nationality: { type: String,  default: "kenyan" },
+      street: { type: String,  default: "" },
     },
   },
   {

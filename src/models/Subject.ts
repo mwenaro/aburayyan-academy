@@ -9,24 +9,27 @@ export interface ISubject extends Document {
 }
 
 // Define the schema
-const SubjectSchema: Schema = new Schema<ISubject>({
-  name: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
+const SubjectSchema: Schema = new Schema<ISubject>(
+  {
+    name: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+    },
+    shortForm: {
+      type: String,
+
+      unique: true,
+    },
+    school: {
+      type: Schema.Types.ObjectId,
+      ref: "School", // Reference the School model
+      required: true,
+    },
   },
-  shortForm: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  school: {
-    type: Schema.Types.ObjectId,
-    ref: "School", // Reference the School model
-    required: true,
-  },
-}, { timestamps: true });
+  { timestamps: true }
+);
 
 // Use a pre-save middleware to compute `shortForm` only if not provided
 SubjectSchema.pre<ISubject>("save", function (next) {
@@ -37,4 +40,5 @@ SubjectSchema.pre<ISubject>("save", function (next) {
 });
 
 // Create and export the model
-export const Subject: Model<ISubject> = mongoose.models.Subject ||  mongoose.model<ISubject>("Subject", SubjectSchema);
+export const Subject: Model<ISubject> =
+  mongoose.models.Subject || mongoose.model<ISubject>("Subject", SubjectSchema);
