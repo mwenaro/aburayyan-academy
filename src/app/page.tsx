@@ -10,7 +10,8 @@ const LandingPage: React.FC = () => (
     {/* Hero Section */}
     <div className="relative text-white py-24 text-center h-1/2 overflow-hidden">
       <Image
-        src="/school/about-us-hero-image.jpg"
+        // src="/school/about-us-hero-image.jpg"
+        src={'/school/teachers/abu-rayyan-teachers-2024-ladies-sitting.jpg'}
         alt="School Environment"
        
         layout="fill"
