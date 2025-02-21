@@ -11,7 +11,7 @@ const LandingPage: React.FC = () => (
     <div className="relative text-white py-24 text-center h-1/2 overflow-hidden">
       <Image
         // src="/school/about-us-hero-image.jpg"
-        src={'/school/teachers/abu-rayyan-teachers-2024-ladies-sitting.jpg'}
+        src={'/school/teachers/abu-rayyan-teachers-2024-male-sitting.JPG'}
         alt="School Environment"
        
         layout="fill"
