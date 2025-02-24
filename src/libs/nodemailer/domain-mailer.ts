@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
   secure: false,
   auth: {
     user: "system@aburayyanacademy.com",
-    pass: "=[hMoF_O)5XZ",
+    pass: "p5CCWfJnM#Qe",
   },
 });
 
