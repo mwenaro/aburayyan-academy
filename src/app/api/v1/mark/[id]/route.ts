@@ -1,19 +1,19 @@
 import { dbCon } from "@/libs/mongoose/dbCon";
-import { User } from "@/models/User";
+import { Mark } from "@/models/Mark";
 import { NextRequest, NextResponse } from "next/server";
 type Query = { params: { id: string } };
 
 export async function GET(req: NextRequest, { params: { id } }: Query) {
   try {
     await dbCon();
-    const fetchedUser = await User.findOne({ _id: id });
-    if (!fetchedUser)
+    const fetchedMark = await Mark.findOne({ _id: id });
+    if (!fetchedMark)
       return NextResponse.json(
         { success: false, message: "Not Found" },
         { status: 404 }
       );
 
-    return NextResponse.json(fetchedUser);
+    return NextResponse.json(fetchedMark);
   } catch (error: any) {
     return NextResponse.json(
       { success: false, message: error.message },
@@ -26,13 +26,13 @@ export async function PUT(req: NextRequest, { params: { id } }: Query) {
   const body = await req.json();
   try {
     await dbCon();
-    const deletedUser = await User.findByIdAndUpdate(id, body);
-    if (!deletedUser)
+    const deletedMark = await Mark.findByIdAndUpdate(id, body);
+    if (!deletedMark)
       return NextResponse.json(
         { success: false, message: "Not Found" },
         { status: 404 }
       );
-    return NextResponse.json({ success: true, data: deletedUser });
+    return NextResponse.json({ success: true, data: deletedMark });
   } catch (error: any) {
     return NextResponse.json(
       { success: false, message: error.message },
@@ -44,10 +44,10 @@ export async function PUT(req: NextRequest, { params: { id } }: Query) {
 export async function DELETE(req: NextRequest, { params: { id } }: Query) {
   try {
     await dbCon();
-    const updatedUsers = await User.findByIdAndDelete(id);
+    const updatedMarks = await Mark.findByIdAndDelete(id);
 
     return NextResponse.json(
-      { success: true, data: updatedUsers },
+      { success: true, data: updatedMarks },
       { status: 201 }
     );
   } catch (error: any) {

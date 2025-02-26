@@ -6,7 +6,7 @@ type Query = { params: { id: string } };
 export async function GET(req: NextRequest, { params: { id } }: Query) {
   try {
     await dbCon();
-    const fetchedUser = await User.findOne({ _id: id });
+    const fetchedUser = await User.findOne({ _id: id, role:"teacher" });
     if (!fetchedUser)
       return NextResponse.json(
         { success: false, message: "Not Found" },
