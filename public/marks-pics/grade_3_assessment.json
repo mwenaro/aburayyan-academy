@@ -1,0 +1,172 @@
+{
+    "grade": 3,
+    "assessment": "End Month Assessment",
+    "students": [
+        {
+            "name": "Kawthar Mohamma",
+            "math": 98,
+            "english": 100,
+            "kuraan": 96,
+            "enviro": 92,
+            "creative": 86,
+            "ire": 90,
+            "reading": 100,
+            "kiswahili": 100,
+            "total_marks": 762
+        },
+        {
+            "name": "Aisha Abdulsalam",
+            "math": 76,
+            "english": 98,
+            "kuraan": 100,
+            "enviro": 100,
+            "creative": 90,
+            "ire": 100,
+            "reading": 100,
+            "kiswahili": 98,
+            "total_marks": 761
+        },
+        {
+            "name": "Fahiya Shukri",
+            "math": 96,
+            "english": 100,
+            "kuraan": 100,
+            "enviro": 96,
+            "creative": 98,
+            "ire": 60,
+            "reading": 100,
+            "kiswahili": 100,
+            "total_marks": 750
+        },
+        {
+            "name": "Aisha Hamisi",
+            "math": 88,
+            "english": 83,
+            "kuraan": 100,
+            "enviro": 92,
+            "creative": 86,
+            "ire": 88,
+            "reading": 100,
+            "kiswahili": 100,
+            "total_marks": 737
+        },
+        {
+            "name": "Zubeir Shafi",
+            "math": 10,
+            "english": 60,
+            "kuraan": 86,
+            "enviro": 88,
+            "creative": 86,
+            "ire": 100,
+            "reading": 88,
+            "kiswahili": 91,
+            "total_marks": 719
+        },
+        {
+            "name": "Khalda Shaban",
+            "math": 96,
+            "english": 96,
+            "kuraan": 96,
+            "enviro": 92,
+            "creative": 100,
+            "ire": 60,
+            "reading": 100,
+            "kiswahili": 100,
+            "total_marks": 704
+        },
+        {
+            "name": "Abdul-Razaq Harief",
+            "math": 98,
+            "english": 63,
+            "kuraan": 86,
+            "enviro": 80,
+            "creative": 70,
+            "ire": 100,
+            "reading": 98,
+            "kiswahili": 661
+        },
+        {
+            "name": "Umeira Mohammed",
+            "math": 58,
+            "english": 100,
+            "kuraan": 80,
+            "enviro": 80,
+            "creative": 70,
+            "ire": 90,
+            "reading": 100,
+            "kiswahili": 98,
+            "total_marks": 651
+        },
+        {
+            "name": "Hafsa Anwar",
+            "math": 58,
+            "english": 76,
+            "kuraan": 96,
+            "enviro": 69,
+            "creative": 73,
+            "ire": 70,
+            "reading": 88,
+            "kiswahili": 100,
+            "total_marks": 648
+        },
+        {
+            "name": "Faatma Abdul-Aziz",
+            "math": 80,
+            "english": 70,
+            "kuraan": 86,
+            "enviro": 69,
+            "creative": 73,
+            "ire": 70,
+            "reading": 88,
+            "kiswahili": 86,
+            "total_marks": 621
+        },
+        {
+            "name": "Munib Abdilkadir",
+            "math": 98,
+            "english": 70,
+            "kuraan": 86,
+            "enviro": 76,
+            "creative": 100,
+            "ire": 30,
+            "reading": 92,
+            "kiswahili": 621,
+            "total_marks": 621
+        },
+        {
+            "name": "Ummul-Kheir Shafe",
+            "math": 60,
+            "english": 83,
+            "kuraan": 76,
+            "enviro": 90,
+            "creative": 76,
+            "ire": 70,
+            "reading": 76,
+            "kiswahili": 609,
+            "total_marks": 609
+        },
+        {
+            "name": "Ahmed Mtawali",
+            "math": 60,
+            "english": 87,
+            "kuraan": 63,
+            "enviro": 78,
+            "creative": 63,
+            "ire": 76,
+            "reading": 76,
+            "kiswahili": 601,
+            "total_marks": 601
+        }
+    ],
+    "mean_per_subject": {
+        "math": 78,
+        "english": 76,
+        "kuraan": 84,
+        "enviro": 67,
+        "creative": 76,
+        "ire": 61.4,
+        "reading": 77,
+        "kiswahili": 86,
+        "total_average": 622.2
+    }
+}

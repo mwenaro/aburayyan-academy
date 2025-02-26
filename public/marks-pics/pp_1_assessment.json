@@ -1,0 +1,82 @@
+[
+    {
+        "Name": "Bilal Abdul-Rahman",
+        "Language": 98.0,
+        "Mathematics": 90.0,
+        "Environment": 100.0,
+        "Creative": 80.0,
+        "IRE": 94.0,
+        "Total": 462.0,
+        "Position": 1
+    },
+    {
+        "Name": "Imran Shafee",
+        "Language": 96.0,
+        "Mathematics": 90.0,
+        "Environment": 90.0,
+        "Creative": 85.0,
+        "IRE": 96.0,
+        "Total": 457.0,
+        "Position": 2
+    },
+    {
+        "Name": "Mariam Amer",
+        "Language": 98.0,
+        "Mathematics": 85.0,
+        "Environment": 100.0,
+        "Creative": 92.0,
+        "IRE": 82.0,
+        "Total": 457.0,
+        "Position": 2
+    },
+    {
+        "Name": "Jaleela Afubwa",
+        "Language": 90.0,
+        "Mathematics": 80.0,
+        "Environment": 100.0,
+        "Creative": 83.0,
+        "IRE": 90.0,
+        "Total": 443.0,
+        "Position": 4
+    },
+    {
+        "Name": "Muhammed Omar",
+        "Language": 83.0,
+        "Mathematics": 80.0,
+        "Environment": 80.0,
+        "Creative": 90.0,
+        "IRE": 88.0,
+        "Total": 421.0,
+        "Position": 5
+    },
+    {
+        "Name": "Omar Jamal",
+        "Language": 90.0,
+        "Mathematics": 85.0,
+        "Environment": 70.0,
+        "Creative": 78.0,
+        "IRE": 88.0,
+        "Total": 411.0,
+        "Position": 6
+    },
+    {
+        "Name": "Amira Mustafa",
+        "Language": 75.0,
+        "Mathematics": 60.0,
+        "Environment": 100.0,
+        "Creative": 80.0,
+        "IRE": 82.0,
+        "Total": 397.0,
+        "Position": 7
+    },
+    {
+        "Name": "Rukia Saim",
+        "Language": NaN,
+        "Mathematics": NaN,
+        "Environment": NaN,
+        "Creative": NaN,
+        "IRE": NaN,
+        "Total": NaN,
+        "Position": 8
+    }
+]
