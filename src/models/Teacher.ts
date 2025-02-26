@@ -1,4 +1,4 @@
-import mongoose, { Model, models, Schema } from "mongoose";
+import  { Model, models, Schema } from "mongoose";
 import { IUser, User } from "./User";
 
 export enum ITrRole {
@@ -66,8 +66,8 @@ responsibilitySchema.pre("validate", function (next) {
 
 // Create the Teacher Schema
 const teacherSchema = new Schema<ITeacher>({
-  subjects: { type: [String], required: true },
-  qualification: { type: String, required: true },
+  subjects: { type: [String], default:[] },
+  qualification: { type: String, required: true, default:'' },
   responsibilities: [responsibilitySchema], // Use the responsibility schema
 });
 
