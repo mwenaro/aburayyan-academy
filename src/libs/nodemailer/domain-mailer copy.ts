@@ -1,14 +1,26 @@
 import { generateAdminNotificationTemplate } from "./email-templates";
+
+// import nodemailer from 'nodemailer';
 const nodemailer = require("nodemailer");
 
-// Configure the Nodemailer transporter with correct SSL/TLS settings
+// // Configure the Nodemailer transporter
+// const transporter = nodemailer.createTransport({
+//   host: "mail.aburayyanacademy.com",
+//   port: 587,
+//   //   port: 465,
+//   secure: false,
+//   auth: {
+//     user: "system@aburayyanacademy.com",
+//     pass: "M{pdk6,s@C2D",
+//   },
+// });
 const transporter = nodemailer.createTransport({
   host: "mail.aburayyanacademy.com",
-  port: 465, // SSL/TLS recommended
+  port: 465,
   secure: true, // Use SSL
   auth: {
     user: "system@aburayyanacademy.com",
-    pass: "Pwd@1211email",
+    pass: "M{pdk6,s@C2D",
   },
 });
 
@@ -34,6 +46,7 @@ export async function sendAdminNotification(
   try {
     await transporter.sendMail({
       from: '"ICT Aburayyan Academy" <system@aburayyanacademy.com>',
+      // to: "ict-registration@aburayyanacademy.com", // Admin email
       to: "mweroabdalla@gmail.com", // Admin email
       subject: subject,
       html: emailTemplate, // Dynamic HTML template
@@ -41,6 +54,6 @@ export async function sendAdminNotification(
     console.log("Admin notification email sent successfully");
   } catch (error: any) {
     console.log("Error sending admin notification email: ", error.message);
-    throw new Error("Email could not be sent: " + error.message);
+    throw new Error("Email could not be sent "+ error.message);
   }
 }
