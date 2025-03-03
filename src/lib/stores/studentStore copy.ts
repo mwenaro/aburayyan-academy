@@ -1,11 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { devtools } from "zustand/middleware";
-import { HttpService } from "../HttpService";
-
-
-// Initialize HttpService
-const httpService = new HttpService("/api/v1/student");
 
 // Define the Student Type
 interface Student {
@@ -33,7 +28,7 @@ interface StudentState {
 export const useStudentStore = create<StudentState>()(
   devtools(
     persist(
-      (set,get) => ({
+      (set, get) => ({
         students: [],
         loading: false,
         error: null,
@@ -42,46 +37,57 @@ export const useStudentStore = create<StudentState>()(
         fetchStudents: async () => {
           set({ loading: true, error: null });
           try {
-            const data = await httpService.get<Student[]>("");
+            const res = await fetch("/api/students");
+            const data: Student[] = await res.json();
             set({ students: data, loading: false });
-          } catch (err: any) {
-            set({ error: err.message || "Failed to fetch students", loading: false });
+          } catch (err) {
+            set({ error: "Failed to fetch students", loading: false });
           }
         },
 
         // Add new student
         addStudent: async (student) => {
           try {
-            const newStudent = await httpService.post<Student>("", student);
+            const res = await fetch("/api/students", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(student),
+            });
+            const newStudent = await res.json();
             set((state) => ({ students: [...state.students, newStudent] }));
-          } catch (err: any) {
-            set({ error: err.message || "Failed to add student" });
+          } catch (err) {
+            set({ error: "Failed to add student" });
           }
         },
 
         // Update existing student
         updateStudent: async (id, updatedData) => {
           try {
-            await httpService.put<Student>(id, updatedData);
+            const res = await fetch(`/api/students/${id}`, {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(updatedData),
+            });
+            const updatedStudent = await res.json();
             set((state) => ({
               students: state.students.map((s) =>
                 s._id === id ? { ...s, ...updatedData } : s
               ),
             }));
-          } catch (err: any) {
-            set({ error: err.message || "Failed to update student" });
+          } catch (err) {
+            set({ error: "Failed to update student" });
           }
         },
 
         // Delete student
         deleteStudent: async (id) => {
           try {
-            await httpService.delete(id);
+            await fetch(`/api/students/${id}`, { method: "DELETE" });
             set((state) => ({
               students: state.students.filter((s) => s._id !== id),
             }));
-          } catch (err: any) {
-            set({ error: err.message || "Failed to delete student" });
+          } catch (err) {
+            set({ error: "Failed to delete student" });
           }
         },
 
