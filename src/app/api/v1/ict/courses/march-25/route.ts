@@ -1,5 +1,5 @@
 import { dbCon } from "@/libs/mongoose/dbCon";
-// import { sendAdminNotification } from "@/libs/nodemailer/domain-mailer";
+import { sendAdminNotification } from "@/libs/nodemailer/domain-mailer";
 import { CourseRegistration } from "@/models/CourseRegistration";
 
 import { NextRequest, NextResponse } from "next/server";
@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
     // console.log({ registeredStudents });
 
     // Uncomment this if email notifications are required
-  //  await sendAdminNotification(studentDetails, parentDetails, registeredStudents, url);
+   await sendAdminNotification(studentDetails, parentDetails, registeredStudents, url);
 
     return NextResponse.json(savedCourseRegistration, { status: 201 });
   } catch (error: any) {
