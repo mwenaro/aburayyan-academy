@@ -42,16 +42,16 @@ export async function POST(req: NextRequest) {
 
     if (!savedCourseRegistration) throw Error("CourseRegistration failed");
     const url = `${req.nextUrl.host}/registrations/march-25`;
-    // const studentDetails = `${fullName}(${phone})`;
-    // const parentDetails = null;
-    // const registeredStudents = await CourseRegistration.countDocuments({
-    //   $nor: [{ isDeleted: true }],
-    // });
+    const studentDetails = `${fullName}(${phone})`;
+    const parentDetails = null;
+    const registeredStudents = await CourseRegistration.countDocuments({
+      $nor: [{ isDeleted: true }],
+    });
     console.log({ url });
     // console.log({ registeredStudents });
 
     // Uncomment this if email notifications are required
-  //  await sendAdminNotification(studentDetails, parentDetails, registeredStudents, url);
+   await sendAdminNotification(studentDetails, parentDetails, registeredStudents, url);
 
     return NextResponse.json(savedCourseRegistration, { status: 201 });
   } catch (error: any) {

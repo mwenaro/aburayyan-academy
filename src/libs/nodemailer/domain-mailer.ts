@@ -3,15 +3,24 @@ import { generateAdminNotificationTemplate } from "./email-templates";
 // import nodemailer from 'nodemailer';
 const nodemailer = require("nodemailer");
 
-// Configure the Nodemailer transporter
+// // Configure the Nodemailer transporter
+// const transporter = nodemailer.createTransport({
+//   host: "mail.aburayyanacademy.com",
+//   port: 587,
+//   //   port: 465,
+//   secure: false,
+//   auth: {
+//     user: "system@aburayyanacademy.com",
+//     pass: "M{pdk6,s@C2D",
+//   },
+// });
 const transporter = nodemailer.createTransport({
   host: "mail.aburayyanacademy.com",
-  port: 587,
-  //   port: 465,
-  secure: false,
+  port: 465,
+  secure: true, // Use SSL
   auth: {
     user: "system@aburayyanacademy.com",
-    pass: "p5CCWfJnM#Qe",
+    pass: "M{pdk6,s@C2D",
   },
 });
 
@@ -44,7 +53,7 @@ export async function sendAdminNotification(
     });
     console.log("Admin notification email sent successfully");
   } catch (error: any) {
-    console.error("Error sending admin notification email: ", error.message);
-    throw new Error("Email could not be sent");
+    console.log("Error sending admin notification email: ", error.message);
+    throw new Error("Email could not be sent "+ error.message);
   }
 }
