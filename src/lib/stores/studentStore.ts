@@ -6,6 +6,7 @@ import { HttpService } from "../HttpService";
 
 // Initialize HttpService
 const httpService = new HttpService("/api/v1/student");
+// const httpService = new HttpService("https://aburayyanacademy.com/api/v1/student");
 
 // Define the Student Type
 interface Student {
