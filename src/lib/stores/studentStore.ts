@@ -45,6 +45,7 @@ export const useStudentStore = create<StudentState>()(
           try {
             const data = await httpService.get<Student[]>("");
             set({ students: data, loading: false });
+            console.log({students:data})
           } catch (err: any) {
             set({ error: err.message || "Failed to fetch students", loading: false });
           }

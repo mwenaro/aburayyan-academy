@@ -10,6 +10,7 @@ import { useEffect } from "react";
 
 const AdminPage = () => {
   const { fetchStudents, students } = useStudentStore();
+  console.log({students})
   useEffect(() => {
     fetchStudents();
     console.log(students)
