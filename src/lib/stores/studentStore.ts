@@ -3,7 +3,6 @@ import { persist } from "zustand/middleware";
 import { devtools } from "zustand/middleware";
 import { HttpService } from "../HttpService";
 
-
 // Initialize HttpService
 const httpService = new HttpService("/api/v1/student");
 // const httpService = new HttpService("https://aburayyanacademy.com/api/v1/student");
@@ -14,7 +13,7 @@ interface Student {
   name: string;
   age: number;
   classId: string;
-  marks?: number[];
+  marks?: number[]; 
 }
 
 // Zustand Store Interface
@@ -34,7 +33,7 @@ interface StudentState {
 export const useStudentStore = create<StudentState>()(
   devtools(
     persist(
-      (set,get) => ({
+      (set, get) => ({
         students: [],
         loading: false,
         error: null,
@@ -45,9 +44,11 @@ export const useStudentStore = create<StudentState>()(
           try {
             const data = await httpService.get<Student[]>("");
             set({ students: data, loading: false });
-            console.log({students:data})
           } catch (err: any) {
-            set({ error: err.message || "Failed to fetch students", loading: false });
+            set({
+              error: err.message || "Failed to fetch students",
+              loading: false,
+            });
           }
         },
 

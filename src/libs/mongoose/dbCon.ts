@@ -7,8 +7,8 @@ function getDbURI(dbname: string) {
   const LIVE_URI = `mongodb+srv://${user}:${pwd}@cluster0.2f29nts.mongodb.net/${dbname}?retryWrites=true&w=majority`;
   const ENV = process.env.NODE_ENV || "development";
 
-   ENV === "production" ? LIVE_URI : MONGO_DB_URI_DEV;
-   return LIVE_URI
+ return  ENV === "production" ? LIVE_URI : MONGO_DB_URI_DEV;
+  //  return LIVE_URI
 }
 
 export async function dbCon() {
