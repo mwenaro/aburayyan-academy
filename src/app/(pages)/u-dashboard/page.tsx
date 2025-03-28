@@ -23,9 +23,9 @@ const AdminPage = () => {
         {/* USER CARDS */}
         <div className="flex gap-4 justify-between flex-wrap">
           <UserCard type="student" num={students.length}/>
-          <UserCard type="teacher" />
-          <UserCard type="parent" />
-          <UserCard type="staff" />
+          <UserCard type="teacher" num={10} />
+          <UserCard type="parent" num={10} />
+          <UserCard type="staff" num={10} />
         </div>
         {/* MIDDLE CHARTS */}
         <div className="flex gap-4 flex-col lg:flex-row">
