@@ -11,9 +11,8 @@ const LandingPage: React.FC = () => (
     <div className="relative text-white py-24 text-center h-1/2 overflow-hidden">
       <Image
         // src="/school/about-us-hero-image.jpg"
-        src={'/school/teachers/abu-rayyan-teachers-2024-male-sitting.JPG'}
+        src={"/school/teachers/abu-rayyan-teachers-2024-male-sitting.JPG"}
         alt="School Environment"
-       
         layout="fill"
         objectFit="cover"
         className="absolute inset-0  w-full "
@@ -45,7 +44,7 @@ const LandingPage: React.FC = () => (
       <div className="grid md:grid-cols-3 gap-8">
         <MyShineBorder className="bg-white px-2 py-1 shadow rounded">
           <Image
-            src="/images/cbc-icon.png"
+            src="/school/home/cbc-students.jpg"
             alt="CBC Curriculum"
             width={2050}
             height={2050}
@@ -81,7 +80,7 @@ const LandingPage: React.FC = () => (
         </MyShineBorder>
         <MyShineBorder className="bg-white px-2 py-1 shadow rounded">
           <Image
-            src="/images/islamic-icon.png"
+            src="/school/home/islamic-studies-students.jpg"
             alt="Islamic Foundation"
             width={2050}
             height={2050}
@@ -106,11 +105,11 @@ const LandingPage: React.FC = () => (
       <div className="grid grid-cols-1 md:grid-cols-2   gap-4">
         <MyMagicCard>
           <Image
-            src="/images/early-childhood.jpg"
+            src="/school/home/pp-students.jpg"
             alt="Early Childhood"
             width={300}
             height={200}
-            className="rounded mb-4"
+            className="rounded mb-4 w-full"
           />
           <h3 className="text-xl font-semibold mb-4">
             Early Childhood Education (PP1, PP2)
@@ -123,11 +122,11 @@ const LandingPage: React.FC = () => (
         </MyMagicCard>
         <MyMagicCard>
           <Image
-            src="/images/primary-school.jpg"
+            src="/school/home/grade1-6.jpg"
             alt="Primary School"
-            width={300}
-            height={200}
-            className="rounded mb-4"
+            width={2400}
+            height={2400}
+            className="rounded mb-4 h-[70%] w-auto"
           />
           <h3 className="text-xl font-semibold mb-4">
             Primary School (Grade 1-6)
@@ -140,11 +139,11 @@ const LandingPage: React.FC = () => (
         </MyMagicCard>
         <MyMagicCard>
           <Image
-            src="/images/junior-secondary.jpg"
+            src="/school/home/junior-grade-9.jpg"
             alt="Junior Secondary"
-            width={300}
-            height={200}
-            className="rounded mb-4"
+            width={2400}
+            height={2400}
+            className="rounded mb-4 h-[70%] w-auto"
           />
           <h3 className="text-xl font-semibold mb-4">
             Junior Secondary (Grade 7-9)
@@ -157,15 +156,15 @@ const LandingPage: React.FC = () => (
         </MyMagicCard>
         <MyMagicCard>
           <Image
-            src="/images/after-school.jpg"
+            src="/school/home/scouts.jpg"
             alt="After School Programs"
-            width={300}
-            height={200}
-            className="rounded mb-4"
+            width={2400}
+            height={2400}
+            className="rounded mb-4 w-full"
           />
           <h3 className="text-xl font-semibold mb-4">After-School Programs</h3>
           <p className="max-w-3xl text-thin text-justify px-2 py-1 text-wrap">
-            We offer enrichment activities including swimming, coding, and Quran
+            We offer enrichment activities including swimming, Scouting, coding, and Quran
             memorization to enhance student skills and knowledge.
           </p>
         </MyMagicCard>
