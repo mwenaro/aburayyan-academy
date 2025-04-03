@@ -3,22 +3,24 @@ import { IUser } from "./User";
 
 // Define the TypeScript interface for a Student document
 export interface IStudent extends Document {
-  name: string;
-  dob: Date;
-  gen: "male" | "female";
+  name: string; // Student's full name
+  dob: Date; // Date of Birth
+  gen: "male" | "female"; // Gender
   photo?: string;
   class: mongoose.Schema.Types.ObjectId;
-  regno: string;
-  contactDetails: { phone: string };
-  guardians: mongoose.Types.ObjectId[];
-  address: {
-    town: string;
-    county: string;
-    nationality: string;
-    street: string;
+  regno: string; // Unique Registration Number
+  contactDetails: {
+    phone: string; // Phone number
   };
-  createdAt?: Date;
-  updatedAt?: Date;
+  guardians: (mongoose.Types.ObjectId | IUser)[];
+  address: {
+    town: string; // Town name
+    county: string; // County name
+    nationality: string; // Nationality
+    street: string; // Street name
+  };
+  createdAt: Date; // Automatically generated
+  updatedAt: Date; // Automatically generated
 }
 
 // Define the Mongoose Schema for a Student
@@ -29,7 +31,7 @@ const studentSchema: Schema<IStudent> = new Schema(
     photo: { type: String },
     gen: {
       type: String,
-      enum: ["male", "female"],
+      enum: ["male", "female"], // Allow only these values for gender
       required: true,
     },
     regno: { type: String, unique: true }, // Unique Registration Number
@@ -52,35 +54,25 @@ const studentSchema: Schema<IStudent> = new Schema(
     },
   },
   {
-    timestamps: true, // Automatically adds createdAt and updatedAt fields
+    timestamps: true, // Automatically manages createdAt and updatedAt fields
   }
 );
+
 
 // Pre-save hook to generate regno
 studentSchema.pre("save", async function (next) {
   if (!this.regno) {
     const currentYear = new Date().getFullYear();
-
-    // Explicitly cast `this.constructor` to the Student model
-    const StudentModel = this.constructor as typeof Student;
-
-    // Find the most recent student for the current year
-    const lastStudent = await StudentModel.findOne({
-      regno: new RegExp(`^abu/s/${currentYear}/\\d{3}$`),
-    }) // Ensure proper format
-      .sort({ $natural: -1 }) // Sort by insertion order, assuming regnos are assigned sequentially
+    const lastStudent = await this.constructor()
+      .findOne({ regno: new RegExp(`abu/s/${currentYear}/`) }) // Find last student of the year
+      .sort({ regno: -1 })
       .exec();
-
     let nextNumber = 1;
     if (lastStudent) {
-      // Extract the numeric part from the last regno
-      const match = lastStudent.regno.match(/(\d{3})$/);
-      if (match) {
-        nextNumber = parseInt(match[1], 10) + 1;
-      }
+      const lastNumber = parseInt(lastStudent.regno.split("/").pop(), 10);
+      nextNumber = lastNumber + 1;
     }
 
-    // Generate the new regno
     this.regno = `abu/s/${currentYear}/${String(nextNumber).padStart(3, "0")}`;
   }
   next();
