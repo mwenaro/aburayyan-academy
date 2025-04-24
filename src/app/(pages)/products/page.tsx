@@ -43,7 +43,12 @@ export default function PayPage() {
     const res = await fetch("/api/product-stk", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ phone:phone.startsWith("254")?phone:`254${phone.substring(1)}`, productId: pId, productName: pName }),
+      body: JSON.stringify({
+        phone: phone.startsWith("254") ? phone : `254${phone.substring(1)}`,
+        productId: pId,
+        productName: pName,
+        amount: 1,
+      }),
     });
 
     const data = await res.json();
