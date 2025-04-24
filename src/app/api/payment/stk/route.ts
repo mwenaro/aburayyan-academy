@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
   const confirmUrl = `${mpesaUrl}/stk/callback`;
   try {
     const { phone, amount } = await req.json();
-    const data = await safaricomDarajaApi.intiateC2bStkPush(
+    const data = await safaricomDarajaApi.initiateC2bStkPush(
       phone,
       amount,
       confirmUrl
