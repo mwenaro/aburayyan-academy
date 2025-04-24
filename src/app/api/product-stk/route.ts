@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
     // Initiate STK Push
     const response = await mpesaClient.stkPush({
       phone,
-      amount,
+      amount:1,
       accountReference: `Product-${productId}`,
       transactionDesc: `Purchase of ${productName}`,
       cbUrl: callbackUrl,

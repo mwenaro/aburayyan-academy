@@ -239,8 +239,8 @@ export const mpesaClient = new MpesaClient({
   initiatorName: process.env.DARAJA_API_INITIATOR_NAME!,
   securityCredential: process.env.DARAJA_API_SECURITY_CREDENTIAL!,
   baseUrl:
-    process.env.NODE_ENV !== "production"
-      ? "https://sandbox.safaricom.co.ke"
-      : "https://api.safaricom.co.ke", // change for live
+    // process.env.NODE_ENV !== "production"
+    "https://sandbox.safaricom.co.ke",
+  //   : "https://api.safaricom.co.ke", // change for live
   callbackBaseUrl: process.env.DARAJA_API_CALLBACK_URL!,
 });
