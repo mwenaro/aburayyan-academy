@@ -41,19 +41,19 @@ export async function POST(req: NextRequest) {
   }/product-stk/callback`;
 
   try {
-    // const response = await mpesaClient.stkPush({
-    //   phone: formattedPhone,
-    //   amount: 1,
-    //   accountReference: `Product-${productId}`,
-    //   transactionDesc: `Purchase of ${productName}`,
-    //   cbUrl: callbackUrl,
-    // });
-    const response = await safaricomDarajaApi.initiateC2bStkPush(
-      formattedPhone,
-      1,
+    const response = await mpesaClient.requestStkPush({
+      phoneNumber: formattedPhone,
+      amount: 1,
+      accountReference: `Product-${productId}`,
+      transactionDesc: `Purchase of ${productName}`,
+      callbackUrl,
+    });
+    // const response = await safaricomDarajaApi.initiateC2bStkPush(
+    //   formattedPhone,
+    //   1,
 
-      callbackUrl
-    );
+    //   callbackUrl
+    // );
     const transaction = await Transaction.create({
       phone: formattedPhone,
       amount,
