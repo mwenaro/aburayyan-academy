@@ -1,4 +1,5 @@
 "use client";
+import { error } from "console";
 import { useState, useEffect } from "react";
 
 export default function PayPage() {
@@ -59,6 +60,7 @@ export default function PayPage() {
       setMessage("STK Push sent! Please enter M-Pesa PIN on your phone.");
     } else {
       setMessage(data.error || "Something went wrong");
+      console.log({data})
     }
   };
 
