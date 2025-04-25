@@ -1,5 +1,5 @@
 // lib/mpesa/MpesaClient.ts
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosInstance } from "axios";
 import { config } from "dotenv";
 config();
 
@@ -10,7 +10,7 @@ interface MpesaClientOptions {
   passkey: string;
   initiatorName: string;
   initiatorPassword: string;
-  environment?: 'sandbox' | 'production';
+  environment?: "sandbox" | "production";
 }
 
 class MpesaClient {
@@ -34,9 +34,9 @@ class MpesaClient {
     this.initiatorName = options.initiatorName;
     this.initiatorPassword = options.initiatorPassword;
     this.baseUrl =
-      options.environment === 'production'
-        ? 'https://api.safaricom.co.ke'
-        : 'https://sandbox.safaricom.co.ke';
+      options.environment === "production"
+        ? "https://api.safaricom.co.ke"
+        : "https://sandbox.safaricom.co.ke";
 
     this.axios = axios.create({
       baseURL: this.baseUrl,
@@ -46,7 +46,7 @@ class MpesaClient {
   private async authenticate() {
     const credentials = Buffer.from(
       `${this.auth.key}:${this.auth.secret}`
-    ).toString('base64');
+    ).toString("base64");
 
     const response = await axios.get(
       `${this.baseUrl}/oauth/v1/generate?grant_type=client_credentials`,
@@ -58,7 +58,7 @@ class MpesaClient {
     );
 
     this.token = response.data.access_token;
-
+    console.log({ token: this.token });
     this.axios = axios.create({
       baseURL: this.baseUrl,
       headers: {
@@ -70,18 +70,18 @@ class MpesaClient {
   private getTimestamp(): string {
     return new Date()
       .toISOString()
-      .replace(/[^0-9]/g, '')
+      .replace(/[^0-9]/g, "")
       .slice(0, 14);
   }
 
   private getPassword(timestamp: string): string {
-    return Buffer.from(
-      `${this.shortCode}${this.passkey}${timestamp}`
-    ).toString('base64');
+    return Buffer.from(`${this.shortCode}${this.passkey}${timestamp}`).toString(
+      "base64"
+    );
   }
 
   private formatPhone(phone: string): string {
-    return phone.replace(/^0/, '254');
+    return phone.replace(/^0/, "254");
   }
 
   async requestStkPush({
@@ -102,11 +102,11 @@ class MpesaClient {
     const timestamp = this.getTimestamp();
     const password = this.getPassword(timestamp);
 
-    const response = await this.axios.post('/mpesa/stkpush/v1/processrequest', {
+    const response = await this.axios.post("/mpesa/stkpush/v1/processrequest", {
       BusinessShortCode: this.shortCode,
       Password: password,
       Timestamp: timestamp,
-      TransactionType: 'CustomerPayBillOnline',
+      TransactionType: "CustomerPayBillOnline",
       Amount: amount,
       PartyA: this.formatPhone(phoneNumber),
       PartyB: this.shortCode,
@@ -119,17 +119,13 @@ class MpesaClient {
     return response.data;
   }
 
-  async queryStkStatus({
-    checkoutRequestId,
-  }: {
-    checkoutRequestId: string;
-  }) {
+  async queryStkStatus({ checkoutRequestId }: { checkoutRequestId: string }) {
     if (!this.token) await this.authenticate();
 
     const timestamp = this.getTimestamp();
     const password = this.getPassword(timestamp);
 
-    const response = await this.axios.post('/mpesa/stkpushquery/v1/query', {
+    const response = await this.axios.post("/mpesa/stkpushquery/v1/query", {
       BusinessShortCode: this.shortCode,
       Password: password,
       Timestamp: timestamp,
@@ -142,15 +138,15 @@ class MpesaClient {
   async registerUrls({
     validationUrl,
     confirmationUrl,
-    responseType = 'Completed',
+    responseType = "Completed",
   }: {
     validationUrl: string;
     confirmationUrl: string;
-    responseType?: 'Completed' | 'Cancelled';
+    responseType?: "Completed" | "Cancelled";
   }) {
     if (!this.token) await this.authenticate();
 
-    const response = await this.axios.post('/mpesa/c2b/v1/registerurl', {
+    const response = await this.axios.post("/mpesa/c2b/v1/registerurl", {
       ShortCode: this.shortCode,
       ResponseType: responseType,
       ConfirmationURL: confirmationUrl,
@@ -171,9 +167,9 @@ class MpesaClient {
   }) {
     if (!this.token) await this.authenticate();
 
-    const response = await this.axios.post('/mpesa/c2b/v1/simulate', {
+    const response = await this.axios.post("/mpesa/c2b/v1/simulate", {
       ShortCode: this.shortCode,
-      CommandID: 'CustomerPayBillOnline',
+      CommandID: "CustomerPayBillOnline",
       Amount: amount,
       Msisdn: this.formatPhone(phoneNumber),
       BillRefNumber: billRefNumber,
@@ -185,13 +181,13 @@ class MpesaClient {
   async checkAccountBalance(callbackUrl: string) {
     if (!this.token) await this.authenticate();
 
-    const response = await this.axios.post('/mpesa/accountbalance/v1/query', {
+    const response = await this.axios.post("/mpesa/accountbalance/v1/query", {
       Initiator: this.initiatorName,
       SecurityCredential: this.initiatorPassword,
-      CommandID: 'AccountBalance',
+      CommandID: "AccountBalance",
       PartyA: this.shortCode,
-      IdentifierType: '4',
-      Remarks: 'Balance Request',
+      IdentifierType: "4",
+      Remarks: "Balance Request",
       QueueTimeOutURL: callbackUrl,
       ResultURL: callbackUrl,
     });
@@ -212,14 +208,14 @@ class MpesaClient {
   }) {
     if (!this.token) await this.authenticate();
 
-    const response = await this.axios.post('/mpesa/reversal/v1/request', {
+    const response = await this.axios.post("/mpesa/reversal/v1/request", {
       Initiator: this.initiatorName,
       SecurityCredential: this.initiatorPassword,
-      CommandID: 'TransactionReversal',
+      CommandID: "TransactionReversal",
       TransactionID: transactionId,
       Amount: amount,
       ReceiverParty: this.shortCode,
-      ReceiverIdentifierType: '11',
+      ReceiverIdentifierType: "11",
       ResultURL: callbackUrl,
       QueueTimeOutURL: callbackUrl,
       Remarks: remarks,
@@ -230,14 +226,14 @@ class MpesaClient {
   }
 
   handleValidation = (reqBody: any) => {
-    console.log('VALIDATION:', reqBody);
-    return { ResultCode: 0, ResultDesc: 'Accepted' };
+    console.log("VALIDATION:", reqBody);
+    return { ResultCode: 0, ResultDesc: "Accepted" };
   };
 
   handleConfirmation = (reqBody: any) => {
-    console.log('CONFIRMATION:', reqBody);
+    console.log("CONFIRMATION:", reqBody);
     // Save to DB, notify, etc.
-    return { ResultCode: 0, ResultDesc: 'Received successfully' };
+    return { ResultCode: 0, ResultDesc: "Received successfully" };
   };
 }
 
@@ -252,8 +248,6 @@ class MpesaClient {
 //   environment: process.env.MPESA_ENV === 'production' ? 'production' : 'sandbox',
 // });
 
-
-
 export const mpesaClient = new MpesaClient({
   consumerKey: process.env.DARAJA_API_CONSUMER_KEY!,
   consumerSecret: process.env.DARAJA_API_CONSUMER_SECRET!,
@@ -261,7 +255,7 @@ export const mpesaClient = new MpesaClient({
   passkey: process.env.DARAJA_API_PASSKEY!,
   initiatorName: process.env.DARAJA_API_INITIATOR_NAME!,
   initiatorPassword: process.env.DARAJA_API_INITIATOR_PASSWORD!,
-  environment: 'test' !== 'test' ? 'production' : 'sandbox',
-    // : "https://api.safaricom.co.ke", // change for live
-//   callbackBaseUrl: process.env.DARAJA_API_CALLBACK_URL!,
+  environment: "test" !== "test" ? "production" : "sandbox",
+  // : "https://api.safaricom.co.ke", // change for live
+  //   callbackBaseUrl: process.env.DARAJA_API_CALLBACK_URL!,
 });
