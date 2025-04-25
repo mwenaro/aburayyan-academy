@@ -74,7 +74,7 @@ export default function PayPage() {
     e.preventDefault();
     setLoading(true);
     setMessage("");
-    const [pId, pName] = productId.split("->");
+    const [pId, pName,amount] = productId.split("->");
 
     const res = await fetch("/api/product-stk", {
       method: "POST",
@@ -83,7 +83,7 @@ export default function PayPage() {
         phone: phone.startsWith("254") ? phone : `254${phone.substring(1)}`,
         productId: pId,
         productName: pName,
-        amount: 1,
+        amount,
       }),
     });
 
@@ -111,7 +111,7 @@ export default function PayPage() {
         >
           <option value="">-- Select a Product --</option>
           {products.map((p: any) => (
-            <option key={p.id} value={`${p.id}->${p.title}`}>
+            <option key={p.id} value={`${p.id}->${p.title}->${p.price}`}>
               {p.title} - KES {p.price}
             </option>
           ))}
