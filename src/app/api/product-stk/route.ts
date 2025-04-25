@@ -3,8 +3,16 @@ import { mpesaClient } from "@/models/MpesaClient";
 import { Transaction } from "@/models/Transaction";
 import { NextRequest, NextResponse } from "next/server";
 
+function formatPhone(phone: string): string {
+  if (phone.startsWith("07")) {
+    return phone.replace(/^0/, "254");
+  } else if (phone.startsWith("+254")) {
+    return phone.replace("+", "");
+  }
+  return phone;
+}
+
 export async function GET(req: NextRequest) {
-  //   await req.json();
   console.log(req);
   await dbCon();
   const data = await Transaction.find();
@@ -14,24 +22,34 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   const body = await req.json();
   const { phone, amount, productId, productName } = body;
-  // const mpesaUrl = req.url.split("/stk")[0];
+
+  if (!phone || !amount || !productId || !productName) {
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Missing required fields",
+      },
+      { status: 400 }
+    );
+  }
+
+  const formattedPhone = formatPhone(phone);
+
   const callbackUrl = `${
     req.url.split("/product-stk")[0]
   }/product-stk/callback`;
 
   try {
-    // Initiate STK Push
     const response = await mpesaClient.stkPush({
-      phone,
+      phone: formattedPhone,
       amount: 1,
       accountReference: `Product-${productId}`,
       transactionDesc: `Purchase of ${productName}`,
       cbUrl: callbackUrl,
     });
 
-    // Save transaction to DB
     const transaction = await Transaction.create({
-      phone,
+      phone: formattedPhone,
       amount,
       productId,
       productName,
@@ -42,15 +60,18 @@ export async function POST(req: NextRequest) {
     });
     console.log({ transaction });
 
-    // Return response including transactionId
     return NextResponse.json({
       success: true,
       message: "STK push sent. Complete payment on your phone.",
       checkoutRequestID: response.CheckoutRequestID,
-      transactionId: transaction._id, // 👈 Send it back to frontend
+      transactionId: transaction._id,
     });
   } catch (error: any) {
-    console.log("STK Push Error:", error.response?.data || error.message);
+    console.error("STK Push Error:", {
+      message: error.message,
+      data: error.response?.data,
+      status: error.response?.status,
+    });
     return NextResponse.json(
       {
         success: false,
