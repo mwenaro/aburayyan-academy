@@ -1,6 +1,14 @@
+import { dbCon } from "@/libs/mongoose/dbCon";
 import { mpesaClient } from "@/models/MpesaClient";
 import { Transaction } from "@/models/Transaction";
 import { NextRequest, NextResponse } from "next/server";
+
+export async function GET(req: NextRequest) {
+  await req.json();
+  await dbCon();
+  const data = await Transaction.find();
+  return NextResponse.json(data);
+}
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
