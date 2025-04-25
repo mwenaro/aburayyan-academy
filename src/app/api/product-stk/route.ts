@@ -28,23 +28,6 @@ export async function POST(req: NextRequest) {
       cbUrl: callbackUrl,
     });
 
-    //   // Save transaction to DB
-    //   await Transaction.create({
-    //     phone,
-    //     amount,
-    //     productId,
-    //     productName,
-    //     checkoutRequestID: response.CheckoutRequestID,
-    //     merchantRequestID: response.MerchantRequestID,
-    //     status: 'PENDING',
-    //     response: response,
-    //   });
-
-    //   return NextResponse.json({
-    //     success: true,
-    //     message: 'STK push sent. Complete payment on your phone.',
-    //     checkoutRequestID: response.CheckoutRequestID,
-    //   });
     // Save transaction to DB
     const transaction = await Transaction.create({
       phone,
@@ -56,6 +39,7 @@ export async function POST(req: NextRequest) {
       status: "PENDING",
       response: response,
     });
+    console.log({transaction})
 
     // Return response including transactionId
     return NextResponse.json({
@@ -65,7 +49,7 @@ export async function POST(req: NextRequest) {
       transactionId: transaction._id, // 👈 Send it back to frontend
     });
   } catch (error: any) {
-    console.error("STK Push Error:", error.response?.data || error.message);
+    console.log("STK Push Error:", error.response?.data || error.message);
     return NextResponse.json(
       {
         success: false,
