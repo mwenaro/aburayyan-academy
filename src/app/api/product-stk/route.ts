@@ -4,7 +4,8 @@ import { Transaction } from "@/models/Transaction";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
-  await req.json();
+  //   await req.json();
+  console.log(req);
   await dbCon();
   const data = await Transaction.find();
   return NextResponse.json(data);
@@ -39,7 +40,7 @@ export async function POST(req: NextRequest) {
       status: "PENDING",
       response: response,
     });
-    console.log({transaction})
+    console.log({ transaction });
 
     // Return response including transactionId
     return NextResponse.json({
