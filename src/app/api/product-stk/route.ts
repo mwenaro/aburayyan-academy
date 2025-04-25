@@ -1,6 +1,7 @@
 import { dbCon } from "@/libs/mongoose/dbCon";
 import { mpesaClient } from "@/models/MpesaClient";
 import { Transaction } from "@/models/Transaction";
+import { safaricomDarajaApi } from "mds-daraja-sdk";
 import { NextRequest, NextResponse } from "next/server";
 
 function formatPhone(phone: string): string {
@@ -40,14 +41,19 @@ export async function POST(req: NextRequest) {
   }/product-stk/callback`;
 
   try {
-    const response = await mpesaClient.stkPush({
-      phone: formattedPhone,
-      amount: 1,
-      accountReference: `Product-${productId}`,
-      transactionDesc: `Purchase of ${productName}`,
-      cbUrl: callbackUrl,
-    });
+    // const response = await mpesaClient.stkPush({
+    //   phone: formattedPhone,
+    //   amount: 1,
+    //   accountReference: `Product-${productId}`,
+    //   transactionDesc: `Purchase of ${productName}`,
+    //   cbUrl: callbackUrl,
+    // });
+    const response = await safaricomDarajaApi.initiateC2bStkPush(
+      formattedPhone,
+      1,
 
+      callbackUrl
+    );
     const transaction = await Transaction.create({
       phone: formattedPhone,
       amount,
