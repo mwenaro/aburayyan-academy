@@ -16,18 +16,53 @@ export default function PayPage() {
       .then(setProducts);
   }, []);
 
+  //   useEffect(() => {
+  //     if (!transactionId) return;
+
+  //     const interval = setInterval(async () => {
+  //       const res = await fetch(`/api/product-stk/status?id=${transactionId}`);
+  //       const data = await res.json();
+
+  //       if (data.status === "Success") {
+  //         setMessage("Payment successful!");
+  //         clearInterval(interval);
+  //       } else if (data.status === "Failed") {
+  //         setMessage("Payment failed. Try again.");
+  //         clearInterval(interval);
+  //       }
+  //     }, 5000);
+
+  //     return () => clearInterval(interval);
+  //   }, [transactionId]);
+
   useEffect(() => {
     if (!transactionId) return;
 
-    const interval = setInterval(async () => {
-      const res = await fetch(`/api/product-stk/status?id=${transactionId}`);
-      const data = await res.json();
+    let attempts = 0;
+    const maxAttempts = 12; // 12 * 5s = 60 seconds
 
-      if (data.status === "Success") {
-        setMessage("Payment successful!");
-        clearInterval(interval);
-      } else if (data.status === "Failed") {
-        setMessage("Payment failed. Try again.");
+    const interval = setInterval(async () => {
+      attempts++;
+      try {
+        const res = await fetch(`/api/product-stk/status?id=${transactionId}`);
+        const data = await res.json();
+
+        if (data.status === "SUCCESS") {
+          setMessage("✅ Payment successful!");
+          clearInterval(interval);
+        } else if (data.status === "FAILED") {
+          setMessage("❌ Payment failed. Try again.");
+          clearInterval(interval);
+        } else {
+          console.log(`Attempt ${attempts}: Payment status still pending...`);
+        }
+
+        if (attempts >= maxAttempts) {
+          setMessage("⏱ Timeout. Try again later.");
+          clearInterval(interval);
+        }
+      } catch (err) {
+        setMessage("⚠️ Error checking status.");
         clearInterval(interval);
       }
     }, 5000);
@@ -60,7 +95,7 @@ export default function PayPage() {
       setMessage("STK Push sent! Please enter M-Pesa PIN on your phone.");
     } else {
       setMessage(data.error || "Something went wrong");
-      console.log({data})
+      console.log({ data });
     }
   };
 
