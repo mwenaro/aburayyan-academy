@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 
 export default function PayPage() {
@@ -124,13 +125,13 @@ export default function PayPage() {
           onChange={(e) => setPhone(e.target.value)}
           required
         />
-        <button
+        <Button
           type="submit"
           className="bg-green-600 text-white px-4 py-2 rounded"
           disabled={loading}
         >
           {loading ? "Sending..." : "Buy Now"}
-        </button>
+        </Button>
       </form>
       {message && <p className="mt-4 text-blue-600">{message}</p>}
     </div>

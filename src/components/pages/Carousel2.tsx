@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import { Button } from "../ui/button";
 
 interface CarouselProps {
   images: string[];
@@ -76,18 +77,18 @@ const Carousel2: React.FC<CarouselProps> = ({ images }) => {
         </AnimatePresence>
         {/* </div> */}
         {/* Responsive button styles */}
-        <button
+        <Button
           onClick={handlePrev}
           className="absolute left-4 top-1/2 -translate-y-1/2 bg-white p-2 sm:p-3 md:p-4 lg:p-5 rounded-full z-10 hidden sm:block"
         >
           Prev
-        </button>
-        <button
+       </Button>
+        <Button
           onClick={handleNext}
           className="absolute right-4 top-1/2 -translate-y-1/2 bg-white p-2 sm:p-3 md:p-4 lg:p-5 rounded-full z-10 hidden sm:block"
         >
           Next
-        </button>
+       </Button>
       </div>
     </section>
   );

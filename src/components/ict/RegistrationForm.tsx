@@ -3,6 +3,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Button } from '../ui/button';
 
  const registrationSchema = z.object({
   name: z.string().min(1, { message: "Name is required" }),
@@ -73,9 +74,9 @@ export const RegistrationForm: React.FC = () => {
           {errors.contact && <p className="text-red-500 text-sm">{errors.contact.message}</p>}
         </div>
         
-        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">
+        <Button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">
           Submit
-        </button>
+       </Button>
       </form>
     </section>
   );

@@ -597,7 +597,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
       {/* Navigation */}
       <div className="mt-8 pt-5">
         <div className="flex justify-between">
-          <button
+          <Button
             type="button"
             onClick={prev}
             disabled={currentStep === 0}
@@ -617,8 +617,8 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                 d="M15.75 19.5L8.25 12l7.5-7.5"
               />
             </svg>
-          </button>
-          <button
+         </Button>
+          <Button
             type="button"
             onClick={next}
             disabled={currentStep === steps.length - 1}
@@ -638,7 +638,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                 d="M8.25 4.5l7.5 7.5-7.5 7.5"
               />
             </svg>
-          </button>
+         </Button>
         </div>
       </div>
     </>

@@ -1,4 +1,5 @@
 "use client";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import React, { useState } from "react";
 import { z } from "zod";
@@ -109,12 +110,12 @@ const ContactPage: React.FC = () => {
             )}
           </div>
 
-          <button
+          <Button
             type="submit"
             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
           >
             Send Message
-          </button>
+          </Button>
         </form>
 
         {/* Physical Address */}

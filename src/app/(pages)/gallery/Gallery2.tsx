@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Dialog, DialogContent } from "@/components/ui/dialog"; // Assuming shadcn Dialog
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface GalleryImage {
   src: string;
@@ -73,20 +74,20 @@ export const GalleryComponent = ({ images }: GalleryComponentProps) => {
               className="w-full h-96 object-cover rounded-lg"
             />
             <div className="absolute top-1/2 left-4 transform -translate-y-1/2">
-              <button
+              <Button
                 onClick={handlePrev}
                 className="p-2 bg-white bg-opacity-75 rounded-full shadow-md hover:bg-opacity-100 transition"
               >
                 <ChevronLeft className="w-6 h-6" />
-              </button>
+             </Button>
             </div>
             <div className="absolute top-1/2 right-4 transform -translate-y-1/2">
-              <button
+              <Button
                 onClick={handleNext}
                 className="p-2 bg-white bg-opacity-75 rounded-full shadow-md hover:bg-opacity-100 transition"
               >
                 <ChevronRight className="w-6 h-6" />
-              </button>
+             </Button>
             </div>
           </div>
         </DialogContent>

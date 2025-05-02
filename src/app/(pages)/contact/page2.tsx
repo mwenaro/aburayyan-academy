@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 const contactSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -77,13 +78,13 @@ const ContactPage: React.FC = () => {
           )}
         </div>
 
-        <button
+        <Button
           type="submit"
           className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
           disabled={isSubmitting}
         >
           {isSubmitting ? "Sending..." : "Send Message"}
-        </button>
+       </Button>
       </form>
 
       {/* Physical Address */}

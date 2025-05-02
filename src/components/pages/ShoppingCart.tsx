@@ -64,24 +64,24 @@ export function ShoppingCart({ isOpen, setIsOpen }: ShippingCartProps) {
                 </span>
               </div>
               <div className="flex items-center space-x-2">
-                <button
+                <Button
                   onClick={() => handleIncrease(item._id)}
                   className="bg-blue-500 text-white px-2 py-1 rounded"
                 >
                   +
-                </button>
-                <button
+               </Button>
+                <Button
                   onClick={() => handleDecrease(item._id)}
                   className="bg-blue-500 text-white px-2 py-1 rounded"
                 >
                   -
-                </button>
-                <button
+               </Button>
+                <Button
                   onClick={() => handleRemove(item._id)}
                   className="bg-red-500 text-white px-2 py-1 rounded"
                 >
                   Remove
-                </button>
+               </Button>
               </div>
             </div>
           </li>

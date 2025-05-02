@@ -31,12 +31,12 @@ export default function CategorySection() {
 
       {/* For small devices: Dropdown menu */}
       <div className="block sm:hidden">
-        <button
+        <Button
           className="bg-primary text-white p-2 rounded-md w-full text-left"
           onClick={toggleDropdown}
         >
           {dropdownOpen ? "Hide Categories" : "Show Categories"}
-        </button>
+       </Button>
 
         {dropdownOpen && (
           <div className="mt-4">

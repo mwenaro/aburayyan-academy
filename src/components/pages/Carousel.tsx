@@ -3,6 +3,7 @@
 import React, { useState, useEffect,  useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import { Button } from "../ui/button";
 
 interface CarouselProps {
   images: string[];
@@ -91,7 +92,7 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
         </div>
 
         {/* Previous Button */}
-        <button
+        <Button
           onClick={handlePrev}
           className="inline-flex items-center justify-center text-sm font-medium border border-input h-8 w-8 absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/50 p-2 shadow transition-colors hover:bg-white z-10"
         >
@@ -110,10 +111,10 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
             <path d="M12 19L5 12l7-7" />
           </svg>
           <span className="sr-only">Previous slide</span>
-        </button>
+       </Button>
 
         {/* Next Button */}
-        <button
+        <Button
           onClick={handleNext}
           className="inline-flex items-center justify-center text-sm font-medium border border-input h-8 w-8 absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/50 p-2 shadow transition-colors hover:bg-white z-10"
         >
@@ -133,7 +134,7 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
             <path d="M12 5l7 7-7 7" />
           </svg>
           <span className="sr-only">Next slide</span>
-        </button>
+       </Button>
       </div>
     </section>
   );

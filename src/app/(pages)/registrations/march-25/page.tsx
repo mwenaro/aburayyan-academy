@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { ICourseRegistration } from "@/models/CourseRegistration";
+import { Button } from "@/components/ui/button";
 const BASE_URL = "/api/v1/ict/courses/march-25";
 
 export default function Dashboard() {
@@ -60,19 +61,19 @@ export default function Dashboard() {
                 <td className="p-2">{reg.gender}</td>
                 {/* <td className="p-2">{reg.session}</td> */}
                 <td className="p-2 hidden lg:table-cell">
-                  <button
+                  <Button
                   disabled
                     className="bg-red-500 text-white px-3 py-1 mr-2 rounded"
                     onClick={() => handleDelete(reg._id as string)}
                   >
                     Delete
-                  </button>
-                  {/* <button
+                 </Button>
+                  {/* <Button
                     className="bg-blue-500 text-white px-3 py-1 rounded"
                     // Attach edit functionality as needed
                   >
                     Edit
-                  </button> */}
+                 </Button> */}
                 </td>
               </tr>
             ))}

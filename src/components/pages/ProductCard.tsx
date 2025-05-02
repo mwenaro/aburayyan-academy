@@ -1,6 +1,7 @@
 "use client"
 import Image from "next/image";
 import React from "react";
+import { Button } from "../ui/button";
 
 interface ProductCardProps {
  
@@ -42,9 +43,9 @@ export function ProductCard({ image, name, description, price , onClick}: Produc
         <p className="text-muted-foreground text-sm mb-4">{description} </p>
         <div className="flex items-center justify-between">
           <span className="text-lg font-bold">Ksh. {Math.round(price)}</span>
-          <button onClick={onClick} className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-9 rounded-md px-3">
+          <Button onClick={onClick} className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-9 rounded-md px-3">
             Add to Cart
-          </button>
+         </Button>
         </div>
       </div>
     </div>

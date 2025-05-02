@@ -1,4 +1,5 @@
 "use client"
+import { Button } from "@/components/ui/button";
 import React, { useState } from "react";
 
 const FileUploadTest: React.FC = () => {
@@ -46,9 +47,9 @@ const FileUploadTest: React.FC = () => {
     <div style={{ padding: "20px" }}>
       <h1>File Upload Test</h1>
       <input type="file" onChange={handleFileChange} />
-      <button onClick={handleUpload} disabled={isUploading}>
+      <Button onClick={handleUpload} disabled={isUploading}>
         {isUploading ? "Uploading..." : "Upload File"}
-      </button>
+     </Button>
       {uploadResult && <p>{uploadResult}</p>}
     </div>
   );

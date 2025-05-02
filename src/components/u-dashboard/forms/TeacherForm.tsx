@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import InputField from "../InputField";
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
 
 const schema = z.object({
   username: z
@@ -155,9 +156,9 @@ const TeacherForm = ({
           )}
         </div>
       </div>
-      <button className="bg-blue-400 text-white p-2 rounded-md">
+      <Button className="bg-blue-400 text-white p-2 rounded-md">
         {type === "create" ? "Create" : "Update"}
-      </button>
+     </Button>
     </form>
   );
 };
