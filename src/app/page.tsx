@@ -14,7 +14,10 @@ const LandingPage: React.FC = () => (
         src={"/school/teachers/abu-rayyan-teachers-2024-male-sitting.JPG"}
         alt="School Environment"
         layout="fill"
+        // width={1080}
+        // height={1008}
         objectFit="cover"
+        priority
         className="absolute inset-0  w-full "
       />
       <div className="relative z-10 bg-opacity-95 ">
@@ -164,8 +167,8 @@ const LandingPage: React.FC = () => (
           />
           <h3 className="text-xl font-semibold mb-4">After-School Programs</h3>
           <p className="max-w-3xl text-thin text-justify px-2 py-1 text-wrap">
-            We offer enrichment activities including swimming, Scouting, coding, and Quran
-            memorization to enhance student skills and knowledge.
+            We offer enrichment activities including swimming, Scouting, coding,
+            and Quran memorization to enhance student skills and knowledge.
           </p>
         </MyMagicCard>
       </div>

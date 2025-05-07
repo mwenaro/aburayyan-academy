@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from "uuid";
 import nodemailer from "nodemailer";
 import bcrypt from "bcryptjs";
 import {
@@ -12,12 +13,15 @@ export class RegistrationInviteManager {
   constructor() {
     // Initialize Nodemailer transporter
     this.transporter = nodemailer.createTransport({
-      host: "mail.aburayyanacademy.com",
+      host: "dx3b.rcnoc.com",
       port: 587,
       secure: false,
       auth: {
-        user: "system@aburayyanacademy.com",
-        pass: "=[hMoF_O)5XZ",
+        user: "accout-creation@aburayyanacademy.com",
+        pass: "Ac@password",
+      },
+      tls: {
+        rejectUnauthorized: false, // <- allows self-signed certs
       },
     });
   }
@@ -28,13 +32,38 @@ export class RegistrationInviteManager {
    */
   private async generateUniqueCode(): Promise<string> {
     try {
-      const uniqueId = `${Date.now()}-${Math.random()}`; // Combine timestamp and random number for uniqueness
-      const saltRounds = 10; // Number of bcrypt salt rounds
-      const hashedCode = await bcrypt.hash(uniqueId, saltRounds);
-      return hashedCode.replace(/\//g, "-"); // Replace forward slashes to ensure URL safety
+      const token = uuidv4(); // Secure plain token
+      const hashedToken = await bcrypt.hash(token, 10);
+      return hashedToken;
     } catch (error) {
       console.error("Error generating unique code:", error);
       throw new Error("Failed to generate a unique registration code.");
+    }
+  }
+
+  async createAndSendInvite2(name: string, email: string, baseUrl: string) {
+    await dbCon();
+
+    const token = await this.generateUniqueCode();
+    const fullLink = `${baseUrl}/sel-registration/${token}`;
+
+    try {
+      await this.sendEmail(name, email, fullLink);
+    } catch (emailError) {
+      throw new Error("Failed to send registration email.");
+    }
+
+    const invite = new RegistrationInvitation({
+      name,
+      email,
+      token,
+    });
+
+    try {
+      await invite.save();
+      return invite;
+    } catch (saveError) {
+      throw new Error("Failed to save registration invite.");
     }
   }
 
@@ -53,7 +82,7 @@ export class RegistrationInviteManager {
     try {
       const uniqueCode = await this.generateUniqueCode();
       const link = `${baseUrl}/sel-registration/${uniqueCode}`;
-    
+
       const invite = new RegistrationInvitation({ name, email, link });
       await invite.save();
 
@@ -88,7 +117,7 @@ export class RegistrationInviteManager {
   ): Promise<void> {
     try {
       const mailOptions = {
-        from: '"Aburayyan Academy" <system@aburayyanacademy.com>',
+        from: '"Aburayyan Academy" <account-creation@aburayyanacademy.com>',
         to: email,
         subject: "Complete Your Registration",
         html: `
@@ -107,41 +136,32 @@ export class RegistrationInviteManager {
     }
   }
 
-  /**
-   * Confirms if an invitation is valid (not expired) and matches the hashed link.
-   * @param link - Registration link
-   * @returns The confirmed invitation document if valid
-   */
-  async confirmInvitation(
-    link: string
-  ): Promise<IRegistrationInvitation | null> {
+  async confirmInvitation(token: string): Promise<IRegistrationInvitation> {
     await dbCon();
-    try {
-      const [baseUrl] = link.split("/sel-registration");
-      const hashedCode = link
-        .replace(`${baseUrl}/sel-registration/`, "")
-        .replace(/-/g, "/"); // Reverse URL-safe transformation
-     
-      const invite = await RegistrationInvitation.findOne({ link });
-      if (!invite) {
-        throw new Error("Invalid or expired invitation.");
-      }
 
-      const isValid = await bcrypt.compare(hashedCode, invite.link);
-      if (!isValid) {
-        throw new Error("Invalid registration link.");
-      }
+    const invites = await RegistrationInvitation.find(); // Scan all invites
+    const matchedInvite = await Promise.any(
+      invites.map(async (invite) => {
+        const isMatch = await bcrypt.compare(token, invite.token);
+        return isMatch ? invite : Promise.reject();
+      })
+    ).catch(() => null);
 
-      if (new Date() > invite.expiresAt) {
-        await invite.deleteOne(); // Clean up expired invite
-        throw new Error("This invitation has expired.");
-      }
-
-      return invite;
-    } catch (error) {
-      console.error("Error confirming invitation:", error);
-      throw new Error("Failed to confirm the registration invitation.");
+    if (!matchedInvite) {
+      throw new Error("Invalid or expired invitation.");
     }
+
+    if (new Date() > matchedInvite.expiresAt) {
+      await matchedInvite.deleteOne();
+      throw new Error("This invitation has expired.");
+    }
+
+    return matchedInvite;
+  }
+
+  // remove confired invitation
+  async removeConfirmedInvites(id: string) {
+    await RegistrationInvitation.findByIdAndDelete(id);
   }
 }
 

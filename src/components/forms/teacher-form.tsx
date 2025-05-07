@@ -1,271 +1,268 @@
-'use client';
-import * as z from 'zod';
-import { useState } from 'react';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { Trash } from 'lucide-react';
-import { useParams, useRouter } from 'next/navigation';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+"use client";
+
+import * as z from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 import {
   Form,
-  FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
-} from '@/components/ui/form';
-import { Separator } from '@/components/ui/separator';
-import { Heading } from '@/components/ui/heading';
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import {
   Select,
+  SelectTrigger,
+  SelectValue,
   SelectContent,
   SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
-// import FileUpload from "@/components/FileUpload";
-import { useToast } from '../ui/use-toast';
-import FileUpload from '../file-upload';
-const ImgSchema = z.object({
-  fileName: z.string(),
-  name: z.string(),
-  fileSize: z.number(),
-  size: z.number(),
-  fileKey: z.string(),
-  key: z.string(),
-  fileUrl: z.string(),
-  url: z.string()
-});
-export const IMG_MAX_LIMIT = 3;
-const formSchema = z.object({
-  name: z
-    .string()
-    .min(3, { message: 'teacher Name must be at least 3 characters' }),
-  imgUrl: z
-    .array(ImgSchema)
-    .max(IMG_MAX_LIMIT, { message: 'You can only add up to 3 images' })
-    .min(1, { message: 'At least one image must be added.' }),
-  description: z
-    .string()
-    .min(3, { message: 'teacher description must be at least 3 characters' }),
-  price: z.coerce.number(),
-  category: z.string().min(1, { message: 'Please select a category' })
+} from "@/components/ui/select";
+// import FileUpload from "../file-upload";
+import { useToast } from "../ui/use-toast";
+
+// const ImgSchema = z.object({
+//   fileName: z.string(),
+//   name: z.string(),
+//   fileSize: z.number(),
+//   size: z.number(),
+//   fileKey: z.string(),
+//   key: z.string(),
+//   fileUrl: z.string(),
+//   url: z.string(),
+// });
+
+const teacherFormSchema = z.object({
+  name: z.string().min(3),
+  email: z.string().email(),
+  phone: z.string().min(10),
+  // imgUrl: z.array(ImgSchema).min(1),
+  qualifications: z.string().min(3),
+  // subjects: z.array(z.string()).min(1),
+  // responsibility: z.discriminatedUnion("type", [
+  //   z.object({
+  //     type: z.literal("class-teacher"),
+  //     classId: z.string().min(1, "Class ID required"),
+  //   }),
+  //   z.object({
+  //     type: z.literal("subject-teacher"),
+  //     subjectId: z.string().min(1, "Subject ID required"),
+  //   }),
+  // ]),
 });
 
-type teacherFormValues = z.infer<typeof formSchema>;
+type TeacherFormValues = z.infer<typeof teacherFormSchema>;
 
 interface teacherFormProps {
   initialData: any | null;
- 
+
   // subCategories:any
 }
 
-export const TeachersForm: React.FC<teacherFormProps> = ({
-  initialData
-
-}) => {
-  const params = useParams();
-  const router = useRouter();
+export const TeacherForm: React.FC<teacherFormProps> = ({ initialData }) => {
   const { toast } = useToast();
-  const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [imgLoading, setImgLoading] = useState(false);
-  const title = initialData ? 'Edit teacher' : 'Create teacher';
-  const description = initialData ? 'Edit a teacher.' : 'Add a new teacher';
-  const toastMessage = initialData ? 'teacher updated.' : 'teacher created.';
-  const action = initialData ? 'Save changes' : 'Create';
-
   const defaultValues = initialData
     ? initialData
     : {
-        name: '',
-        description: '',
-        price: 0,
-        imgUrl: [],
-        category: ''
+        name: "",
+        email: "",
+        phone: "",
+        // imgUrl: [],
+        qualifications: "",
+        // subjects: [],
+        // responsibility: {
+        //   type: "class-teacher",
+        //   classId: "",
+        // },
       };
 
-  const form = useForm<teacherFormValues>({
-    resolver: zodResolver(formSchema),
-    defaultValues
+  const form = useForm<TeacherFormValues>({
+    resolver: zodResolver(teacherFormSchema),
+    defaultValues,
   });
 
-  const onSubmit = async (data: teacherFormValues) => {
+  // const responsibilityType = form.watch("responsibility.type");
+
+  const onSubmit = async (values: TeacherFormValues) => {
     try {
       setLoading(true);
-      if (initialData) {
-        // await axios.post(`/api/teachers/edit-teacher/${initialData._id}`, data);
-      } else {
-        // const res = await axios.post(`/api/teachers/create-teacher`, data);
-        // console.log("teacher", res);
-      }
-      router.refresh();
-      router.push(`/dashboard/teachers`);
+      console.log("Submitting teacher data:", values);
+      // await axios.post('/api/teachers', values);
+      toast({ title: "Success", description: "Teacher saved successfully" });
+    } catch (err) {
       toast({
-        variant: 'destructive',
-        title: 'Uh oh! Something went wrong.',
-        description: 'There was a problem with your request.'
-      });
-    } catch (error: any) {
-      toast({
-        variant: 'destructive',
-        title: 'Uh oh! Something went wrong.',
-        description: 'There was a problem with your request.'
+        variant: "destructive",
+        title: "Error",
+        description: "Could not save teacher.",
       });
     } finally {
       setLoading(false);
     }
   };
-
-  const onDelete = async () => {
-    try {
-      setLoading(true);
-      //   await axios.delete(`/api/${params.storeId}/teachers/${params.teacherId}`);
-      router.refresh();
-      router.push(`/${params.storeId}/teachers`);
-    } catch (error: any) {
-    } finally {
-      setLoading(false);
-      setOpen(false);
-    }
-  };
-
-  const triggerImgUrlValidation = () => form.trigger('imgUrl');
 
   return (
-    <>
-      {/* <AlertModal
-        isOpen={open}
-        onClose={() => setOpen(false)}
-        onConfirm={onDelete}
-        loading={loading}
-      /> */}
-      <div className="flex items-center justify-between">
-        <Heading title={title} description={description} />
-        {initialData && (
-          <Button
-            disabled={loading}
-            variant="destructive"
-            size="sm"
-            onClick={() => setOpen(true)}
-          >
-            <Trash className="h-4 w-4" />
-          </Button>
-        )}
-      </div>
-      <Separator />
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="w-full space-y-8"
-        >
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        {/* <FormField
+          control={form.control}
+          name="imgUrl"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Image</FormLabel>
+              <FormControl>
+                <FileUpload
+                  value={field.value}
+                  onChange={field.onChange}
+                  onRemove={field.onChange}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        /> */}
+
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Name</FormLabel>
+              <FormControl>
+                <Input placeholder="Full name" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input type="email" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="phone"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Phone</FormLabel>
+              <FormControl>
+                <Input type="tel" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="qualifications"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Qualifications</FormLabel>
+              <FormControl>
+                <Input placeholder="e.g., B.Ed, M.Ed" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {/* <FormField
+          control={form.control}
+          name="subjects"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Subjects</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Comma-separated (e.g., Math, English)"
+                  value={field.value.join(", ")}
+                  onChange={(e) =>
+                    field.onChange(
+                      e.target.value.split(",").map((s) => s.trim())
+                    )
+                  }
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        /> */}
+
+        {/* <FormField
+          control={form.control}
+          name="responsibility.type"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Responsibility Type</FormLabel>
+              <Select onValueChange={field.onChange} value={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select type" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="class-teacher">Class Teacher</SelectItem>
+                  <SelectItem value="subject-teacher">
+                    Subject Teacher
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        /> */}
+
+        {/* {responsibilityType === "class-teacher" && (
           <FormField
             control={form.control}
-            name="imgUrl"
+            name="responsibility.classId"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Images</FormLabel>
+                <FormLabel>Class ID</FormLabel>
                 <FormControl>
-                  <FileUpload
-                    onChange={field.onChange}
-                    value={field.value}
-                    onRemove={field.onChange}
-                  />
+                  <Input {...field} placeholder="Enter class ID" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <div className="gap-8 md:grid md:grid-cols-3">
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Name</FormLabel>
-                  <FormControl>
-                    <Input
-                      disabled={loading}
-                      placeholder="teacher name"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Description</FormLabel>
-                  <FormControl>
-                    <Input
-                      disabled={loading}
-                      placeholder="teacher description"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="price"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Price</FormLabel>
-                  <FormControl>
-                    <Input type="number" disabled={loading} {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="category"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Category</FormLabel>
-                  <Select
-                    disabled={loading}
-                    onValueChange={field.onChange}
-                    value={field.value}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue
-                          defaultValue={field.value}
-                          placeholder="Select a category"
-                        />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {/* @ts-ignore  */}
-                      {categories.map((category) => (
-                        <SelectItem key={category._id} value={category._id}>
-                          {category.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          <Button disabled={loading} className="ml-auto" type="submit">
-            {action}
-          </Button>
-        </form>
-      </Form>
-    </>
+        )}
+
+        {responsibilityType === "subject-teacher" && (
+          <FormField
+            control={form.control}
+            name="responsibility.subjectId"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Subject ID</FormLabel>
+                <FormControl>
+                  <Input {...field} placeholder="Enter subject ID" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )} */}
+
+        <Button type="submit" disabled={loading}>
+          {loading ? "Saving..." : "Register Teacher"}
+        </Button>
+      </form>
+    </Form>
   );
 };

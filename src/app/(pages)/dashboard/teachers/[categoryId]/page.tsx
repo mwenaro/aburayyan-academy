@@ -1,6 +1,5 @@
 import { Breadcrumbs } from "@/components/breadcrumbs";
-import { TeachersForm } from "@/components/forms/teacher-form";
-
+import { TeacherForm } from "@/components/forms/teacher-form";
 import PageContainer from "@/components/layout/page-container";
 
 import { User } from "@/models/User";
@@ -22,7 +21,7 @@ export default async function Page({ params: { categoryId } }: any) {
     <PageContainer scrollable={true}>
       <div className="space-y-4">
         <Breadcrumbs items={breadcrumbItems} />
-        <TeachersForm
+        <TeacherForm
          
           
           initialData={initData}

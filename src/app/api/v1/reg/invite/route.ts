@@ -7,8 +7,6 @@ export async function GET(req: NextRequest) {
   try {
     await dbCon();
     const fetchedInvitations = await RegistrationInvitation.find({});
-    // if (!fetchedInvitations.length)
-    //   return NextResponse.json(fetchedInvitations, { status: 404 });
     return NextResponse.json(fetchedInvitations);
   } catch (error: any) {
     return NextResponse.json(
@@ -24,7 +22,7 @@ export async function POST(req: NextRequest) {
     const { name, email } = await req.json();
     await dbCon();
 
-    const baseUrl = `${req.nextUrl.host}`;
+    const baseUrl = `${req.nextUrl.origin}`;
     await registrationInviteManager.createAndSendInvite(name, email, baseUrl);
 
     return NextResponse.json(
