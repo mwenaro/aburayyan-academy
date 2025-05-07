@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
-import { IUser } from "./User";
+
 
 // Define the TypeScript interface for a Student document
 export interface IStudent extends Document {
@@ -16,6 +16,7 @@ export interface IStudent extends Document {
     county: string;
     nationality: string;
     street: string;
+    image?:string
   };
   createdAt?: Date;
   updatedAt?: Date;
