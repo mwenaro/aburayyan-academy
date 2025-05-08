@@ -1,3 +1,4 @@
+import { studentsData } from "@/lib/data";
 import { dbCon } from "@/libs/mongoose/dbCon";
 import { School } from "@/models/School";
 import { Student } from "@/models/Student";
@@ -7,8 +8,8 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest) {
   try {
     await dbCon();
-    const fetchedStudents = await Student.find({});
-
+    const fetchedStudents = await Student.find({}).populate('class');
+console.log({fetchedStudents})
     return NextResponse.json(fetchedStudents);
   } catch (error: any) {
     return NextResponse.json({ error: error }, { status: 500 });

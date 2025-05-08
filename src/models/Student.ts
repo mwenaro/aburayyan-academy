@@ -1,3 +1,4 @@
+import { strCapitalize } from "@/libs/str_functions";
 import mongoose, { Schema, Document, Model } from "mongoose";
 
 
@@ -43,7 +44,7 @@ const studentSchema: Schema<IStudent> = new Schema(
       phone: { type: String, required: true, default: "" },
     },
     guardians: [
-      { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+      { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     ],
     address: {
       town: { type: String, required: true, default: "Mombasa" },
@@ -59,6 +60,12 @@ const studentSchema: Schema<IStudent> = new Schema(
 
 // Pre-save hook to generate regno
 studentSchema.pre("save", async function (next) {
+// capitalize some fields
+if (this.isModified('name') && this.name) {
+  this.name = strCapitalize(this.name);
+}
+
+
   if (!this.regno) {
     const currentYear = new Date().getFullYear();
 
@@ -84,6 +91,7 @@ studentSchema.pre("save", async function (next) {
     // Generate the new regno
     this.regno = `abu/s/${currentYear}/${String(nextNumber).padStart(3, "0")}`;
   }
+  
   next();
 });
 

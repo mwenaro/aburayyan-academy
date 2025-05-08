@@ -10,6 +10,7 @@ const breadcrumbItems = [
 ];
 export default async function page() {
   const myData = await getData('/v1/student');
+  console.log({myData})
 
   return (
     <PageContainer>

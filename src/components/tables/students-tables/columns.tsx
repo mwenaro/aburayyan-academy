@@ -4,6 +4,8 @@ import { ColumnDef } from "@tanstack/react-table";
 import { CellAction } from "./cell-action";
 import { IStudent } from "@/models/Student";
 import Image from "next/image";
+import { IClass } from "@/models/Class";
+import { strCapitalize } from "@/libs/str_functions";
 
 export const columns: ColumnDef<IStudent>[] = [
   {
@@ -28,13 +30,22 @@ export const columns: ColumnDef<IStudent>[] = [
   {
     accessorKey: "photo",
     header: "PIC",
-    cell: ({ row }) => (
+    cell: ({
+      row: {
+        original: { photo, gen },
+      },
+    }) => (
       <div className="flex justify-center items-center">
         <Image
           width={100}
           height={100}
-          src={row.original.photo || ""}
-          alt={row.original.name}
+          src={
+            photo ||
+            `/school/avatars/${gen
+              .toLocaleLowerCase()
+              .trim()}-student-avatar.png`
+          }
+          alt={"student photo"}
           className="w-16 h-16 object-cover"
         />
       </div>
@@ -45,14 +56,25 @@ export const columns: ColumnDef<IStudent>[] = [
     header: "NAME",
   },
   {
+    accessorKey: "gen",
+    header: "GENDER",
+  },
+  {
     accessorKey: "grade",
     header: "GRADE",
+    cell: ({
+      row: {
+        original: { class: cls },
+      },
+    }) => {
+      <>{strCapitalize((cls as unknown as IClass).name)}</>;
+    },
   },
   {
     accessorKey: "phone",
     header: "TEL",
   },
-  
+
   {
     id: "actions",
     cell: ({ row }) => <CellAction data={row.original} />,
