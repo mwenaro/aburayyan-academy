@@ -31,7 +31,10 @@ import { Separator } from "../ui/separator";
 
 const studentFormSchema = z.object({
   name: z.string().min(3),
-  dob: z.string(),
+  dob: z.coerce.date({
+    required_error: "Date of birth is required",
+    invalid_type_error: "Invalid date",
+  }),
   gen: z.enum(["male", "female"]),
   contactDetails: z.object({
     phone: z.string().min(10),
@@ -71,7 +74,7 @@ export const StudentForm: React.FC<StudentFormProps> = ({
 
   const defaultValues = initialData || {
     name: "",
-    dob: "",
+    dob: '',
     gen: "male",
     contactDetails: {
       phone: "",
@@ -185,7 +188,7 @@ export const StudentForm: React.FC<StudentFormProps> = ({
               </FormItem>
             )}
           />
-          <FormField
+          {/* <FormField
             control={form.control}
             name="dob"
             render={({ field }) => (
@@ -193,6 +196,26 @@ export const StudentForm: React.FC<StudentFormProps> = ({
                 <FormLabel>Date of Birth</FormLabel>
                 <FormControl>
                   <Input type="date" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          /> */}
+          <FormField
+            control={form.control}
+            name="dob"
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-2 w-[300px]">
+                <FormLabel>Date of Birth</FormLabel>
+                <FormControl>
+                  <input
+                    type="date"
+                    value={
+                      field.value ? field.value.toISOString().split("T")[0] : ""
+                    }
+                    onChange={(e) => field.onChange(new Date(e.target.value))}
+                    className="input-class"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
         };
       });
     }
-    console.log({ body });
+
     const savedStudents = await Student.insertMany(body);
 
     return NextResponse.json(
