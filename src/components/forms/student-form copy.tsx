@@ -31,18 +31,15 @@ import { Separator } from "../ui/separator";
 
 const studentFormSchema = z.object({
   name: z.string().min(3),
-  dob: z.string(),
+  dob: z.string(), // ISO date string
   gen: z.enum(["male", "female"]),
-  contactDetails: z.object({
-    phone: z.string().min(10),
-  }),
-  class: z.string().min(1),
-  address: z.object({
-    town: z.string().min(1),
-    county: z.string().min(1),
-    nationality: z.string().min(1),
-    street: z.string().min(1),
-  }),
+  phone: z.string().min(10),
+ class: z.string().min(1),
+  town: z.string().min(1),
+  county: z.string().min(1),
+  nationality: z.string().min(1),
+  street: z.string().min(1),
+  // guardians: z.array(z.string()).min(1, "At least one guardian is required"),
 });
 
 type StudentFormValues = z.infer<typeof studentFormSchema>;
@@ -73,16 +70,13 @@ export const StudentForm: React.FC<StudentFormProps> = ({
     name: "",
     dob: "",
     gen: "male",
-    contactDetails: {
-      phone: "",
-    },
+    phone: "",
     class: "",
-    address: {
-      town: "Mombasa",
-      county: "Mombasa",
-      nationality: "kenyan",
-      street: "",
-    },
+    town: "Mombasa",
+    county: "Mombasa",
+    nationality: "kenyan",
+    street: "",
+    // guardians: [],
   };
 
   const form = useForm<StudentFormValues>({
@@ -219,7 +213,19 @@ export const StudentForm: React.FC<StudentFormProps> = ({
               </FormItem>
             )}
           />
-
+          <FormField
+            control={form.control}
+            name="phone"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Phone</FormLabel>
+                <FormControl>
+                  <Input type="tel" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="class"
@@ -277,21 +283,7 @@ export const StudentForm: React.FC<StudentFormProps> = ({
         /> */}
           <FormField
             control={form.control}
-            name="contactDetails.phone"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Phone</FormLabel>
-                <FormControl>
-                  <Input type="tel" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="address.town"
+            name="town"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Town</FormLabel>
@@ -304,7 +296,7 @@ export const StudentForm: React.FC<StudentFormProps> = ({
           />
           <FormField
             control={form.control}
-            name="address.county"
+            name="county"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>County</FormLabel>
@@ -317,7 +309,7 @@ export const StudentForm: React.FC<StudentFormProps> = ({
           />
           <FormField
             control={form.control}
-            name="address.nationality"
+            name="nationality"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Nationality</FormLabel>
@@ -330,7 +322,7 @@ export const StudentForm: React.FC<StudentFormProps> = ({
           />
           <FormField
             control={form.control}
-            name="address.street"
+            name="street"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Street</FormLabel>
@@ -341,7 +333,6 @@ export const StudentForm: React.FC<StudentFormProps> = ({
               </FormItem>
             )}
           />
-
           <Button disabled={loading} className="ml-auto" type="submit">
             {action}
           </Button>

@@ -10,9 +10,10 @@ export const getData = async (path: string) => {
     const res = await axios.get(formatedUrl);
 
     data = (await res?.data) || (await res?.data?.data) || [];
+    console.log({ data, then: 1 });
   } catch (error: any) {
     console.log("Featch Er : " + error.message);
   } finally {
-    return data;
+    return await data;
   }
 };

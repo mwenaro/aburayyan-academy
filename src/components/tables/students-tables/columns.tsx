@@ -54,6 +54,9 @@ export const columns: ColumnDef<IStudent>[] = [
   {
     accessorKey: "name",
     header: "NAME",
+    cell:({row:{original:{name}}})=>(
+      <>{strCapitalize(name)}</>
+    )
   },
   {
     accessorKey: "gen",
@@ -64,15 +67,17 @@ export const columns: ColumnDef<IStudent>[] = [
     header: "GRADE",
     cell: ({
       row: {
-        original: { class: cls },
+        original: { class:cls },
       },
     }) => {
-      <>{strCapitalize((cls as unknown as IClass).name)}</>;
+      <>{strCapitalize((cls as unknown as IClass)?.name)}</>;
     },
   },
   {
     accessorKey: "phone",
     header: "TEL",
+
+    cell:({row})=><>{row.original.contactDetails.phone || ''}</>
   },
 
   {

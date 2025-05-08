@@ -1,7 +1,6 @@
 import { strCapitalize } from "@/libs/str_functions";
 import mongoose, { Schema, Document, Model } from "mongoose";
 
-
 // Define the TypeScript interface for a Student document
 export interface IStudent extends Document {
   name: string;
@@ -17,7 +16,7 @@ export interface IStudent extends Document {
     county: string;
     nationality: string;
     street: string;
-    image?:string
+    image?: string;
   };
   createdAt?: Date;
   updatedAt?: Date;
@@ -43,14 +42,12 @@ const studentSchema: Schema<IStudent> = new Schema(
     contactDetails: {
       phone: { type: String, required: true, default: "" },
     },
-    guardians: [
-      { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    ],
+    guardians: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     address: {
       town: { type: String, required: true, default: "Mombasa" },
       county: { type: String, required: true, default: "Mombasa" },
       nationality: { type: String, required: true, default: "kenyan" },
-      street: { type: String, required: true, default: "" },
+      street: { type: String,  default: "" },
     },
   },
   {
@@ -60,11 +57,10 @@ const studentSchema: Schema<IStudent> = new Schema(
 
 // Pre-save hook to generate regno
 studentSchema.pre("save", async function (next) {
-// capitalize some fields
-if (this.isModified('name') && this.name) {
-  this.name = strCapitalize(this.name);
-}
-
+  // capitalize some fields
+  if (this.isModified("name") && this.name) {
+    this.name = strCapitalize(this.name);
+  }
 
   if (!this.regno) {
     const currentYear = new Date().getFullYear();
@@ -91,7 +87,7 @@ if (this.isModified('name') && this.name) {
     // Generate the new regno
     this.regno = `abu/s/${currentYear}/${String(nextNumber).padStart(3, "0")}`;
   }
-  
+
   next();
 });
 

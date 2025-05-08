@@ -1,6 +1,7 @@
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { StudentForm } from "@/components/forms/student-form";
 import PageContainer from "@/components/layout/page-container";
+import { strCapitalize } from "@/libs/str_functions";
 import { ClassModel } from "@/models/Class";
 
 import { Student } from "@/models/Student";
@@ -13,12 +14,12 @@ const breadcrumbItems = [
   { title: "Students", link: "/dashboard/students" },
   { title: "Create", link: "/dashboard/students/create" },
 ];
-export default async function Page({ params: { categoryId } }: any) {
+export default async function Page({ params: { studentId } }: any) {
   const initData =
-    categoryId !== "new" ? await Student.findById(categoryId) : null;
+    studentId !== "new" ? await Student.findById(studentId) : null;
   const classes = (await ClassModel.find({})).map((cls) => ({
     id: cls._id,
-    name: cls.name,
+    name: strCapitalize(cls.name),
   }));
 
   return (
