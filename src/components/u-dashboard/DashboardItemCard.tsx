@@ -35,7 +35,7 @@ export const DashboardItemCard: React.FC<DashboardItemCardProps> = ({
         )}
       </CardHeader>
       <CardContent className="flex flex-col gap-2">
-        <div className="text-2xl font-bold">{value}</div>
+        <div className="text-2xl font-bold text-center">{value}</div>
         <p className="text-xs text-muted-foreground">{dev}</p>
       </CardContent>
     </Card>

@@ -60,6 +60,7 @@ export default function DashboardHomePage() {
                   title="No. Students"
                   value={students.length}
                   icon={<GraduationCap />}
+                  dev=""
                 />
               </Link>
               {/* classes */}
@@ -68,6 +69,7 @@ export default function DashboardHomePage() {
                   title="No. Classes"
                   value={classes.length}
                   icon={<GraduationCapIcon />}
+                  dev=""
                 />
               </Link>
               <Link href="/dashboard/teachers">
@@ -79,6 +81,7 @@ export default function DashboardHomePage() {
                       <PersonIcon /> <PersonIcon />
                     </span>
                   }
+                  dev=""
                 />
               </Link>
               <Link href="/dashboard/subjects">
@@ -86,6 +89,7 @@ export default function DashboardHomePage() {
                   title="No. Subjects"
                   value={0}
                   icon={<GraduationCap />}
+                  dev=""
                 />
               </Link>
             </div>
