@@ -132,13 +132,13 @@ export const navItems: NavItem[] = [
     label: 'student'
   },
   {
-    title: 'Subjects',
+    title: 'Learning Areas',
     href: '/dashboard/subjects',
     icon: 'subject',
     label: 'subject'
   },
    {
-    title: 'Classes',
+    title: 'Grades',
     href: '/dashboard/classes',
     icon: 'class',
     label: 'class'

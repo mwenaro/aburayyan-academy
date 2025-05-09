@@ -52,7 +52,7 @@ export default function DashboardHomePage() {
               {/* students */}
               <Link href="/dashboard/students">
                 <DashboardItemCard
-                  title="No. Students"
+                  title="No. of Students"
                   value={students.length}
                   icon={<GraduationCap />}
                   dev=""
@@ -61,7 +61,7 @@ export default function DashboardHomePage() {
               {/* classes */}
               <Link href="/dashboard/classes">
                 <DashboardItemCard
-                  title="No. Classes"
+                  title="No. of Grades"
                   value={classes.length}
                   icon={<FaBuildingColumns />}
                   dev=""
@@ -69,7 +69,7 @@ export default function DashboardHomePage() {
               </Link>
               <Link href="/dashboard/teachers">
                 <DashboardItemCard
-                  title="No. Teachers"
+                  title="No. of Teachers"
                   value={teachers.length}
                   icon={<GiTeacher />}
                   dev=""
@@ -77,7 +77,7 @@ export default function DashboardHomePage() {
               </Link>
               <Link href="/dashboard/subjects">
                 <DashboardItemCard
-                  title="No. Subjects"
+                  title="No. of Learning Areas"
                   value={0}
                   icon={<MdLibraryBooks />}
                   dev=""

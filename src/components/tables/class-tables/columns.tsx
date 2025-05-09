@@ -27,7 +27,7 @@ export const columns: ColumnDef<IClass>[] = [
 
   {
     accessorKey: "name",
-    header: "CLASS",
+    header: "GRADE",
   },
 
   {
