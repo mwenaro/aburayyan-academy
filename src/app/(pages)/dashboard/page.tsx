@@ -22,7 +22,7 @@ import { PersonIcon } from "@radix-ui/react-icons";
 import { GraduationCap, GraduationCapIcon } from "lucide-react";
 import { useEffect } from "react";
 
-export default function page() {
+export default function DashboardHomePage() {
   const { fetchStudents, students } = useStudentStore();
   const { teachers, fetchTeachers } = useTeacherStore();
   const { classes, fetchClasses } = useClassStore();
@@ -31,7 +31,7 @@ export default function page() {
     fetchStudents();
     fetchTeachers();
     fetchClasses();
-  }, [students, teachers, classes]);
+  }, [fetchClasses, fetchStudents, fetchTeachers]);
   return (
     <PageContainer scrollable={true}>
       <div className="space-y-2">
@@ -68,7 +68,11 @@ export default function page() {
               <DashboardItemCard
                 title="No. Teachers"
                 value={teachers.length}
-                icon={<span><PersonIcon /> <PersonIcon /> </span>}
+                icon={
+                  <span>
+                    <PersonIcon /> <PersonIcon />{" "}
+                  </span>
+                }
               />
               <DashboardItemCard
                 title="No. Subjects"
