@@ -19,8 +19,8 @@ export const ClassClient: React.FC<ClassesClientProps> = ({ data }) => {
     <>
       <div className="flex items-start justify-between">
         <Heading
-          title={`Classs (${(data || []).length})`}
-          description="Manage Classs (Client side table functionalities.)"
+          title={`Grades (${(data || []).length})`}
+          description="Manage Classs/Grade (Client side table functionalities.)"
         />
         <Button
           className="text-xs md:text-sm"

@@ -6,7 +6,7 @@ import { getData } from "@/libs/get-data";
 
 const breadcrumbItems = [
   { title: "Dashboard", link: "/dashboard" },
-  { title: "Classes", link: "/dashboard/classes" },
+  { title: "Grades", link: "/dashboard/classes" },
 ];
 export default async function page() {
   const myData = await getData('/v1/class');

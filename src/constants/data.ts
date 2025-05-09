@@ -135,13 +135,13 @@ export const navItems: NavItem[] = [
     title: 'Learning Areas',
     href: '/dashboard/subjects',
     icon: 'subject',
-    label: 'subject'
+    label: 'learning areas'
   },
    {
     title: 'Grades',
     href: '/dashboard/classes',
     icon: 'class',
-    label: 'class'
+    label: 'grade'
   },
   {
     title: 'Invite',

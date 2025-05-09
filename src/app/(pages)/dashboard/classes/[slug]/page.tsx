@@ -8,7 +8,7 @@ import React from "react";
 
 const breadcrumbItems = [
   { title: "Dashboard", link: "/dashboard" },
-  { title: "Classes", link: "/dashboard/classes" },
+  { title: "Grades", link: "/dashboard/classes" },
   { title: "Create", link: "/dashboard/classes/create" },
 ];
 export default async function Page({ params: { slug } }: any) {

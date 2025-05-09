@@ -3,11 +3,11 @@ import Header from '@/components/layout/header';
 import Providers from '@/components/layout/providers';
 import Sidebar from '@/components/layout/sidebar';
 // import { ScrollArea } from '@/components/ui/scroll-area';
-import { Toaster } from '@/components/ui/toaster';
+// import { Toaster } from '@/components/ui/toaster';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Abu-rayyan Academy Dashboard',
+  title: 'Abu-Rayyan Academy Dashboard',
   description: 'The official School Admin dashboard '
 };
 
