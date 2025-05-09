@@ -20,6 +20,7 @@ import { useStudentStore } from "@/lib/stores/studentStore";
 import { useTeacherStore } from "@/lib/stores/teacherStore";
 import { PersonIcon } from "@radix-ui/react-icons";
 import { GraduationCap, GraduationCapIcon } from "lucide-react";
+import Link from "next/link";
 import { useEffect } from "react";
 
 export default function DashboardHomePage() {
@@ -54,31 +55,39 @@ export default function DashboardHomePage() {
           <TabsContent value="overview" className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
               {/* students */}
-              <DashboardItemCard
-                title="No. Students"
-                value={students.length}
-                icon={<GraduationCap />}
-              />
+              <Link href="/dashboard/students">
+                <DashboardItemCard
+                  title="No. Students"
+                  value={students.length}
+                  icon={<GraduationCap />}
+                />
+              </Link>
               {/* classes */}
-              <DashboardItemCard
-                title="No. Classes"
-                value={classes.length}
-                icon={<GraduationCapIcon />}
-              />
-              <DashboardItemCard
-                title="No. Teachers"
-                value={teachers.length}
-                icon={
-                  <span>
-                    <PersonIcon /> <PersonIcon />{" "}
-                  </span>
-                }
-              />
-              <DashboardItemCard
-                title="No. Subjects"
-                value={0}
-                icon={<GraduationCap />}
-              />
+              <Link href="/dashboard/classes">
+                <DashboardItemCard
+                  title="No. Classes"
+                  value={classes.length}
+                  icon={<GraduationCapIcon />}
+                />
+              </Link>
+              <Link href="/dashboard/teachers">
+                <DashboardItemCard
+                  title="No. Teachers"
+                  value={teachers.length}
+                  icon={
+                    <span>
+                      <PersonIcon /> <PersonIcon />
+                    </span>
+                  }
+                />
+              </Link>
+              <Link href="/dashboard/subjects">
+                <DashboardItemCard
+                  title="No. Subjects"
+                  value={0}
+                  icon={<GraduationCap />}
+                />
+              </Link>
             </div>
             {/* <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-7">
               <div className="col-span-4">
