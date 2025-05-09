@@ -44,12 +44,12 @@ export async function PUT(req: NextRequest, { params: { id } }: Query) {
 export async function DELETE(req: NextRequest, { params: { id } }: Query) {
   try {
     await dbCon();
-    const updatedStudents = await Student.findByIdAndDelete(id);
+    let deleted =
+      id === "all"
+        ? await Student.deleteMany({})
+        : await Student.findByIdAndDelete(id);
 
-    return NextResponse.json(
-      { success: true, data: updatedStudents },
-      { status: 201 }
-    );
+    return NextResponse.json({ success: true, data: deleted }, { status: 201 });
   } catch (error: any) {
     return NextResponse.json(
       { success: false, message: error.message },

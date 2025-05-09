@@ -9,6 +9,7 @@ import {
   CreditCard,
   File,
   FileText,
+  GraduationCap,
   HelpCircle,
   Image,
   Laptop,
@@ -28,9 +29,12 @@ import {
   User,
   User2Icon,
   UserX2Icon,
-  X
-} from 'lucide-react';
+  X,
+} from "lucide-react";
+import { FaBuildingColumns } from "react-icons/fa6";
 
+import { GiTeacher } from "react-icons/gi";
+import { MdLibraryBooks } from "react-icons/md";
 export type Icon = LucideIcon;
 
 export const Icons = {
@@ -60,6 +64,12 @@ export const Icons = {
   sun: SunMedium,
   moon: Moon,
   laptop: Laptop,
+  // mine
+  teacher: GiTeacher,
+  student: GraduationCap,
+  class: FaBuildingColumns,
+  subject: MdLibraryBooks,
+
   gitHub: ({ ...props }: LucideProps) => (
     <svg
       aria-hidden="true"
@@ -78,5 +88,5 @@ export const Icons = {
     </svg>
   ),
   twitter: Twitter,
-  check: Check
+  check: Check,
 };

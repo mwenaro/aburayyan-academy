@@ -121,26 +121,26 @@ export const navItems: NavItem[] = [
   {
     title: 'Teachers',
     href: '/dashboard/teachers',
-    icon: 'user',
+    icon: 'teacher',
     label: 'teacher'
   },
  
   {
     title: 'Students',
     href: '/dashboard/students',
-    icon: 'user',
+    icon: 'student',
     label: 'student'
   },
   {
     title: 'Subjects',
     href: '/dashboard/subjects',
-    icon: 'user',
+    icon: 'subject',
     label: 'subject'
   },
    {
     title: 'Classes',
     href: '/dashboard/classes',
-    icon: 'user',
+    icon: 'class',
     label: 'class'
   },
   {
@@ -161,12 +161,12 @@ export const navItems: NavItem[] = [
   //   icon: 'employee',
   //   label: 'employee'
   // },
-  {
-    title: 'Profile',
-    href: '/dashboard/profile',
-    icon: 'profile',
-    label: 'profile'
-  },
+  // {
+  //   title: 'Profile',
+  //   href: '/dashboard/profile',
+  //   icon: 'profile',
+  //   label: 'profile'
+  // },
   // {
   //   title: 'Kanban',
   //   href: '/dashboard/kanban',

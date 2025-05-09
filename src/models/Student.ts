@@ -91,6 +91,45 @@ studentSchema.pre("save", async function (next) {
   next();
 });
 
+
+studentSchema.pre("insertMany", async function (next, docs: IStudent[]) {
+  try {
+    for (const doc of docs) {
+      // Capitalize name
+      if (doc.name) {
+        doc.name = strCapitalize(doc.name);
+      }
+
+      // Assign regno if missing
+      if (!doc.regno) {
+        const currentYear = new Date().getFullYear();
+        const StudentModel = mongoose.model<IStudent>("Student");
+
+        // Find the last student (this is simplified; you may want a more robust strategy)
+        const lastStudent = await StudentModel.findOne({
+          regno: new RegExp(`^abu/s/${currentYear}/\\d{3}$`),
+        }).sort({ $natural: -1 });
+
+        let nextNumber = 1;
+        if (lastStudent?.regno) {
+          const match = lastStudent.regno.match(/(\d{3})$/);
+          if (match) {
+            nextNumber = parseInt(match[1], 10) + 1;
+          }
+        }
+
+        doc.regno = `abu/s/${currentYear}/${String(nextNumber).padStart(3, "0")}`;
+        nextNumber++; // Increment for the next doc
+      }
+    }
+
+    next();
+  } catch (err:any) {
+    console.error("insertMany hook error:", err);
+    next(err);
+  }
+});
+
 // Define the Mongoose Model
 export const Student: Model<IStudent> =
   mongoose.models.Student || mongoose.model<IStudent>("Student", studentSchema);

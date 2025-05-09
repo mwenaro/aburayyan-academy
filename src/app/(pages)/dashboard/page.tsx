@@ -7,19 +7,14 @@ import PageContainer from "@/components/layout/page-container";
 import { RecentSales } from "@/components/recent-sales";
 import { DashboardItemCard } from "@/components/u-dashboard/DashboardItemCard";
 // import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { FaBuildingColumns } from "react-icons/fa6";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useClassStore } from "@/lib/stores/classStore";
 import { useStudentStore } from "@/lib/stores/studentStore";
 import { useTeacherStore } from "@/lib/stores/teacherStore";
-import { PersonIcon } from "@radix-ui/react-icons";
-import { GraduationCap, GraduationCapIcon } from "lucide-react";
+import { MdLibraryBooks } from "react-icons/md";
+import { GiTeacher } from "react-icons/gi";
+import { GraduationCap } from "lucide-react";
 import Link from "next/link";
 import { useEffect } from "react";
 
@@ -68,7 +63,7 @@ export default function DashboardHomePage() {
                 <DashboardItemCard
                   title="No. Classes"
                   value={classes.length}
-                  icon={<GraduationCapIcon />}
+                  icon={<FaBuildingColumns />}
                   dev=""
                 />
               </Link>
@@ -76,11 +71,7 @@ export default function DashboardHomePage() {
                 <DashboardItemCard
                   title="No. Teachers"
                   value={teachers.length}
-                  icon={
-                    <span>
-                      <PersonIcon /> <PersonIcon />
-                    </span>
-                  }
+                  icon={<GiTeacher />}
                   dev=""
                 />
               </Link>
@@ -88,7 +79,7 @@ export default function DashboardHomePage() {
                 <DashboardItemCard
                   title="No. Subjects"
                   value={0}
-                  icon={<GraduationCap />}
+                  icon={<MdLibraryBooks />}
                   dev=""
                 />
               </Link>
