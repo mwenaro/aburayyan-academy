@@ -22,7 +22,7 @@ export class Controller<T extends Document> {
 
   async createMany(data: Partial<T>[]): Promise<any[]> {
     await dbCon();
-    return await this.model.insertMany(data);
+    return await this.model.create(data);
   }
 
   async getById(id: string): Promise<T | null> {

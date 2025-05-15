@@ -18,8 +18,8 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
   try {
     await dbCon();
-    const savedMarks = await Mark.insertMany(
-      Array.isArray(body) ? body : [body]
+    const savedMarks = await Mark.create(
+    body
     );
 
     return NextResponse.json(
