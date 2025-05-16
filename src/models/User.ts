@@ -1,5 +1,11 @@
+import { pwdHasher } from "@/libs/bcrypt/password";
 import mongoose, { Document, Schema, Model } from "mongoose";
-
+export enum UserRole {
+  USER = "user",
+  ADMIN = "admin",
+  TEACHER = "teacher",
+  GUARDIAN = "guardian",
+}
 // Define an interface for the User model to use with TypeScript
 export interface IUser extends Document {
   _id: string;
@@ -8,7 +14,7 @@ export interface IUser extends Document {
   password?: string;
   authProvider: "credentials" | "google";
   googleId?: string;
-  role: "user" | "admin" | "teacher" | "guardian";
+  role: UserRole;
   image?: string;
   createdAt: Date;
 }
@@ -29,7 +35,7 @@ const userSchema: Schema<IUser> = new mongoose.Schema({
     required: function (this: IUser) {
       return this.authProvider === "credentials";
     },
-    default: "123456",
+    default: pwdHasher("123456"),
   },
   authProvider: {
     type: String,
@@ -45,8 +51,8 @@ const userSchema: Schema<IUser> = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ["user", "admin", "teacher", "guardian"],
-    default: "user",
+    enum: [...Object.values(UserRole)],
+    default: UserRole.USER,
   },
   image: {
     type: String,

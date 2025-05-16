@@ -1,6 +1,6 @@
 import { IUser, User } from "@/models/User";
 import { Controller } from "./Controller";
-import { pwdHasher } from "@/libs/bcrypt/passord";
+import { pwdHasher } from "@/libs/bcrypt/password";
 
 class UserService extends Controller<IUser> {
   constructor() {
