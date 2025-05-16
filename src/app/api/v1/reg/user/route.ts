@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
   try {
     await dbCon();
-    const savedTrs = await TeacherSubject.insertMany(
+    const savedTrs = await TeacherSubject.create(
       Array.isArray(body) ? body : [body]
     );
 

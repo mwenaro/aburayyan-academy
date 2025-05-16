@@ -19,8 +19,8 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
   try {
     await dbCon();
-    const savedSchools = await School.insertMany(
-      Array.isArray(body) ? body : [body]
+    const savedSchools = await School.create(
+      body
     );
 
     return NextResponse.json(

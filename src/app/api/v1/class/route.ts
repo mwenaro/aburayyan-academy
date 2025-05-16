@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
   }
   // return NextResponse.json({body})
   try {
-    const savedClasses = await ClassModel.insertMany(body);
+    const savedClasses = await ClassModel.create(body);
 
     return NextResponse.json(
       { success: true, data: savedClasses },

@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
   try {
     await dbCon();
-    const savedUsers = await User.insertMany(
+    const savedUsers = await User.create(
       (Array.isArray(body) ? body : [body]).map((tr) => ({
         ...tr,
         role: "teacher",

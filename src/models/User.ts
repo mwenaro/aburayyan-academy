@@ -2,12 +2,13 @@ import mongoose, { Document, Schema, Model } from "mongoose";
 
 // Define an interface for the User model to use with TypeScript
 export interface IUser extends Document {
+  _id: string;
   name: string;
   email: string;
   password?: string;
   authProvider: "credentials" | "google";
   googleId?: string;
-  role: "user" | "admin" | "teacher";
+  role: "user" | "admin" | "teacher" | "guardian";
   image?: string;
   createdAt: Date;
 }
@@ -28,6 +29,7 @@ const userSchema: Schema<IUser> = new mongoose.Schema({
     required: function (this: IUser) {
       return this.authProvider === "credentials";
     },
+    default: "123456",
   },
   authProvider: {
     type: String,
@@ -43,7 +45,7 @@ const userSchema: Schema<IUser> = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ["user", "admin", "teacher"],
+    enum: ["user", "admin", "teacher", "guardian"],
     default: "user",
   },
   image: {
