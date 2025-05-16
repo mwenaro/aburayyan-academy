@@ -1,5 +1,5 @@
-import { User } from "@/models/User"; // Base model with discriminator
-import { pwdConfirm } from "@/libs/bcrypt/passord";
+import { User, UserRole } from "@/models/User"; // Base model with discriminator
+import { pwdConfirm, pwdHasher } from "@/libs/bcrypt/password";
 import { IUser } from "@/models/User";
 import { HydratedDocument } from "mongoose";
 
@@ -8,7 +8,7 @@ export interface AuthenticatedUser {
   name: string;
   email: string;
   image?: string;
-  role: string;
+  role: UserRole;
 }
 
 class AuthService {
@@ -19,7 +19,7 @@ class AuthService {
     const user = (await User.findOne({
       email,
     }).exec()) as HydratedDocument<IUser> | null;
-    console.log({ password, pwd: user?.password });
+
     if (
       !user ||
       !user.password ||
@@ -64,9 +64,10 @@ class AuthService {
         name,
         email,
         image,
-        role: "user", // default role
+        role: UserRole.USER, // default role
         authProvider: "google",
         googleId: id,
+        password: pwdHasher(process.env.USER_DEFAULT_PASSWORD!), //hte default password
       });
     }
 
