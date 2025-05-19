@@ -2,8 +2,6 @@ import CredentialProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { authService } from "./AuthService";
 
-
-
 const authConfig = {
   providers: [
     GoogleProvider({
@@ -26,7 +24,7 @@ const authConfig = {
     }),
   ],
   callbacks: {
-    async signIn({ user, account, profile }:any) {
+    async signIn({ user, account, profile }: any) {
       if (account?.provider === "google") {
         const newUser = await authService.loginWithGoogleProfile({
           id: profile.sub,
@@ -40,14 +38,14 @@ const authConfig = {
 
       return true;
     },
-    async session({ session, token }:any) {
+    async session({ session, token }: any) {
       if (token && session.user) {
         session.user.id = token.sub;
         session.user.role = token.role;
       }
       return session;
     },
-    async jwt({ token, user }:any) {
+    async jwt({ token, user }: any) {
       if (user) {
         token.sub = user.id;
         token.role = user.role;
