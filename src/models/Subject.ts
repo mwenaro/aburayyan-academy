@@ -2,7 +2,7 @@ import mongoose, { Schema, Document, Model } from "mongoose";
 import { ISchool } from "./School"; // Import the ISchool interface
 
 export enum SubjectCategory {
-  PRE_PRIMARY = "PRE-PREMARY",
+  PRE_PRIMARY = "PRE-PRIMARY",
   LOWER_PRIMARY = "LOWER_PRIMARY",
   UPPER_PRIMARY = "UPPER_PRIMARY",
   JUNIOR_SECONDARY = "JUNIOR_SECONDARY",
@@ -50,7 +50,6 @@ SubjectSchema.pre<ISubject>("save", function (next) {
   }
   next();
 });
-
 
 // Create and export the model
 export const Subject: Model<ISubject> =
