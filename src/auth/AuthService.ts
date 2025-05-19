@@ -2,8 +2,13 @@ import { pwdConfirm, pwdHasher } from "@/libs/bcrypt/password";
 import { Guardian } from "@/models/Guardian";
 import { Teacher } from "@/models/Teacher";
 import { User } from "@/models/User";
+import { dbCon } from "@/libs/mongoose/dbCon";
 
 class AuthService {
+  constructor() {
+    // call dbcon
+    (async () => await dbCon())();
+  }
   async findByEmail(email: string) {
     // This returns the correct subclass automatically!
     return await User.findOne({ email });
@@ -14,7 +19,10 @@ class AuthService {
     if (
       !user ||
       !user.password ||
-      !( pwdConfirm(password, process.env.USER_DEFAULT_PASSWORD! ) || await pwdConfirm(password, user.password))
+      !(
+        pwdConfirm(password, process.env.USER_DEFAULT_PASSWORD!) ||
+        (await pwdConfirm(password, user.password))
+      )
     ) {
       return null;
     }
