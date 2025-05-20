@@ -160,14 +160,14 @@ const LandingPage: React.FC = () => (
         <MyMagicCard>
           <Image
             src="/school/home/scouts.jpg"
-            alt="After School Programs"
+            alt="Co-curricular Activities"
             width={2400}
             height={2400}
             className="rounded mb-4 w-full"
           />
-          <h3 className="text-xl font-semibold mb-4">After-School Programs</h3>
+          <h3 className="text-xl font-semibold mb-4">Co-curricular Activities</h3>
           <p className="max-w-3xl text-thin text-justify px-2 py-1 text-wrap">
-            We offer enrichment activities including swimming, Scouting, coding,
+            We offer enrichment activities including swimming, Scouting,Guiding & Counseling,
             and Quran memorization to enhance student skills and knowledge.
           </p>
         </MyMagicCard>
@@ -175,7 +175,7 @@ const LandingPage: React.FC = () => (
     </div>
 
     {/* Testimonials Section */}
-    <div className="py-16 px-10 bg-white">
+    {/* <div className="py-16 px-10 bg-white">
       <h2 className="text-3xl font-bold text-blue-600 text-center mb-6">
         What Parents Say
       </h2>
@@ -210,7 +210,7 @@ const LandingPage: React.FC = () => (
           <p className="text-right mt-4 font-bold">- Yusuf Hassan</p>
         </div>
       </div>
-    </div>
+    </div> */}
 
     {/* Call to Action */}
     <div className="bg-blue-300 text-white py-16 text-center">
