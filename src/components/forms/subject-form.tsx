@@ -61,10 +61,10 @@ export const SubjectForm: React.FC<SubjectFormProps> = ({
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const title = initialData ? "Edit Subject" : "Create Subject";
+  const title = initialData ? "Edit Subject(Learning Area)" : "Create Subject(Learning Area)";
   const description = initialData
-    ? "Edit an existing subject."
-    : "Add a new subject.";
+    ? "Edit an existing subject/Learning Area."
+    : "Add a new subject/Learning Area.";
   const toastMessage = initialData
     ? "Subject updated successfully."
     : "Subject created successfully.";

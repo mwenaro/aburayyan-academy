@@ -30,13 +30,17 @@ export const columns: ColumnDef<IUser>[] = [
     header: "PIC",
     cell: ({ row }) => (
       <div className="flex justify-center items-center">
-        <Image
-          width={100}
-          height={100}
-          src={row.original.image || ""}
-          alt={row.original.name}
-          className="w-16 h-16 object-cover"
-        />
+        {!row.original.image ? (
+          ""
+        ) : (
+          <Image
+            width={100}
+            height={100}
+            src={row.original.image || ""}
+            alt={row.original.name}
+            className="w-16 h-16 object-cover"
+          />
+        )}
       </div>
     ),
   },
@@ -49,10 +53,10 @@ export const columns: ColumnDef<IUser>[] = [
     header: "EMAIL",
   },
   {
-    accessorKey: "telephone",
+    accessorKey: "phone",
     header: "TEL",
   },
-  
+
   {
     id: "actions",
     cell: ({ row }) => <CellAction data={row.original} />,
