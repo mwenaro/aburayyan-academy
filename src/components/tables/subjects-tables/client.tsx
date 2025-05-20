@@ -19,8 +19,8 @@ export const SubjectClient: React.FC<SubjectsClientProps> = ({ data }) => {
     <>
       <div className="flex items-start justify-between">
         <Heading
-          title={`Subjects (${(data || []).length})`}
-          description="Manage Subjects (Client side table functionalities.)"
+          title={`Subjects/Learning Areas (${(data || []).length})`}
+          description="Manage Learning Area(Subject)s (Client side table functionalities.)"
         />
         <Button
           className="text-xs md:text-sm"

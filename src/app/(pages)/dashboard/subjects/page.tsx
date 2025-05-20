@@ -1,7 +1,7 @@
 export const revalidate = 0;
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import PageContainer from "@/components/layout/page-container";
-import { StudentClient } from "@/components/tables/students-tables/client";
+import { SubjectClient } from "@/components/tables/subjects-tables/client";
 import { getData } from "@/libs/get-data";
 
 const breadcrumbItems = [
@@ -16,7 +16,7 @@ export default async function page() {
     <PageContainer>
       <div className="space-y-2">
         <Breadcrumbs items={breadcrumbItems} />
-        <StudentClient data={myData} />
+        <SubjectClient data={myData} />
       </div>
     </PageContainer>
   );

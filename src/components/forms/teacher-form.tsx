@@ -29,6 +29,7 @@ import { Separator } from "@radix-ui/react-select";
 import { Trash } from "lucide-react";
 import { Heading } from "../ui/heading";
 import { AlertModal } from "../modal/alert-modal";
+import { strCapitalize } from "@/libs/str_functions";
 
 // const ImgSchema = z.object({
 //   fileName: z.string(),
@@ -45,6 +46,7 @@ const teacherFormSchema = z.object({
   name: z.string().min(3),
   email: z.string().email(),
   phone: z.string().min(10),
+  gen: z.string().min(1),
   // imgUrl: z.array(ImgSchema).min(1),
   qualifications: z.string().min(3),
   // subjects: z.array(z.string()).min(1),
@@ -86,6 +88,7 @@ export const TeacherForm: React.FC<teacherFormProps> = ({ initialData }) => {
         name: "",
         email: "",
         phone: "",
+        gen: "",
         // imgUrl: [],
         qualifications: "",
         // subjects: [],
@@ -209,6 +212,31 @@ export const TeacherForm: React.FC<teacherFormProps> = ({ initialData }) => {
                 <FormControl>
                   <Input placeholder="Full name" {...field} />
                 </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* gender */}
+          <FormField
+            control={form.control}
+            name="gen"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Gender</FormLabel>
+                <Select onValueChange={field.onChange} value={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select Gender" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {["male", "female"].map((gen) => (
+                      <SelectItem key={gen} value={gen}>
+                        {strCapitalize(gen)}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
                 <FormMessage />
               </FormItem>
             )}

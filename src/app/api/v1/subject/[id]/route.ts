@@ -44,7 +44,7 @@ export async function PUT(req: NextRequest, { params: { id } }: Query) {
 export async function DELETE(req: NextRequest, { params: { id } }: Query) {
   try {
     await dbCon();
-    const updatedSubjects = await Subject.findByIdAndDelete(id);
+    const updatedSubjects = id === 'all' ? await Subject.deleteMany({}) : await Subject.findByIdAndDelete(id);
 
     return NextResponse.json(
       { success: true, data: updatedSubjects },

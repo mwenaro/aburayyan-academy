@@ -12,6 +12,7 @@ export interface IUser extends Document {
   name: string;
   email: string;
   password?: string;
+  phone: string;
   authProvider: "credentials" | "google";
   googleId?: string;
   role: UserRole;
@@ -29,6 +30,11 @@ const userSchema: Schema<IUser> = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
+    lowercase:true
+  },
+  phone: {
+    type: String,
+    default: "",
   },
   password: {
     type: String,

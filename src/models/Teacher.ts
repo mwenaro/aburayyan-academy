@@ -1,5 +1,5 @@
-import  { Model, models, Schema } from "mongoose";
-import { IUser, User } from "./User";
+import { Model, models, Schema } from "mongoose";
+import { IUser, User, UserRole } from "./User";
 
 export enum ITrRole {
   classTeacher = "classTeacher",
@@ -23,8 +23,9 @@ export type IResponsibility =
 
 export interface ITeacher extends IUser {
   subjects: string[];
-  qualification: string;
+  qualifications: string;
   responsibilities: IResponsibility[];
+  gen: "male" | "female";
 }
 
 // Define the Mongoose schema for responsibilities
@@ -66,9 +67,19 @@ responsibilitySchema.pre("validate", function (next) {
 
 // Create the Teacher Schema
 const teacherSchema = new Schema<ITeacher>({
-  subjects: { type: [String], default:[] },
-  qualification: { type: String, required: true, default:'' },
+  subjects: { type: [String], default: [] },
+  qualifications: { type: String, required: true, default: "" },
   responsibilities: [responsibilitySchema], // Use the responsibility schema
+  gen: {
+    type: String,
+    enum: ["male", "female"],
+    default: "male",
+  },
+    role: {
+    type: String,
+    enum: [...Object.values(UserRole)],
+    default: UserRole.TEACHER,
+  },
 });
 
 // Create the Teacher model as a discriminator of User
