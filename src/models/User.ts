@@ -30,7 +30,7 @@ const userSchema: Schema<IUser> = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-    lowercase:true
+    lowercase: true,
   },
   phone: {
     type: String,
