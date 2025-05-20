@@ -30,10 +30,10 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    const savedStudents = await Subject.create(body);
+    const savedSubjects = await Subject.create(body);
 
     return NextResponse.json(
-      { success: true, data: savedStudents },
+      { success: true, data: savedSubjects },
       { status: 201 }
     );
   } catch (error: any) {

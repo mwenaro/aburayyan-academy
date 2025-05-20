@@ -4,6 +4,7 @@ import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
+import axios from "axios";
 import {
   Form,
   FormField,
@@ -23,6 +24,11 @@ import {
 } from "@/components/ui/select";
 // import FileUpload from "../file-upload";
 import { useToast } from "../ui/use-toast";
+import { useParams, useRouter } from "next/navigation";
+import { Separator } from "@radix-ui/react-select";
+import { Trash } from "lucide-react";
+import { Heading } from "../ui/heading";
+import { AlertModal } from "../modal/alert-modal";
 
 // const ImgSchema = z.object({
 //   fileName: z.string(),
@@ -63,8 +69,17 @@ interface teacherFormProps {
 }
 
 export const TeacherForm: React.FC<teacherFormProps> = ({ initialData }) => {
+  const params = useParams();
+  const router = useRouter();
   const { toast } = useToast();
+  const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const title = initialData ? "Edit Teacher" : "Create Teacher";
+  const description = initialData ? "Edit a Teacher." : "Add a new Teacher.";
+  const toastMessage = initialData ? "Teacher updated." : "Teacher created.";
+  const action = initialData ? "Save changes" : "Create";
+
   const defaultValues = initialData
     ? initialData
     : {
@@ -90,24 +105,84 @@ export const TeacherForm: React.FC<teacherFormProps> = ({ initialData }) => {
   const onSubmit = async (values: TeacherFormValues) => {
     try {
       setLoading(true);
-      console.log("Submitting teacher data:", values);
-      // await axios.post('/api/teachers', values);
-      toast({ title: "Success", description: "Teacher saved successfully" });
-    } catch (err) {
+      if (initialData) {
+        await axios.put(`/api/v1/teacher/${initialData._id}`, values);
+      } else {
+        await axios.post(`/api/v1/teacher`, values);
+      }
+      router.push(`/dashboard/teachers`);
+      toast({
+        title: "Success",
+        description: toastMessage,
+      });
+    } catch (error: any) {
+      console.error(error);
       toast({
         variant: "destructive",
-        title: "Error",
-        description: "Could not save teacher.",
+        title: "Uh oh! Something went wrong.",
+        description:
+          error?.response?.data?.message ||
+          "There was a problem with your request.",
       });
     } finally {
       setLoading(false);
     }
   };
 
+  const onDelete = async () => {
+    if (!params.teacherId) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Teacher ID is missing.",
+      });
+      return;
+    }
+
+    try {
+      setLoading(true);
+      await axios.delete(`/api/v1/teacher/${params.teacherId}`);
+      router.push(`/dashboard/classes`);
+    } catch (error: any) {
+      console.error(error);
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description:
+          error?.response?.data?.message ||
+          "There was a problem with the deletion.",
+      });
+    } finally {
+      setLoading(false);
+      setOpen(false);
+    }
+  };
+
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        {/* <FormField
+    <>
+      <AlertModal
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        onConfirm={onDelete}
+        loading={loading}
+      />
+      <div className="flex items-center justify-between">
+        <Heading title={title} description={description} />
+        {initialData && (
+          <Button
+            disabled={loading}
+            variant="destructive"
+            size="sm"
+            onClick={() => setOpen(true)}
+          >
+            <Trash className="h-4 w-4" />
+          </Button>
+        )}
+      </div>
+      <Separator />
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          {/* <FormField
           control={form.control}
           name="imgUrl"
           render={({ field }) => (
@@ -125,63 +200,63 @@ export const TeacherForm: React.FC<teacherFormProps> = ({ initialData }) => {
           )}
         /> */}
 
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Name</FormLabel>
-              <FormControl>
-                <Input placeholder="Full name" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="Full name" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input type="email" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input type="email" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="phone"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Phone</FormLabel>
-              <FormControl>
-                <Input type="tel" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="phone"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Phone</FormLabel>
+                <FormControl>
+                  <Input type="tel" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="qualifications"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Qualifications</FormLabel>
-              <FormControl>
-                <Input placeholder="e.g., B.Ed, M.Ed" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="qualifications"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Qualifications</FormLabel>
+                <FormControl>
+                  <Input placeholder="e.g., B.Ed, M.Ed" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        {/* <FormField
+          {/* <FormField
           control={form.control}
           name="subjects"
           render={({ field }) => (
@@ -203,7 +278,7 @@ export const TeacherForm: React.FC<teacherFormProps> = ({ initialData }) => {
           )}
         /> */}
 
-        {/* <FormField
+          {/* <FormField
           control={form.control}
           name="responsibility.type"
           render={({ field }) => (
@@ -227,7 +302,7 @@ export const TeacherForm: React.FC<teacherFormProps> = ({ initialData }) => {
           )}
         /> */}
 
-        {/* {responsibilityType === "class-teacher" && (
+          {/* {responsibilityType === "class-teacher" && (
           <FormField
             control={form.control}
             name="responsibility.classId"
@@ -259,10 +334,11 @@ export const TeacherForm: React.FC<teacherFormProps> = ({ initialData }) => {
           />
         )} */}
 
-        <Button type="submit" disabled={loading}>
-          {loading ? "Saving..." : "Register Teacher"}
-        </Button>
-      </form>
-    </Form>
+          <Button disabled={loading} className="ml-auto" type="submit">
+            {action}
+          </Button>
+        </form>
+      </Form>
+    </>
   );
 };

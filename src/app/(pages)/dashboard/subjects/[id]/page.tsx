@@ -1,8 +1,7 @@
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { SubjectForm } from "@/components/forms/subject-form";
 import PageContainer from "@/components/layout/page-container";
-import { strCapitalize } from "@/libs/str_functions";
-import { ClassModel } from "@/models/Class";
+
 
 import { Subject } from "@/models/Subject";
 

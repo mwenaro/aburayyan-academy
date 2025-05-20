@@ -33,7 +33,7 @@ const responsibilitySchema = new Schema<IResponsibility>(
     role: {
       type: String, // Fix: Use String explicitly
       enum: Object.values(ITrRole), // Fix: Extract enum values
-      required: true,
+      // required: true,
     },
     class: { type: String },
     subject: { type: String },
