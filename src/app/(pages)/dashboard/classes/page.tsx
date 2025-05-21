@@ -9,13 +9,13 @@ const breadcrumbItems = [
   { title: "Grades", link: "/dashboard/classes" },
 ];
 export default async function page() {
-  const myData = await getData('/v1/class');
+  const {data} = await getData('/v1/class');
 
   return (
     <PageContainer>
       <div className="space-y-2">
         <Breadcrumbs items={breadcrumbItems} />
-        <ClassClient data={myData} />
+        <ClassClient data={data} />
       </div>
     </PageContainer>
   );

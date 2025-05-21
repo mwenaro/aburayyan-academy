@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { devtools } from "zustand/middleware";
 import { HttpService } from "../HttpService";
+import { ResponseData } from "@/contollers/fetchService";
 
 // Initialize HttpService
 const httpService = new HttpService("/api/v1/student");
@@ -13,8 +14,9 @@ interface Student {
   name: string;
   age: number;
   classId: string;
-  marks?: number[]; 
+  marks?: number[];
 }
+
 
 // Zustand Store Interface
 interface StudentState {
@@ -42,7 +44,7 @@ export const useStudentStore = create<StudentState>()(
         fetchStudents: async () => {
           set({ loading: true, error: null });
           try {
-            const data = await httpService.get<Student[]>("");
+            const { data } = await httpService.get<ResponseData>("");
             set({ students: data, loading: false });
           } catch (err: any) {
             set({

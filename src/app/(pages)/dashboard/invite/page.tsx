@@ -10,13 +10,13 @@ const breadcrumbItems = [
   { title: "invite", link: "/dashboard/invite" },
 ];
 export default async function page() {
-  const myData = await getData('/v1/reg/invite');
+  const {data} = await getData('/v1/reg/invite');
 
   return (
     <PageContainer>
       <div className="space-y-2">
         <Breadcrumbs items={breadcrumbItems} />
-        <InviteClient data={myData} />
+        <InviteClient data={data} />
       </div>
     </PageContainer>
   );

@@ -2,9 +2,10 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { devtools } from "zustand/middleware";
 import { HttpService } from "../HttpService";
+import { ResponseData } from "@/contollers/fetchService";
 
 // Initialize HttpService
-const httpService = new HttpService("/api/v1/Subject");
+const httpService = new HttpService("/api/v1/subject");
 // const httpService = new HttpService("https://aburayyanacademy.com/api/v1/Subject");
 
 // Define the Subject Type
@@ -42,7 +43,7 @@ export const useSubjectStore = create<SubjectState>()(
         fetchSubjects: async () => {
           set({ loading: true, error: null });
           try {
-            const data = await httpService.get<Subject[]>("");
+            const { data } = await httpService.get<ResponseData>("");
             set({ subjects: data, loading: false });
           } catch (err: any) {
             set({

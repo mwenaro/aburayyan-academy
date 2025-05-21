@@ -65,7 +65,7 @@ export function ProductsTable<TData, TValue>({
   const pageAsNumber = Number(page);
   const fallbackPage =
     isNaN(pageAsNumber) || pageAsNumber < 1 ? 1 : pageAsNumber;
-  const per_page = searchParams?.get('limit') ?? '10';
+  const per_page = searchParams?.get('limit') ?? '20';
   const perPageAsNumber = Number(per_page);
   const fallbackPerPage = isNaN(perPageAsNumber) ? 10 : perPageAsNumber;
 

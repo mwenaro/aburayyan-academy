@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { devtools } from "zustand/middleware";
 import { HttpService } from "../HttpService";
+import { ResponseData } from "@/contollers/fetchService";
 
 // Initialize HttpService
 const httpService = new HttpService("/api/v1/teacher");
@@ -42,7 +43,7 @@ export const useTeacherStore = create<TeacherState>()(
         fetchTeachers: async () => {
           set({ loading: true, error: null });
           try {
-            const data = await httpService.get<Teacher[]>("");
+            const { data } = await httpService.get<ResponseData>("");
             set({ teachers: data, loading: false });
           } catch (err: any) {
             set({

@@ -52,6 +52,10 @@ export const columns: ColumnDef<IStudent>[] = [
     ),
   },
   {
+    accessorKey: "regno",
+    header: "REGNO",
+  },
+  {
     accessorKey: "name",
     header: "NAME",
     cell: ({
@@ -71,11 +75,7 @@ export const columns: ColumnDef<IStudent>[] = [
       row: {
         original: { class: cls },
       },
-    }) => (
-      <>
-        {strCapitalize((cls as unknown as IClass).name)} 
-      </>
-    ),
+    }) => <>{strCapitalize((cls as unknown as IClass).name)}</>,
   },
   {
     accessorKey: "phone",
