@@ -13,13 +13,13 @@ const breadcrumbItems = [
   { title: "SubCategories", link: "/dashboard/sub-categories" },
 ];
 export default async function page() {
-  const myData = await getSubCategories();
+  const {data} = await getSubCategories();
 
   return (
     <PageContainer>
       <div className="space-y-2">
         <Breadcrumbs items={breadcrumbItems} />
-        <SubCategoryClient data={myData} />
+        <SubCategoryClient data={data} />
       </div>
     </PageContainer>
   );

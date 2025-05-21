@@ -7,12 +7,21 @@ import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { columns } from "./columns";
 import { IStudent } from "@/models/Student";
+import { ProductsTable } from "./products-table";
 
 interface StudentsClientProps {
   data: IStudent[];
+  pageNo: number;
+  pageCount: number;
+  total:number
 }
 
-export const StudentClient: React.FC<StudentsClientProps> = ({ data }) => {
+export const StudentClient: React.FC<StudentsClientProps> = ({
+  data,
+  pageNo,
+  pageCount,
+ total
+}) => {
   const router = useRouter();
 
   return (
@@ -30,7 +39,21 @@ export const StudentClient: React.FC<StudentsClientProps> = ({ data }) => {
         </Button>
       </div>
       <Separator />
-      <DataTable searchKey="name" columns={columns} data={data} />
+      <ProductsTable
+        searchKey="name"
+        columns={columns}
+        data={data}
+        pageNo={pageNo}
+        totalUsers={total}
+        pageCount={pageCount}
+      />
+      {/* <DataTable
+        searchKey="name"
+        columns={columns}
+        data={data}
+        pageNo={pageNo}
+        pageCount={pageCount}
+      /> */}
     </>
   );
 };

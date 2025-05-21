@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { devtools } from "zustand/middleware";
 import { HttpService } from "../HttpService";
+import { ResponseData } from "@/contollers/fetchService";
 
 // Initialize HttpService
 const httpService = new HttpService("/api/v1/class");
@@ -40,7 +41,7 @@ export const useClassStore = create<ClassState>()(
         fetchClasses: async () => {
           set({ loading: true, error: null });
           try {
-            const data = await httpService.get<Class[]>("");
+            const { data } = await httpService.get<ResponseData>("");
             set({ classes: data, loading: false });
           } catch (err: any) {
             set({

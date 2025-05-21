@@ -17,17 +17,20 @@ import { GiTeacher } from "react-icons/gi";
 import { GraduationCap } from "lucide-react";
 import Link from "next/link";
 import { useEffect } from "react";
+import { useSubjectStore } from "@/lib/stores/subjectStore";
 
 export default function DashboardHomePage() {
   const { fetchStudents, students } = useStudentStore();
+  const { fetchSubjects, subjects } = useSubjectStore();
   const { teachers, fetchTeachers } = useTeacherStore();
   const { classes, fetchClasses } = useClassStore();
 
   useEffect(() => {
     fetchStudents();
+    fetchSubjects();
     fetchTeachers();
     fetchClasses();
-  }, [fetchClasses, fetchStudents, fetchTeachers]);
+  }, [fetchClasses, fetchStudents, fetchTeachers, fetchSubjects]);
   return (
     <PageContainer scrollable={true}>
       <div className="space-y-2">
@@ -78,7 +81,7 @@ export default function DashboardHomePage() {
               <Link href="/dashboard/subjects">
                 <DashboardItemCard
                   title="No. of Learning Areas"
-                  value={0}
+                  value={subjects.length}
                   icon={<MdLibraryBooks />}
                   dev=""
                 />

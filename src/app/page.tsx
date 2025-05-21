@@ -28,7 +28,7 @@ const LandingPage: React.FC = () => (
           Empowering learners today to become the leaders of tomorrow with a
           blend of CBC, ICT, swimming, and Islamic education.
         </p>
-        <MyShimmerButton shimmerSize="0.5em" shimmerColr="purple">
+        <MyShimmerButton shimmerSize="0.5em" shimmerColor="purple">
           <Link
             href="/about"
             className="bg-white text-blue-600 font-semibold rounded hover:bg-gray-200"
