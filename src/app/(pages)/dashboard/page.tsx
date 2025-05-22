@@ -20,10 +20,10 @@ import { useEffect } from "react";
 import { useSubjectStore } from "@/lib/stores/subjectStore";
 
 export default function DashboardHomePage() {
-  const { fetchStudents,total:numStudents  } = useStudentStore();
-  const { fetchSubjects, total:numSubjects } = useSubjectStore();
-  const { total:numTeachers, fetchTeachers } = useTeacherStore();
-  const { total:numClasses, fetchClasses } = useClassStore();
+  const { fetchStudents, total: numStudents } = useStudentStore();
+  const { fetchSubjects, total: numSubjects } = useSubjectStore();
+  const { total: numTeachers, fetchTeachers } = useTeacherStore();
+  const { total: numClasses, fetchClasses } = useClassStore();
 
   useEffect(() => {
     fetchStudents();

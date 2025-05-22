@@ -44,7 +44,7 @@ export const useClassStore = create<ClassState>()(
           set({ loading: true, error: null });
           try {
             const { data , meta:{total}} = await httpService.get<ResponseData>("");
-            set({ classes: data, loading: false });
+            set({ classes: data, loading: false, total });
           } catch (err: any) {
             set({
               error: err.message || "Failed to fetch Classs",
