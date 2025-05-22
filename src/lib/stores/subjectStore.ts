@@ -20,6 +20,7 @@ interface Subject {
 // Zustand Store Interface
 interface SubjectState {
   subjects: Subject[];
+  total:number
   loading: boolean;
   error: string | null;
 
@@ -37,14 +38,15 @@ export const useSubjectStore = create<SubjectState>()(
       (set, get) => ({
         subjects: [],
         loading: false,
+        total:0,
         error: null,
 
         // Fetch Subjects from API
         fetchSubjects: async () => {
           set({ loading: true, error: null });
           try {
-            const { data } = await httpService.get<ResponseData>("");
-            set({ subjects: data, loading: false });
+          const { data, meta:{total} } = await httpService.get<ResponseData>("");
+            set({ subjects: data, loading: false , total});
           } catch (err: any) {
             set({
               error: err.message || "Failed to fetch Subjects",

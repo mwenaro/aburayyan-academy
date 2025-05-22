@@ -21,6 +21,7 @@ interface Teacher {
 interface TeacherState {
   teachers: Teacher[];
   loading: boolean;
+  total: number;
   error: string | null;
 
   fetchTeachers: () => Promise<void>;
@@ -36,6 +37,7 @@ export const useTeacherStore = create<TeacherState>()(
     persist(
       (set, get) => ({
         teachers: [],
+        total: 0,
         loading: false,
         error: null,
 
@@ -43,8 +45,11 @@ export const useTeacherStore = create<TeacherState>()(
         fetchTeachers: async () => {
           set({ loading: true, error: null });
           try {
-            const { data } = await httpService.get<ResponseData>("");
-            set({ teachers: data, loading: false });
+            const {
+              data,
+              meta: { total },
+            } = await httpService.get<ResponseData>("");
+            set({ teachers: data, loading: false, total });
           } catch (err: any) {
             set({
               error: err.message || "Failed to fetch Teachers",
