@@ -1,3 +1,4 @@
+import { findWithQuery, getQueryOptions } from "@/contollers/fetchService";
 import { dbCon } from "@/libs/mongoose/dbCon";
 import { School } from "@/models/School";
 import { Teacher } from "@/models/Teacher";
@@ -6,11 +7,19 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
-    await dbCon();
-    const fetchedTeachers = await Teacher.find({});
-    // const fetchedTeachers = await Teacher.find({ });
-
-    return NextResponse.json(fetchedTeachers);
+   await dbCon();
+      
+          const queryOptions = getQueryOptions(req, {
+            searchableFields: ["name", "email", "gen"],
+            allowedFilters: ["name", "gen"],
+            defaultSortBy: "createdAt",
+            defaultSortOrder: "desc",
+           //  populate: ["class"],
+          });
+      
+          const result = await findWithQuery(Teacher, queryOptions);
+      // console.log(result)
+          return NextResponse.json(result);
   } catch (error: any) {
     return NextResponse.json({ error: error }, { status: 500 });
   }

@@ -1,3 +1,4 @@
+import { findWithQuery, getQueryOptions } from "@/contollers/fetchService";
 import { dbCon } from "@/libs/mongoose/dbCon";
 import { ClassModel, IClass } from "@/models/Class";
 import { School } from "@/models/School";
@@ -7,9 +8,18 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest) {
   try {
     await dbCon();
-    const fetchedClasses = await ClassModel.find({});
 
-    return NextResponse.json(fetchedClasses);
+    const queryOptions = getQueryOptions(req, {
+      searchableFields: ["name", "grade"],
+      allowedFilters: ["name", "grade"],
+      defaultSortBy: "createdAt",
+      defaultSortOrder: "desc",
+      //  populate: ["class"],
+    });
+
+    const result = await findWithQuery(ClassModel, queryOptions);
+    // console.log(result)
+    return NextResponse.json(result);
   } catch (error: any) {
     return NextResponse.json({ error: error }, { status: 500 });
   }
@@ -22,12 +32,12 @@ export async function POST(req: NextRequest) {
   if (!Object.keys(body[0]).includes("school")) {
     const school = await School.findOne({});
     body = body.map((cls: any) => {
-      const { year, name,isGraduated, ...others } = cls;
+      const { year, name, isGraduated, ...others } = cls;
       return {
         ...others,
         name,
         school: school?._id,
-        isGraduated:['true', true].includes(isGraduated)? true:false,
+        isGraduated: ["true", true].includes(isGraduated) ? true : false,
         steps: [
           {
             year: year,

@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
     await dbCon();
     const fetchedSchools = await School.find({});
 
-    return NextResponse.json(fetchedSchools);
+    return NextResponse.json({data:fetchedSchools});
   } catch (error: any) {
     return NextResponse.json({ error: error }, { status: 500 });
   }
