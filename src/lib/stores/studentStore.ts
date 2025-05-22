@@ -21,6 +21,7 @@ interface Student {
 // Zustand Store Interface
 interface StudentState {
   students: Student[];
+  total:number;
   loading: boolean;
   error: string | null;
 
@@ -38,14 +39,15 @@ export const useStudentStore = create<StudentState>()(
       (set, get) => ({
         students: [],
         loading: false,
+        total:0,
         error: null,
 
         // Fetch students from API
         fetchStudents: async () => {
           set({ loading: true, error: null });
           try {
-            const { data } = await httpService.get<ResponseData>("");
-            set({ students: data, loading: false });
+            const { data, meta:{total} } = await httpService.get<ResponseData>("");
+            set({ students: data, loading: false , total});
           } catch (err: any) {
             set({
               error: err.message || "Failed to fetch students",

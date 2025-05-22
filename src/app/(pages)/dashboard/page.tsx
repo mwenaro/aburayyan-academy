@@ -20,10 +20,10 @@ import { useEffect } from "react";
 import { useSubjectStore } from "@/lib/stores/subjectStore";
 
 export default function DashboardHomePage() {
-  const { fetchStudents, students } = useStudentStore();
-  const { fetchSubjects, subjects } = useSubjectStore();
-  const { teachers, fetchTeachers } = useTeacherStore();
-  const { classes, fetchClasses } = useClassStore();
+  const { fetchStudents,total:numStudents  } = useStudentStore();
+  const { fetchSubjects, total:numSubjects } = useSubjectStore();
+  const { total:numTeachers, fetchTeachers } = useTeacherStore();
+  const { total:numClasses, fetchClasses } = useClassStore();
 
   useEffect(() => {
     fetchStudents();
@@ -56,7 +56,7 @@ export default function DashboardHomePage() {
               <Link href="/dashboard/students">
                 <DashboardItemCard
                   title="No. of Students"
-                  value={students.length}
+                  value={numStudents}
                   icon={<GraduationCap />}
                   dev=""
                 />
@@ -65,7 +65,7 @@ export default function DashboardHomePage() {
               <Link href="/dashboard/classes">
                 <DashboardItemCard
                   title="No. of Grades"
-                  value={classes.length}
+                  value={numClasses}
                   icon={<FaBuildingColumns />}
                   dev=""
                 />
@@ -73,7 +73,7 @@ export default function DashboardHomePage() {
               <Link href="/dashboard/teachers">
                 <DashboardItemCard
                   title="No. of Teachers"
-                  value={teachers.length}
+                  value={numTeachers}
                   icon={<GiTeacher />}
                   dev=""
                 />
@@ -81,7 +81,7 @@ export default function DashboardHomePage() {
               <Link href="/dashboard/subjects">
                 <DashboardItemCard
                   title="No. of Learning Areas"
-                  value={subjects.length}
+                  value={numSubjects}
                   icon={<MdLibraryBooks />}
                   dev=""
                 />

@@ -19,6 +19,7 @@ interface Class {
 interface ClassState {
   classes: Class[];
   loading: boolean;
+  total:number
   error: string | null;
 
   fetchClasses: () => Promise<void>;
@@ -34,6 +35,7 @@ export const useClassStore = create<ClassState>()(
     persist(
       (set, get) => ({
        classes: [],
+       total:0,
         loading: false,
         error: null,
 
@@ -41,7 +43,7 @@ export const useClassStore = create<ClassState>()(
         fetchClasses: async () => {
           set({ loading: true, error: null });
           try {
-            const { data } = await httpService.get<ResponseData>("");
+            const { data , meta:{total}} = await httpService.get<ResponseData>("");
             set({ classes: data, loading: false });
           } catch (err: any) {
             set({
