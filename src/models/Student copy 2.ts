@@ -1,6 +1,5 @@
 import { strCapitalize } from "@/libs/str_functions";
 import mongoose, { Schema, Document, Model } from "mongoose";
-import { Counter } from "./Counter";
 
 // Define the TypeScript interface for a Student document
 export interface IStudent extends Document {
@@ -41,14 +40,14 @@ const studentSchema: Schema<IStudent> = new Schema(
       required: true,
     },
     contactDetails: {
-      phone: { type: String, default: "07xxxxxxxx" },
+      phone: { type: String,  default: "07xxxxxxxx" },
     },
     guardians: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     address: {
       town: { type: String, required: true, default: "Mombasa" },
       county: { type: String, required: true, default: "Mombasa" },
       nationality: { type: String, required: true, default: "kenyan" },
-      street: { type: String, default: "" },
+      street: { type: String,  default: "" },
     },
   },
   {
@@ -56,23 +55,34 @@ const studentSchema: Schema<IStudent> = new Schema(
   }
 );
 
+
+// Pre-save hook to generate regno
 studentSchema.pre("save", async function (next) {
+  // Capitalize name
   if (this.isModified("name") && this.name) {
     this.name = strCapitalize(this.name);
   }
 
   if (!this.regno) {
     const currentYear = new Date().getFullYear();
-    const counterKey = `student_regno_${currentYear}`;
+    const StudentModel = this.constructor as typeof Student;
 
-    // Atomically increment counter
-    const counter = await Counter.findOneAndUpdate(
-      { key: counterKey },
-      { $inc: { seq: 1 } },
-      { upsert: true, new: true }
-    );
+    let nextNumber = 1;
+    let regnoExists = true;
+    let newRegno = "";
 
-    this.regno = `abu/s/${currentYear}/${String(counter.seq).padStart(3, "0")}`;
+    // Loop until we find a regno that doesn't exist
+    while (regnoExists) {
+      newRegno = `abu/s/${currentYear}/${String(nextNumber).padStart(3, "0")}`;
+      const existing = await StudentModel.findOne({ regno: newRegno }).lean();
+      if (!existing) {
+        regnoExists = false;
+      } else {
+        nextNumber++;
+      }
+    }
+
+    this.regno = newRegno;
   }
 
   next();

@@ -8,16 +8,17 @@ const breadcrumbItems = [
   { title: "Dashboard", link: "/dashboard" },
   { title: "Students", link: "/dashboard/students" },
 ];
-export default async function page({searchParams}:any) {
-
-  const {data, meta:{total, page, totalPages}} = await getData('/v1/student',searchParams);
-  // console.log({myData})
+export default async function page({ searchParams }: any) {
+  const {
+    data,
+    meta: { total, totalPages },
+  } = await getData("/v1/student", searchParams);
 
   return (
     <PageContainer>
       <div className="space-y-2">
         <Breadcrumbs items={breadcrumbItems} />
-        <StudentClient data={data} pageNo={page} pageCount={totalPages} total={total}  />
+        <StudentClient data={data} pageCount={totalPages} total={total} />
       </div>
     </PageContainer>
   );

@@ -1,25 +1,32 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { DataTable } from "@/components/ui/data-table";
+// import { DataTable } from "@/components/ui/data-table";
 import { Heading } from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { columns } from "./columns";
 import { IUser } from "@/models/User";
+import { MyDataTable } from "../MyDataTable";
 
 interface TeachersClientProps {
   data: IUser[];
+  pageCount: number;
+  total: number;
 }
 
-export const TeacherClient: React.FC<TeachersClientProps> = ({ data }) => {
+export const TeacherClient: React.FC<TeachersClientProps> = ({
+  data,
+  pageCount,
+  total,
+}) => {
   const router = useRouter();
 
   return (
     <>
       <div className="flex items-start justify-between">
         <Heading
-          title={`Teachers (${(data || []).length})`}
+          title={`Teachers (${(data || []).length}/${total})`}
           description="Manage Teachers (Client side table functionalities.)"
         />
         <Button
@@ -30,7 +37,12 @@ export const TeacherClient: React.FC<TeachersClientProps> = ({ data }) => {
         </Button>
       </div>
       <Separator />
-      <DataTable searchKey="name" columns={columns} data={data} />
+      <MyDataTable
+        searchKey="name"
+        columns={columns}
+        data={data}
+        pageCount={pageCount}
+      />
     </>
   );
 };
