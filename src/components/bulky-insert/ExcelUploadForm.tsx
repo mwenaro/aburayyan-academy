@@ -96,3 +96,140 @@ export default function ExcelUploadForm({
     </div>
   );
 }
+
+
+[
+  {
+    class: "67ac4412831b7f2fe8aa6c09",
+    name: "Zeinab Farouk",
+    gen: "female",
+    
+  },
+  {
+    class: "67ac4412831b7f2fe8aa6c09",
+    name: "Sami Abdulatif",
+    gen: "male",
+    
+  },
+  {
+    class: "67ac4412831b7f2fe8aa6c09",
+    name: "Yusra Mohamed",
+    gen: "female",
+    
+  },
+  {
+    class: "67ac4412831b7f2fe8aa6c09",
+    name: "Zakiya Mohamed",
+    gen: "female",
+    
+  },
+  {
+    class: "67ac4412831b7f2fe8aa6c09",
+    name: "Abdihalim Yussuf",
+    gen: "male",
+    
+  },
+  {
+    class: "67ac4412831b7f2fe8aa6c09",
+    name: "Mohamed Hassan",
+    gen: "male",
+    
+  },
+  {
+    class: "67ac4412831b7f2fe8aa6c09",
+    name: "Zeinab Abdulmanaf",
+    gen: "female",
+    
+  },
+  {
+    class: "67ac4412831b7f2fe8aa6c09",
+    name: "Abubakar Ali",
+    gen: "male",
+    
+  },
+  {
+    class: "67ac4412831b7f2fe8aa6c09",
+    name: "Abdalla Mahdy",
+    gen: "male",
+    
+  },
+  {
+    class: "67ac4412831b7f2fe8aa6c09",
+    name: "Salman Mursal",
+    gen: "male",
+    
+  },
+  {
+    class: "67ac4412831b7f2fe8aa6c09",
+    name: "Husni Bashir",
+    gen: "male",
+    
+  },
+  {
+    class: "67ac4412831b7f2fe8aa6c09",
+    name: "Mohamed Amin Yussuf",
+    gen: "male",
+    
+  },
+  {
+    class: "67ac4412831b7f2fe8aa6c09",
+    name: "Abubakar Shafee",
+    gen: "male",
+    
+  },
+  {
+    class: "67ac4412831b7f2fe8aa6c09",
+    name: "Tiaam Taufiq",
+    gen: "female",
+    
+  },
+  {
+    class: "67ac4412831b7f2fe8aa6c09",
+    name: "Swallahuddin Shariff",
+    gen: "male",
+    
+  },
+  {
+    class: "67ac4412831b7f2fe8aa6c09",
+    name: "Mahir Mohamed",
+    gen: "male",
+    
+  },
+  {
+    class: "67ac4412831b7f2fe8aa6c09",
+    name: "Munira Harun",
+    gen: "female",
+    
+  },
+  {
+    class: "67ac4412831b7f2fe8aa6c09",
+    name: "Yusra Omar",
+    gen: "female",
+    
+  },
+  {
+    class: "67ac4412831b7f2fe8aa6c09",
+    name: "Zahdy Amer",
+    gen: "male",
+    
+  },
+  {
+    class: "67ac4412831b7f2fe8aa6c09",
+    name: "Awes Abdulkadir",
+    gen: "male",
+    
+  },
+  {
+    class: "67ac4412831b7f2fe8aa6c09",
+    name: "Hanaa Abdirazack",
+    gen: "female",
+    
+  },
+  {
+    class: "67ac4412831b7f2fe8aa6c09",
+    name: "Lyni Omar",
+    gen: "female",
+    
+  }
+ 
+];

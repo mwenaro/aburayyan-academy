@@ -1,26 +1,26 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { DataTable } from "@/components/ui/data-table";
+// import { DataTable } from "@/components/ui/data-table";
 import { Heading } from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { columns } from "./columns";
 import { IStudent } from "@/models/Student";
-import { ProductsTable } from "./products-table";
+
+import { MyDataTable } from "../MyDataTable";
 
 interface StudentsClientProps {
   data: IStudent[];
-  pageNo: number;
+
   pageCount: number;
-  total:number
+  total: number;
 }
 
 export const StudentClient: React.FC<StudentsClientProps> = ({
   data,
-  pageNo,
   pageCount,
- total
+  total,
 }) => {
   const router = useRouter();
 
@@ -28,7 +28,7 @@ export const StudentClient: React.FC<StudentsClientProps> = ({
     <>
       <div className="flex items-start justify-between">
         <Heading
-          title={`Students (${(data || []).length})`}
+          title={`Students (${(data || []).length}/${total})`}
           description="Manage Students (Client side table functionalities.)"
         />
         <Button
@@ -39,12 +39,11 @@ export const StudentClient: React.FC<StudentsClientProps> = ({
         </Button>
       </div>
       <Separator />
-      <ProductsTable
+
+      <MyDataTable
         searchKey="name"
         columns={columns}
         data={data}
-        pageNo={pageNo}
-        totalUsers={total}
         pageCount={pageCount}
       />
       {/* <DataTable

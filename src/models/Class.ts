@@ -4,6 +4,7 @@ import { ISchool } from "./School";
 // IClass Interface
 export interface IClass extends Document {
   name: string;
+  grade: number | string;
   ukey: string;
   school: mongoose.Types.ObjectId | ISchool; // Reference to a School document
   steps: { grade: string; year: number }[]; // Array of steps
@@ -24,6 +25,10 @@ const ClassSchema = new Schema<IClass>(
           ? `Grade 1`
           : `PP 1 ${Math.min(...this.steps.map((step) => step.year))}`;
       },
+    },
+    grade: {
+      type: String,
+      default: "",
     },
     school: {
       type: mongoose.Schema.Types.ObjectId,
