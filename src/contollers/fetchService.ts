@@ -44,7 +44,7 @@ export async function findWithQuery<T>(model: Model<T>, options: QueryOptions) {
       [field]: { $regex: search, $options: "i" },
     }));
   }
-//   await dbCon();
+  //   await dbCon();
   let dbQuery = model.find(query);
 
   if (populate) {
@@ -79,6 +79,37 @@ export function getQueryOptions(
   req: NextRequest,
   config: QueryConfig
 ): QueryOptions {
+  const params = getSearchParams(req);
+
+  const page = parseInt(params?.page || "1");
+  const limit = parseInt(params?.limit || "20");
+  const search = params?.search || undefined;
+  const sortBy = params?.sortBy || config.defaultSortBy || "createdAt";
+  const sortOrder = params?.sortOrder === "asc" ? "asc" : "desc";
+
+  const filters: Record<string, any> = {};
+  if (config.allowedFilters) {
+    config.allowedFilters.forEach((field) => {
+      const value = params[field];
+      if (value) filters[field] = value;
+    });
+  }
+
+  return {
+    search,
+    searchableFields: config.searchableFields || [],
+    page,
+    limit,
+    sortBy,
+    sortOrder,
+    filters,
+    populate: config.populate,
+  };
+}
+export function getQueryOptions2(
+  req: NextRequest,
+  config: QueryConfig
+): QueryOptions {
   const { searchParams } = new URL(req.url);
 
   const page = parseInt(searchParams.get("page") || "1");
@@ -106,4 +137,15 @@ export function getQueryOptions(
     filters,
     populate: config.populate,
   };
+}
+
+export function getSearchParams(req: Request): Record<string, string> {
+  const url = new URL(req.url);
+  const params: Record<string, string> = {};
+
+  url.searchParams.forEach((value, key) => {
+    params[key] = value;
+  });
+
+  return params;
 }

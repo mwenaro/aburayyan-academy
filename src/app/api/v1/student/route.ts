@@ -7,6 +7,7 @@ import { findWithQuery, getQueryOptions } from "@/contollers/fetchService";
 
 
 export async function GET(req: NextRequest) {
+
   try {
     await dbCon();
 
