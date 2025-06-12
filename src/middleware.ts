@@ -4,19 +4,42 @@ import type { NextRequest } from "next/server";
 
 export default withAuth(
   function middleware(req: NextRequest) {
-    // Log the current request pathname for debugging
+    const url = req.nextUrl;
+    const method = req.method;
+    const protectedMethods = ["POST", "PUT", "DELETE"];
+
+    // Check if the request is to an API route
+    const isApiRoute = url.pathname.startsWith("/api");
+
+    // Restrict mutations to admin users only
+    if (isApiRoute && protectedMethods.includes(method)) {
+      const role = req.nextauth?.token?.role;
+
+      if (role !== "admin") {
+        return NextResponse.json(
+          { message: "Forbidden: Admins only" },
+          { status: 403 }
+        );
+      }
+    }
+
+    // Continue to route handler
     const res = NextResponse.next();
-    // You can perform additional checks here if needed
     res.headers.set("x-url", req.nextUrl.origin);
-    return res; // Continue if the user is authenticated
+    return res;
   },
   {
-    // You can specify additional next-auth options here (optional)
+    callbacks: {
+      authorized: ({ token }) => !!token, // Require authentication
+    },
   }
 );
 
-// Define the routes that need to be protected
+
 export const config = {
-  matcher: ["/dashboard/:path*", "/u-dashboard"],
-//   matcher: ["/dashboard/:path*", "/api/:path*"],
+  matcher: [
+    "/dashboard/:path*",
+    "/u-dashboard",
+    "/api/:path*", 
+  ],
 };
