@@ -22,7 +22,7 @@ export const getData = async (
     });
 
     let result = res?.data?.meta ? res?.data : res?.data?.data || res?.data;
-    // console.log({ result });
+    console.log({ result });
     return result;
   } catch (error: any) {
     console.error("Fetch Error:", error.message);

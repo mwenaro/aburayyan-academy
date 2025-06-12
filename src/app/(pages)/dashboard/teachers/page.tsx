@@ -4,6 +4,7 @@ import PageContainer from "@/components/layout/page-container";
 import { TeacherClient } from "@/components/tables/teachers-tables/client";
 import { getData } from "@/libs/get-data";
 
+
 const breadcrumbItems = [
   { title: "Dashboard", link: "/dashboard" },
   { title: "Teachers", link: "/dashboard/teachers" },

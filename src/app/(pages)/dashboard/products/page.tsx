@@ -4,6 +4,7 @@ import PageContainer from "@/components/layout/page-container";
 import { ProductClient } from "@/components/tables/products-tables/client";
 import { getData } from "@/libs/get-data";
 
+
 const breadcrumbItems = [
   { title: "Dashboard", link: "/dashboard" },
   { title: "Products", link: "/dashboard/products" },
