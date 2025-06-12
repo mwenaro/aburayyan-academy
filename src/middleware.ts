@@ -1,21 +1,23 @@
 import { withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-
+import type { JWT } from "next-auth/jwt"; // Optional, for typing
+type NextAuthRequest = NextRequest & {
+  nextauth: {
+    token: JWT | null;
+  };
+};
 export default withAuth(
-  function middleware(req: NextRequest) {
-    const url = req.nextUrl;
+  function middleware(req: NextAuthRequest, event) {
     const method = req.method;
+    const url = req.nextUrl;
     const protectedMethods = ["POST", "PUT", "DELETE"];
 
-    // Check if the request is to an API route
-    const isApiRoute = url.pathname.startsWith("/api");
+    // Check if it's an API route and a protected method
+    if (url.pathname.startsWith("/api") && protectedMethods.includes(method)) {
+      const token = req?.nextauth.token as JWT | null;
 
-    // Restrict mutations to admin users only
-    if (isApiRoute && protectedMethods.includes(method)) {
-      const role = req.nextauth?.token?.role;
-
-      if (role !== "admin") {
+      if (!token || token.role !== "admin") {
         return NextResponse.json(
           { message: "Forbidden: Admins only" },
           { status: 403 }
@@ -23,23 +25,17 @@ export default withAuth(
       }
     }
 
-    // Continue to route handler
     const res = NextResponse.next();
     res.headers.set("x-url", req.nextUrl.origin);
     return res;
   },
   {
     callbacks: {
-      authorized: ({ token }) => !!token, // Require authentication
+      authorized: ({ token }) => !!token, // Only allow authenticated users
     },
   }
 );
 
-
 export const config = {
-  matcher: [
-    "/dashboard/:path*",
-    "/u-dashboard",
-    "/api/:path*", 
-  ],
+  matcher: ["/dashboard/:path*", "/u-dashboard", "/api/:path*"],
 };
