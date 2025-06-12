@@ -1,26 +1,32 @@
 import axios from "axios";
 import { headers } from "next/headers";
-export const getData = async (path: string, params = null) => {
-  let data = [];
+
+export const getData = async (
+  path: string,
+  params: Record<string, any> | null = null
+): Promise<any> => {
+  let data: any = null;
+
   const paramStr = params
     ? Object.keys(params)
-        .map((key) => `${key}=${params[key]}`)
+        .map((key) => `${key}=${encodeURIComponent(params[key])}`)
         .join("&")
     : "";
+
   try {
     const url = headers().get("x-url") || process.env.NEXTAUTH_URL;
-    const formattedUrl = `${url}/api${path}${
-      paramStr.length ? "?" + paramStr : ""
-    }`;
-    // console.log({ url, formattedUrl });
+    const formattedUrl = `${url}/api${path}${paramStr ? "?" + paramStr : ""}`;
 
-    const res = await axios.get(formattedUrl);
+    console.log({ url, formattedUrl });
 
-    data = (await res?.data) || (await res?.data?.data) || [];
-    // console.log({ data, then: 1 });
+    const res = await axios.get(formattedUrl, {
+      headers: { "x-api-key": process.env.ADMIN_API_KEY || "" },
+    });
+
+    data = res?.data?.data ?? res?.data ?? null;
   } catch (error: any) {
-    console.log("Featch Er : " + error.message);
-  } finally {
-    return await data;
+    console.error("Fetch Error:", error.message);
   }
+
+  return data;
 };

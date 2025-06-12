@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
     });
 
     const result = await findWithQuery(Student, queryOptions);
-// console.log(result)
+console.log(result)
     return NextResponse.json(result);
   } catch (error: any) {
     console.error("Error:", error.message);

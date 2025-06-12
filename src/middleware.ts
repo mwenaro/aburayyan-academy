@@ -21,7 +21,8 @@ export default withAuth(
 
     if (isApiRequest && protectedMethods.includes(method)) {
       const token = req.nextauth?.token;
-      const userIsAdmin = ["admin","user"].includes(token?.role||"test");
+      // const userIsAdmin = ["admin","user"].includes(token?.role||"test");
+      const userIsAdmin = "admin" === token?.role || "user" === token?.role
 
       const requestApiKey = req.headers.get("x-api-key");
       const apiKeyIsValid = requestApiKey === ADMIN_API_KEY;
@@ -35,11 +36,11 @@ export default withAuth(
     res.headers.set("x-url", req.nextUrl.origin);
     return res;
   },
-  {
-    callbacks: {
-      authorized: ({ token }) => !!token, // Only enforce login
-    },
-  }
+  // {
+  //   callbacks: {
+  //     authorized: ({ token }) => !!token, // Only enforce login
+  //   },
+  // }
 );
 
 export const config = {
