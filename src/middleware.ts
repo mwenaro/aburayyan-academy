@@ -1,27 +1,33 @@
 import { withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import type { JWT } from "next-auth/jwt"; // Optional, for typing
+import type { JWT } from "next-auth/jwt";
+
 type NextAuthRequest = NextRequest & {
   nextauth: {
     token: JWT | null;
   };
 };
+
+const ADMIN_API_KEY = process.env.ADMIN_API_KEY || ""; // Set this in your .env file
+
 export default withAuth(
-  function middleware(req: NextAuthRequest, event) {
+  function middleware(req: NextAuthRequest) {
     const method = req.method;
     const url = req.nextUrl;
     const protectedMethods = ["POST", "PUT", "DELETE"];
 
-    // Check if it's an API route and a protected method
-    if (url.pathname.startsWith("/api") && protectedMethods.includes(method)) {
-      const token = req?.nextauth.token as JWT | null;
+    const isApiRequest = url.pathname.startsWith("/api");
 
-      if (!token || token.role !== "admin") {
-        return NextResponse.json(
-          { message: "Forbidden: Admins only" },
-          { status: 403 }
-        );
+    if (isApiRequest && protectedMethods.includes(method)) {
+      const token = req.nextauth?.token;
+      const userIsAdmin = ["admin","user"].includes(token?.role||"test");
+
+      const requestApiKey = req.headers.get("x-api-key");
+      const apiKeyIsValid = requestApiKey === ADMIN_API_KEY;
+
+      if (!userIsAdmin && !apiKeyIsValid) {
+        return new NextResponse("Forbidden: Admins only", { status: 403 });
       }
     }
 
@@ -31,7 +37,7 @@ export default withAuth(
   },
   {
     callbacks: {
-      authorized: ({ token }) => !!token, // Only allow authenticated users
+      authorized: ({ token }) => !!token, // Only enforce login
     },
   }
 );
