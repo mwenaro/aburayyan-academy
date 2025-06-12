@@ -1,32 +1,31 @@
 import axios from "axios";
-import { headers } from "next/headers";
 
 export const getData = async (
   path: string,
   params: Record<string, any> | null = null
 ): Promise<any> => {
-  let data: any = null;
-
-  const paramStr = params
-    ? Object.keys(params)
-        .map((key) => `${key}=${encodeURIComponent(params[key])}`)
-        .join("&")
-    : "";
-
   try {
-    const url = headers().get("x-url") || process.env.NEXTAUTH_URL;
-    const formattedUrl = `${url}/api${path}${paramStr ? "?" + paramStr : ""}`;
+    const paramStr = new URLSearchParams(params || {}).toString();
+    const baseUrl =
+      typeof window === "undefined"
+        ? process.env.NEXTAUTH_URL
+        : window.location.origin;
 
-    console.log({ url, formattedUrl });
+    const formattedUrl = `${baseUrl}/api${path}${
+      paramStr ? `?${paramStr}` : ""
+    }`;
 
     const res = await axios.get(formattedUrl, {
-      headers: { "x-api-key": process.env.ADMIN_API_KEY || "" },
+      headers: {
+        "x-api-key": process.env.ADMIN_API_KEY || "",
+      },
     });
 
-    data = res?.data?.data ?? res?.data ?? null;
+    let result = res?.data?.meta ? res?.data : res?.data?.data || res?.data;
+    console.log({ result });
+    return result;
   } catch (error: any) {
     console.error("Fetch Error:", error.message);
+    return null;
   }
-
-  return data;
 };
