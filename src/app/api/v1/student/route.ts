@@ -5,21 +5,20 @@ import "@/models/Class"; // import without leaving unsed imports
 import { NextRequest, NextResponse } from "next/server";
 import { findWithQuery, getQueryOptions } from "@/contollers/fetchService";
 
-
 export async function GET(req: NextRequest) {
   try {
     await dbCon();
 
     const queryOptions = getQueryOptions(req, {
-      searchableFields: ["name", "contactDetails.phone",'class.name'],
-      allowedFilters: ["class", "gen",'class.name'],
+      searchableFields: ["name", "contactDetails.phone", "class.name"],
+      allowedFilters: ["class", "gen", "class.name"],
       defaultSortBy: "createdAt",
       defaultSortOrder: "desc",
       populate: ["class"],
     });
 
     const result = await findWithQuery(Student, queryOptions);
-// console.log(result)
+    // console.log({ result });
     return NextResponse.json(result);
   } catch (error: any) {
     console.error("Error:", error.message);

@@ -1,26 +1,31 @@
 import axios from "axios";
-import { headers } from "next/headers";
-export const getData = async (path: string, params = null) => {
-  let data = [];
-  const paramStr = params
-    ? Object.keys(params)
-        .map((key) => `${key}=${params[key]}`)
-        .join("&")
-    : "";
+
+export const getData = async (
+  path: string,
+  params: Record<string, any> | null = null
+): Promise<any> => {
   try {
-    const url = headers().get("x-url") || process.env.NEXTAUTH_URL;
-    const formattedUrl = `${url}/api${path}${
-      paramStr.length ? "?" + paramStr : ""
+    const paramStr = new URLSearchParams(params || {}).toString();
+    const baseUrl =
+      typeof window === "undefined"
+        ? process.env.NEXTAUTH_URL
+        : window.location.origin;
+
+    const formattedUrl = `${baseUrl}/api${path}${
+      paramStr ? `?${paramStr}` : ""
     }`;
-    // console.log({ url, formattedUrl });
 
-    const res = await axios.get(formattedUrl);
+    const res = await axios.get(formattedUrl, {
+      headers: {
+        "x-api-key": process.env.ADMIN_API_KEY || "",
+      },
+    });
 
-    data = (await res?.data) || (await res?.data?.data) || [];
-    // console.log({ data, then: 1 });
+    let result = res?.data?.meta ? res?.data : res?.data?.data || res?.data;
+    // console.log({ result });
+    return result;
   } catch (error: any) {
-    console.log("Featch Er : " + error.message);
-  } finally {
-    return await data;
+    console.error("Fetch Error:", error.message);
+    return null;
   }
 };
