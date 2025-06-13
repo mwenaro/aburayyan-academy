@@ -1,4 +1,5 @@
 import axios from "axios";
+import { headers } from "next/headers";
 
 export const getData = async (
   path: string,
@@ -6,11 +7,11 @@ export const getData = async (
 ): Promise<any> => {
   try {
     const paramStr = new URLSearchParams(params || {}).toString();
-    const baseUrl =
-      typeof window === "undefined"
-        ? process.env.NEXTAUTH_URL
-        : window.location.origin;
-
+    // const baseUrl =
+    //   typeof window === "undefined"
+    //     ? process.env.NEXTAUTH_URL
+    //     : window.location.origin;
+  const baseUrl = headers().get("x-url") || process.env.NEXTAUTH_URL;
     const formattedUrl = `${baseUrl}/api${path}${
       paramStr ? `?${paramStr}` : ""
     }`;
@@ -22,7 +23,7 @@ export const getData = async (
     });
 
     let result = res?.data?.meta ? res?.data : res?.data?.data || res?.data;
-    console.log({ result });
+    console.log({ formattedUrl, result });
     return result;
   } catch (error: any) {
     console.error("Fetch Error:", error.message);

@@ -15,6 +15,9 @@ export default withAuth(
   function middleware(req: NextAuthRequest) {
     const method = req.method;
     const url = req.nextUrl;
+    const res = NextResponse.next();
+    // You can perform additional checks here if needed
+    res.headers.set("x-url", req.nextUrl.origin);
     const protectedMethods = ["POST", "PUT", "DELETE"];
     const isApiRequest = url.pathname.startsWith("/api");
     // Restrict API mutations to admins or valid API key
@@ -33,7 +36,8 @@ export default withAuth(
       }
     }
 
-    return NextResponse.next();
+    res.headers.set("x-url", req.nextUrl.origin);
+    return res;
   },
   {
     callbacks: {

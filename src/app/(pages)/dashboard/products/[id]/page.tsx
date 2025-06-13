@@ -12,9 +12,9 @@ const breadcrumbItems = [
   { title: "Products", link: "/dashboard/products" },
   { title: "Create", link: "/dashboard/products/create" },
 ];
-export default async function Page({ params: { categoryId } }: any) {
+export default async function Page({ params: { id } }: any) {
   const initData =
-    categoryId !== "new" ? await Product.findById(categoryId) : null;
+    id !== "new" ? await Product.findById(id) : null;
   const [subCategories, categories] = await Promise.all([
     SubCategory.find().select(["_id", "name", "category"]),
     Category.find().select(["_id", "name"]),
