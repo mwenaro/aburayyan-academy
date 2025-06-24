@@ -27,9 +27,8 @@ export default async function Page({ params: { id } }: any) {
       <div className="space-y-4">
         <Breadcrumbs items={breadcrumbItems} />
         <StudentForm
-          classes={classes || []}
+          classes={JSON.stringify(classes || [])}
           initialData={initData}
-          key={null}
         />
       </div>
     </PageContainer>

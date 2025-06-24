@@ -21,6 +21,8 @@ export interface IStudent extends Document {
   };
   createdAt?: Date;
   updatedAt?: Date;
+  kas?: string;
+  birthCertificate?: string;
 }
 
 // Define the Mongoose Schema for a Student
@@ -50,6 +52,8 @@ const studentSchema: Schema<IStudent> = new Schema(
       nationality: { type: String, required: true, default: "kenyan" },
       street: { type: String, default: "" },
     },
+    kas: { type: String },
+    birthCertificate: { type: String },
   },
   {
     timestamps: true, // Automatically adds createdAt and updatedAt fields
