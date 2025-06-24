@@ -25,7 +25,7 @@ export const ExamClient: React.FC<ExamsClientProps> = ({
     <>
       <div className="flex items-start justify-between">
         <Heading
-          title={`Exams (${(data || []).length})/${total}`}
+          title={`Exams (${(data || []).length}/${total})`}
           description="Manage Exams (Client side table functionalities.)"
         />
         <Button
