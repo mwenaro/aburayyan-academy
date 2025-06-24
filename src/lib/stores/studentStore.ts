@@ -30,6 +30,7 @@ interface StudentState {
   updateStudent: (id: string, updatedData: Partial<Student>) => Promise<void>;
   deleteStudent: (id: string) => Promise<void>;
   reset: () => void;
+  setStudents: (students: Student[]) => void;
 }
 
 // Create the Zustand Store
@@ -94,6 +95,8 @@ export const useStudentStore = create<StudentState>()(
 
         // Reset store
         reset: () => set({ students: [], loading: false, error: null }),
+        // Set students directly
+        setStudents: (students) => set({ students }),
       }),
       { name: "student-store" }
     )

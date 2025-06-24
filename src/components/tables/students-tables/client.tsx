@@ -12,7 +12,6 @@ import { MyDataTable } from "../MyDataTable";
 
 interface StudentsClientProps {
   data: IStudent[];
-
   pageCount: number;
   total: number;
 }
@@ -46,13 +45,6 @@ export const StudentClient: React.FC<StudentsClientProps> = ({
         data={data}
         pageCount={pageCount}
       />
-      {/* <DataTable
-        searchKey="name"
-        columns={columns}
-        data={data}
-        pageNo={pageNo}
-        pageCount={pageCount}
-      /> */}
     </>
   );
 };
