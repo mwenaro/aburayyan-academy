@@ -1,6 +1,6 @@
 import { findWithQuery, getQueryOptions } from "@/contollers/fetchService";
 import { dbCon } from "@/libs/mongoose/dbCon";
-import { ClassModel, IClass } from "@/models/Class";
+import { ClassModel } from "@/models/Class";
 import { School } from "@/models/School";
 
 import { NextRequest, NextResponse } from "next/server";
@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
     const queryOptions = getQueryOptions(req, {
       searchableFields: ["name", "grade"],
       allowedFilters: ["name", "grade"],
-      defaultSortBy: "createdAt",
+      defaultSortBy: "name",
       defaultSortOrder: "desc",
       //  populate: ["class"],
     });

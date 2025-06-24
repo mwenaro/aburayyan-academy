@@ -14,9 +14,9 @@ const breadcrumbItems = [
   { title: "Students", link: "/dashboard/students" },
   { title: "Create", link: "/dashboard/students/create" },
 ];
-export default async function Page({ params: { studentId } }: any) {
+export default async function Page({ params: { id } }: any) {
   const initData =
-    studentId !== "new" ? await Student.findById(studentId) : null;
+    id !== "new" ? await Student.findById(id) : null;
   const classes = (await ClassModel.find({})).map((cls) => ({
     id: cls._id,
     name: strCapitalize(cls.name),

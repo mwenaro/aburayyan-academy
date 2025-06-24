@@ -7,19 +7,26 @@ import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { columns } from "./columns";
 import { IClass } from "@/models/Class";
+import { MyDataTable } from "../MyDataTable";
 
 interface ClassesClientProps {
   data: IClass[];
+  pageCount: number;
+  total: number;
 }
 
-export const ClassClient: React.FC<ClassesClientProps> = ({ data }) => {
+export const ClassClient: React.FC<ClassesClientProps> = ({
+  data,
+  pageCount,
+  total,
+}) => {
   const router = useRouter();
 
   return (
     <>
       <div className="flex items-start justify-between">
         <Heading
-          title={`Grades (${(data || []).length})`}
+          title={`Grades (${(data || []).length}/${total})`}
           description="Manage Classs/Grade (Client side table functionalities.)"
         />
         <Button
@@ -30,7 +37,12 @@ export const ClassClient: React.FC<ClassesClientProps> = ({ data }) => {
         </Button>
       </div>
       <Separator />
-      <DataTable searchKey="name" columns={columns} data={data} />
+      <MyDataTable
+        searchKey="name"
+        columns={columns}
+        data={data}
+        pageCount={pageCount}
+      />
     </>
   );
 };

@@ -11,8 +11,8 @@ export default function Home() {
   return (
     <div className="p-6">
       <ExcelTemplateGenerator
-      title="Grade 6 Maths"
-      columnNames="name,age,gender"
+      title="Grade 1 & 2"
+      columnNames="class,name,gen,"
 
       />
       

@@ -15,11 +15,9 @@ export default async function Page({ params: { slug } }: any) {
   const initData = slug !== "new" ? await ClassModel.findById(slug) : null;
 
   return (
-    <PageContainer scrollable={true}>
-      <div className="space-y-4">
-        <Breadcrumbs items={breadcrumbItems} />
-        <ClassForm initialData={initData} key={null} />
-      </div>
+    <PageContainer scrollable={true} className="space-y-4">
+      <Breadcrumbs items={breadcrumbItems} />
+      <ClassForm initialData={initData} key={null} />
     </PageContainer>
   );
 }

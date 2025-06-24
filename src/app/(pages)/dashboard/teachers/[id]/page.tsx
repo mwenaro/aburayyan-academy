@@ -12,9 +12,9 @@ const breadcrumbItems = [
   { title: "Teachers", link: "/dashboard/teachers" },
   { title: "Create", link: "/dashboard/teachers/create" },
 ];
-export default async function Page({ params: { categoryId } }: any) {
+export default async function Page({ params: { id } }: any) {
   const initData =
-    categoryId !== "new" ? await User.findById(categoryId) : null;
+    id !== "new" ? await User.findById(id) : null;
   
 
   return (
