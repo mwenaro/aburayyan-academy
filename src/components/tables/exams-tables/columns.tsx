@@ -1,17 +1,9 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
-import { ExamCellAction } from "./cell-action";
-// import { IExam } from "@/models/Exam";
 
-export interface IExam {
-  _id: string;
-  name: string;
-  term: number;
-  year: number;
-  school: any;
-  createdAt?: string;
-  updatedAt?: string;
-}
+import { IExam } from "@/models/Exam";
+import { ISchool } from "@/models/School";
+import { CellAction } from "./cell-action";
 
 export const columns: ColumnDef<IExam>[] = [
   {
@@ -48,10 +40,10 @@ export const columns: ColumnDef<IExam>[] = [
   {
     accessorKey: "school.name",
     header: "School",
-    cell: ({ row }) => row.original.school?.name || "-",
+    cell: ({ row }) => (row.original.school as ISchool)?.name || "-",
   },
   {
     id: "actions",
-    cell: ({ row }) => <ExamCellAction id={row.original._id} />,
+    cell: ({ row }) => <CellAction data={row.original} />,
   },
 ];

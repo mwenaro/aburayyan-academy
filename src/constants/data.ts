@@ -143,6 +143,12 @@ export const navItems: NavItem[] = [
     icon: 'class',
     label: 'grade'
   },
+   {
+    title: 'Exams',
+    href: '/dashboard/exams',
+    icon: 'class',
+    label: 'exam'
+  },
   {
     title: 'Invite',
     href: '/dashboard/invite',

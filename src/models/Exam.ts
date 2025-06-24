@@ -40,6 +40,6 @@ const ExamSchema: Schema = new Schema<IExam>(
 );
 
 // Create and export the model
-export const ExamModel: Model<IExam> = mongoose.model<IExam>("Exam", ExamSchema);
+export const Exam: Model<IExam> = mongoose.models.Exam || mongoose.model<IExam>("Exam", ExamSchema);
 
 

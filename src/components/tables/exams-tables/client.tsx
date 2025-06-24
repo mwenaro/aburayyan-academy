@@ -1,22 +1,21 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { columns, IExam } from "./columns";
-import { ProductsTable } from "./products-table";
-
+import { columns } from "./columns";
+import { MyDataTable } from "../MyDataTable";
+import { IExam } from "@/models/Exam";
 
 interface ExamsClientProps {
   data: IExam[];
-  pageNo: number;
   pageCount: number;
   total: number;
 }
 
 export const ExamClient: React.FC<ExamsClientProps> = ({
   data,
-  pageNo,
   pageCount,
   total,
 }) => {
@@ -26,7 +25,7 @@ export const ExamClient: React.FC<ExamsClientProps> = ({
     <>
       <div className="flex items-start justify-between">
         <Heading
-          title={`Exams (${(data || []).length})`}
+          title={`Exams (${(data || []).length})/${total}`}
           description="Manage Exams (Client side table functionalities.)"
         />
         <Button
@@ -37,12 +36,10 @@ export const ExamClient: React.FC<ExamsClientProps> = ({
         </Button>
       </div>
       <Separator />
-      <ProductsTable
+      <MyDataTable
         searchKey="name"
         columns={columns}
         data={data}
-        pageNo={pageNo}
-        totalUsers={total}
         pageCount={pageCount}
       />
     </>

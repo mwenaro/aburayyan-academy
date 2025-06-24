@@ -14,15 +14,6 @@ export default withAuth(
     res.headers.set("x-url", url.origin);
     const protectedMethods = ["POST", "PUT", "DELETE"];
     const isApiRequest = url.pathname.startsWith("/api");
-    const isProtectedRoute = !isApiRequest; // All non-API routes matched by the middleware
-
-    // Redirect unauthenticated users to NextAuth sign-in for protected routes
-    if (isProtectedRoute && !(req as any).nextauth?.token) {
-      const signinUrl = new URL("/api/auth/signin", url.origin);
-      signinUrl.searchParams.set("callbackUrl", url.pathname + url.search);
-      return NextResponse.redirect(signinUrl);
-    }
-
     if (isApiRequest && protectedMethods.includes(method)) {
       const token = req.nextauth?.token as JWT | undefined;
       const userIsAdmin = token?.role === "admin";

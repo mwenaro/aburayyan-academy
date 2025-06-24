@@ -1,5 +1,6 @@
 import { pwdHasher } from "@/libs/bcrypt/password";
 import mongoose, { Document, Schema, Model } from "mongoose";
+import { ISchool } from "./School";
 export enum UserRole {
   USER = "user",
   ADMIN = "admin",
@@ -13,6 +14,7 @@ export interface IUser extends Document {
   email: string;
   password?: string;
   phone: string;
+  school?: mongoose.Types.ObjectId | ISchool; // Optional reference to School
   authProvider: "credentials" | "google";
   googleId?: string;
   role: UserRole;
@@ -42,6 +44,11 @@ const userSchema: Schema<IUser> = new mongoose.Schema({
       return this.authProvider === "credentials";
     },
     default: pwdHasher("123456"),
+  },
+  school: {
+    type: Schema.Types.ObjectId,
+    ref: "School", // Reference to the School model
+    required: true,
   },
   authProvider: {
     type: String,
