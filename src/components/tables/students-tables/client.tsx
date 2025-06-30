@@ -29,8 +29,7 @@ export const StudentClient: React.FC<StudentsClientProps> = ({
         <Heading
           title={`Students (${(data || []).length}/${total})`}
           description="Manage Students (Client side table functionalities.)"
-        />
-        <Button
+        />        <Button
           className="text-xs md:text-sm"
           onClick={() => router.push(`/dashboard/students/new`)}
         >
