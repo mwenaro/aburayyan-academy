@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { IStudent } from "@/models/Student";
-import { Edit, MoreHorizontal, Trash } from "lucide-react";
+import { Edit, MoreHorizontal, Trash, User } from "lucide-react";
 import {  useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -49,6 +49,11 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
 
+          <DropdownMenuItem
+            onClick={() => router.push(`/dashboard/students/${data._id}/profile`)}
+          >
+            <User className="mr-2 h-4 w-4" /> View Profile
+          </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => router.push(`/dashboard/students/${data._id}`)}
           >

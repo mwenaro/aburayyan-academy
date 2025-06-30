@@ -1,6 +1,8 @@
 "use client";
+import Link from 'next/link'
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
+
 import { CellAction } from "./cell-action";
 import { IStudent } from "@/models/Student";
 import Image from "next/image";
@@ -60,9 +62,11 @@ export const columns: ColumnDef<IStudent>[] = [
     header: "NAME",
     cell: ({
       row: {
-        original: { name },
+        original: {_id, name },
       },
-    }) => <>{strCapitalize(name)}</>,
+    }) => <Link 
+    className='hover:text-blue-500 hover:underline'
+    href={`/dashboard/students/${_id}/profile`} title="Go to student  Proflie">{strCapitalize(name)}</Link>,
   },
   {
     accessorKey: "gen",

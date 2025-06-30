@@ -46,13 +46,15 @@ const studentFormSchema = z.object({
     nationality: z.string().min(1),
     street: z.string().min(1),
   }),
+  kas: z.string().optional(),
+  birthCertificate: z.string().optional(),
 });
 
 type StudentFormValues = z.infer<typeof studentFormSchema>;
 
 interface StudentFormProps {
   initialData: any | null;
-  classes: { id: string; name: string }[];
+  classes: string;
   // guardians: { id: string; name: string }[];
 }
 
@@ -74,7 +76,7 @@ export const StudentForm: React.FC<StudentFormProps> = ({
 
   const defaultValues = initialData || {
     name: "",
-    dob: '',
+    dob: "",
     gen: "male",
     contactDetails: {
       phone: "",
@@ -86,6 +88,8 @@ export const StudentForm: React.FC<StudentFormProps> = ({
       nationality: "kenyan",
       street: "",
     },
+    kas: "",
+    birthCertificate: "",
   };
 
   const form = useForm<StudentFormValues>({
@@ -256,7 +260,9 @@ export const StudentForm: React.FC<StudentFormProps> = ({
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {classes.map((cls) => (
+                    {(
+                      JSON.parse(classes) as { id: string; name: string }[]
+                    ).map((cls) => (
                       <SelectItem key={cls.id} value={cls.id}>
                         {cls.name}
                       </SelectItem>
@@ -359,6 +365,58 @@ export const StudentForm: React.FC<StudentFormProps> = ({
                 <FormLabel>Street</FormLabel>
                 <FormControl>
                   <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="kas"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>KAS</FormLabel>
+                <FormControl>
+                  <Input placeholder="KAS number or info" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="birthCertificate"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Birth Certificate (Upload)</FormLabel>
+                <FormControl>
+                  <input
+                    type="file"
+                    accept="application/pdf,image/*"
+                    onChange={async (e) => {
+                      const file = e.target.files?.[0];
+                      if (!file) return;
+                      const formData = new FormData();
+                      formData.append("file", file);
+                      // You should have an API endpoint to handle file uploads
+                      const res = await axios.post("/api/upload", formData, {
+                        headers: { "Content-Type": "multipart/form-data" },
+                      });
+                      // Save the returned file path in the form
+                      field.onChange(res.data.filePath);
+                    }}
+                  />
+                  {field.value && (
+                    <a
+                      href={field.value}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block mt-2 text-blue-600 underline"
+                    >
+                      View Uploaded File
+                    </a>
+                  )}
                 </FormControl>
                 <FormMessage />
               </FormItem>
