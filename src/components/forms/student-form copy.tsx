@@ -382,8 +382,8 @@ export const StudentForm: React.FC<StudentFormProps> = ({
                 </FormControl>
                 <FormMessage />
               </FormItem>
-            )}          />
-          
+            )}
+          />
           <FormField
             control={form.control}
             name="birthCertificate"
@@ -407,17 +407,17 @@ export const StudentForm: React.FC<StudentFormProps> = ({
                       field.onChange(res.data.filePath);
                     }}
                   />
+                  {field.value && (
+                    <a
+                      href={field.value}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block mt-2 text-blue-600 underline"
+                    >
+                      View Uploaded File
+                    </a>
+                  )}
                 </FormControl>
-                {field.value && (
-                  <a
-                    href={field.value}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block mt-2 text-blue-600 underline"
-                  >
-                    View Uploaded File
-                  </a>
-                )}
                 <FormMessage />
               </FormItem>
             )}

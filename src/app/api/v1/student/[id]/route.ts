@@ -6,7 +6,9 @@ type Query = { params: { id: string } };
 export async function GET(req: NextRequest, { params: { id } }: Query) {
   try {
     await dbCon();
-    const fetchedStudent = await Student.findOne({ _id: id });
+    const fetchedStudent = await Student.findOne({ _id: id })
+      .populate('class', 'name grade ukey')
+      .populate('guardians', 'name email phone role');
     if (!fetchedStudent)
       return NextResponse.json(
         { success: false, message: "Not Found" },
