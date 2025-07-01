@@ -15,7 +15,7 @@ export default function NotFound() {
         </CardHeader>
         <CardContent className="text-center space-y-4">
           <p className="text-muted-foreground">
-            The student you're looking for doesn't exist or may have been removed.
+            The student you&apos;re looking for doesn&apos;t exist or may have been removed.
           </p>
           <div className="flex gap-2 justify-center">
             <Button asChild variant="outline">
