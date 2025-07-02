@@ -58,12 +58,14 @@ export function isConnected(): boolean {
 
 export function getConnectionState(): string {
   const states = {
-    0: 'disconnected',
-    1: 'connected',
-    2: 'connecting',
-    3: 'disconnecting'
+    0: "disconnected",
+    1: "connected",
+    2: "connecting",
+    3: "disconnecting",
   };
-  return states[mongoose.connection.readyState as keyof typeof states] || 'unknown';
+  return (
+    states[mongoose.connection.readyState as keyof typeof states] || "unknown"
+  );
 }
 
 export async function disconnect(): Promise<void> {
