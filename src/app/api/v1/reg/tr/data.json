@@ -1,0 +1,101 @@
+[
+    {
+      "name": "Mr. Tom Nathan",
+      "subjects": [
+        { "subjectName": "Maths", "grade": "Grade 4" },
+        { "subjectName": "Maths", "grade": "Grade 5" },
+        { "subjectName": "Maths", "grade": "Grade 6" },
+        { "subjectName": "Maths", "grade": "Grade 7" },
+        { "subjectName": "Maths", "grade": "Grade 8" },
+        { "subjectName": "Science", "grade": "Grade 5" }
+      ]
+    },
+    {
+      "name": "Md. Maria Mwangangi",
+      "subjects": [
+        { "subjectName": "Social", "grade": "Grade 5" },
+        { "subjectName": "Social", "grade": "Grade 6" },
+        { "subjectName": "Social", "grade": "Grade 7" },
+        { "subjectName": "English", "grade": "Grade 4" },
+        { "subjectName": "English", "grade": "Grade 6" }
+      ]
+    },
+    {
+      "name": "Md. Isabella Komen",
+      "subjects": [
+        { "subjectName": "Social", "grade": "Grade 8" },
+        { "subjectName": "Creative Arts", "grade": "Grade 4" },
+        { "subjectName": "Creative Arts", "grade": "Grade 5" },
+        { "subjectName": "Agriculture", "grade": "Grade 4" },
+        { "subjectName": "Agriculture", "grade": "Grade 5" }
+      ]
+    },
+    {
+      "name": "Md. Linet Achieno",
+      "subjects": [
+        { "subjectName": "Kiswahili", "grade": "Grade 4" },
+        { "subjectName": "Kiswahili", "grade": "Grade 5" },
+        { "subjectName": "Kiswahili", "grade": "Grade 6" },
+        { "subjectName": "Kiswahili", "grade": "Grade 7" },
+        { "subjectName": "Agriculture", "grade": "Grade 6" },
+        { "subjectName": "English", "grade": "Grade 8" }
+      ]
+    },
+    {
+      "name": "Md. Ruth Moraa",
+      "subjects": [
+        { "subjectName": "Integrated Science", "grade": "Grade 6" },
+        { "subjectName": "Integrated Science", "grade": "Grade 7" },
+        { "subjectName": "Integrated Science", "grade": "Grade 8" },
+        { "subjectName": "Science", "grade": "Grade 4" }
+      ]
+    },
+    {
+      "name": "Md. Ummi Ali",
+      "subjects": [
+        { "subjectName": "IRE", "grade": "Grade 3" },
+        { "subjectName": "IRE", "grade": "Grade 4" },
+        { "subjectName": "IRE", "grade": "Grade 5" },
+        { "subjectName": "IRE", "grade": "Grade 6" },
+        { "subjectName": "IRE", "grade": "Grade 7" },
+        { "subjectName": "IRE", "grade": "Grade 8" },
+        { "subjectName": "Kiswahili", "grade": "Grade 5" }
+      ]
+    },
+    {
+      "name": "Md. Lucy Osoro",
+      "subjects": [
+        { "subjectName": "English", "grade": "Grade 7" },
+        { "subjectName": "Creative Arts", "grade": "Grade 6" },
+        { "subjectName": "Creative Arts", "grade": "Grade 7" },
+        { "subjectName": "Creative Arts", "grade": "Grade 8" },
+        { "subjectName": "Agriculture", "grade": "Grade 7" },
+        { "subjectName": "Agriculture", "grade": "Grade 8" }
+      ]
+    },
+    {
+      "name": "Md. Celestine Otieno",
+      "subjects": [
+        { "subjectName": "Social", "grade": "Grade 4" }
+      ]
+    },
+    {
+      "name": "Md. Prisca Mkala",
+      "subjects": [
+        { "subjectName": "All", "grade": "Grade 1" }
+      ]
+    },
+    {
+      "name": "Md. Dorine Wanyonyi",
+      "subjects": [
+        { "subjectName": "All", "grade": "Grade 2" }
+      ]
+    },
+    {
+      "name": "Md. Easter Adede",
+      "subjects": [
+        { "subjectName": "All", "grade": "Grade 3" }
+      ]
+    }
+  ]
+  
