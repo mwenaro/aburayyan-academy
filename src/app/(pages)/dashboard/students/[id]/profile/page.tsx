@@ -23,7 +23,10 @@ interface StudentProfilePageProps {
 
 export default async function StudentProfilePage({ params }: StudentProfilePageProps) {
   // Fetch student data
-  const student: IStudent = await getData(`/v1/student/${params.id}`);
+  const student: IStudent = await getData(`/v1/student/${params.id}`,{}, true);
+  // console.log("Student Data:", student);
+  // If student not found, show 404 page
+  // This is a fallback for when the student data is not available
   
   if (!student) {
     notFound();

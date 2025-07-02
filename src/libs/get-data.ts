@@ -1,9 +1,11 @@
 import axios from "axios";
+
 import { headers } from "next/headers";
 
 export const getData = async (
   path: string,
-  params: Record<string, any> | null = null
+  params: Record<string, any> | null = null,
+  logs: boolean = false
 ): Promise<any> => {
   try {
     const paramStr = new URLSearchParams(params || {}).toString();
@@ -23,7 +25,12 @@ export const getData = async (
     });
 
     let result = res?.data?.meta ? res?.data : res?.data?.data || res?.data;
-    console.log({ formattedUrl, result });
+    if(logs) {
+      console.log("API Call:", { formattedUrl, params, result });
+    }
+    if (res.status !== 200) {
+      throw new Error(`Error: ${res.status} - ${res.statusText}`);
+    }
     return result;
   } catch (error: any) {
     console.error("Fetch Error:", error.message);
