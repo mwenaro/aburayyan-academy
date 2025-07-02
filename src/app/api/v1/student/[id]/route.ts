@@ -9,6 +9,7 @@ export async function GET(req: NextRequest, { params: { id } }: Query) {
     const fetchedStudent = await Student.findOne({ _id: id })
       .populate('class', 'name grade ukey')
       .populate('guardians', 'name email phone role');
+      console.log("Fetched Student:", fetchedStudent);
     if (!fetchedStudent)
       return NextResponse.json(
         { success: false, message: "Not Found" },
