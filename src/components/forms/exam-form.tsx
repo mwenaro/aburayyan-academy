@@ -72,9 +72,9 @@ export const ExamForm: React.FC<ExamFormProps> = ({ initialData}) => {
     try {
       setLoading(true);
       if (initialData) {
-        await axios.put(`/api/v1/exam/${initialData._id}`, data);
+        await axios.put(`/api/v3/exam/${initialData._id}`, data);
       } else {
-        await axios.post(`/api/v1/exam`, data);
+        await axios.post(`/api/v3/exam`, data);
       }
       router.push(`/dashboard/exams`);
       toast({
@@ -87,7 +87,7 @@ export const ExamForm: React.FC<ExamFormProps> = ({ initialData}) => {
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
         description:
-          error?.response?.data?.message ||
+          error?.response?.data?.error || error?.response?.data?.message ||
           "There was a problem with your request.",
       });
     } finally {
@@ -106,7 +106,7 @@ export const ExamForm: React.FC<ExamFormProps> = ({ initialData}) => {
     }
     try {
       setLoading(true);
-      await axios.delete(`/api/v1/exam/${params.examId}`);
+      await axios.delete(`/api/v3/exam/${params.examId}`);
       router.push(`/dashboard/exams`);
     } catch (error: any) {
       console.error(error);
@@ -114,7 +114,7 @@ export const ExamForm: React.FC<ExamFormProps> = ({ initialData}) => {
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
         description:
-          error?.response?.data?.message ||
+          error?.response?.data?.error || error?.response?.data?.message ||
           "There was a problem with the deletion.",
       });
     } finally {
