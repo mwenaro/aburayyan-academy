@@ -1,9 +1,5 @@
 import { dbCon } from "@/libs/mongoose/dbCon";
 import { Exam } from "@/models/Exam";
-import { School } from "@/models/School";
-import { Subject } from "@/models/Subject";
-import { ClassModel } from "@/models/Class";
-import { Teacher } from "@/models/Teacher";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
@@ -12,12 +8,6 @@ export async function GET(
 ) {
   try {
     await dbCon();
-    
-    // Ensure models are registered
-    School;
-    Subject;
-    ClassModel;
-    Teacher;
     
     const exam = await Exam.findById(params.id)
       .populate("school", "name")
@@ -52,10 +42,6 @@ export async function PUT(
 ) {
   try {
     await dbCon();
-    
-    // Ensure models are registered
-    School;
-    
     const body = await req.json();
 
     // Only allow updating basic exam fields, not testing areas

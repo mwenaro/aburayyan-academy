@@ -1,10 +1,18 @@
 import { dbCon } from "@/libs/mongoose/dbCon";
 import { Exam } from "@/models/Exam";
+import { Subject } from "@/models/Subject";
+import { ClassModel } from "@/models/Class";
+import { Teacher } from "@/models/Teacher";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
     await dbCon();
+    
+    // Ensure models are registered
+    Subject;
+    ClassModel;
+    Teacher;
     
     const { searchParams } = new URL(req.url);
     const examId = searchParams.get("examId");
@@ -68,6 +76,12 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     await dbCon();
+    
+    // Ensure models are registered
+    Subject;
+    ClassModel;
+    Teacher;
+    
     const body = await req.json();
 
     // Validate required fields
