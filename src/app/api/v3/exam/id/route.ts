@@ -4,6 +4,7 @@ import { School } from "@/models/School";
 import { Subject } from "@/models/Subject";
 import { ClassModel } from "@/models/Class";
 import { Teacher } from "@/models/Teacher";
+import { Student } from "@/models/Student";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
@@ -18,13 +19,15 @@ export async function GET(
     Subject;
     ClassModel;
     Teacher;
+    Student;
     
     const exam = await Exam.findById(params.id)
       .populate("school", "name")
       .populate("testingAreas.subject", "name shortForm")
       .populate("testingAreas.class", "name grade")
       .populate("testingAreas.teacher", "firstName lastName")
-      .populate("testingAreas.invigilators", "firstName lastName");
+      .populate("testingAreas.invigilators", "firstName lastName")
+      .populate("testingAreas.marks.student", "firstName lastName admissionNumber");
 
     if (!exam) {
       return NextResponse.json(
@@ -113,7 +116,7 @@ export async function DELETE(
 
     return NextResponse.json({
       success: true,
-      message: "Exam and all associated testing areas deleted successfully"
+      message: "Exam and all associated testing areas and marks deleted successfully"
     });
   } catch (error: any) {
     console.error("Error deleting exam:", error);

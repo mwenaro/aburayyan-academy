@@ -5,26 +5,15 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { examId: string; testingAreaId: string; markId: string } }
 ) {
   try {
     await dbCon();
     
     // Ensure models are registered
     Student;
-    
-    const { searchParams } = new URL(req.url);
-    const examId = searchParams.get("examId");
-    const testingAreaId = searchParams.get("testingAreaId");
-    
-    if (!examId || !testingAreaId) {
-      return NextResponse.json(
-        { success: false, error: "examId and testingAreaId parameters are required" },
-        { status: 400 }
-      );
-    }
 
-    const exam = await Exam.findById(examId)
+    const exam = await Exam.findById(params.examId)
       .populate("testingAreas.marks.student", "firstName lastName admissionNumber");
 
     if (!exam) {
@@ -34,7 +23,7 @@ export async function GET(
       );
     }
 
-    const testingArea = exam.testingAreas.find(ta => ta._id?.toString() === testingAreaId);
+    const testingArea = exam.testingAreas.find(ta => ta._id?.toString() === params.testingAreaId);
 
     if (!testingArea) {
       return NextResponse.json(
@@ -43,7 +32,7 @@ export async function GET(
       );
     }
 
-    const mark = testingArea.marks.find(m => m._id?.toString() === params.id);
+    const mark = testingArea.marks.find(m => m._id?.toString() === params.markId);
 
     if (!mark) {
       return NextResponse.json(
@@ -59,6 +48,12 @@ export async function GET(
         _id: testingArea._id,
         name: testingArea.name,
         outOf: testingArea.outOf
+      },
+      exam: {
+        _id: exam._id,
+        name: exam.name,
+        term: exam.term,
+        year: exam.year
       }
     });
   } catch (error: any) {
@@ -72,7 +67,7 @@ export async function GET(
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { examId: string; testingAreaId: string; markId: string } }
 ) {
   try {
     await dbCon();
@@ -81,14 +76,6 @@ export async function PUT(
     Student;
     
     const body = await req.json();
-    
-    const { examId, testingAreaId } = body;
-    if (!examId || !testingAreaId) {
-      return NextResponse.json(
-        { success: false, error: "examId and testingAreaId are required in request body" },
-        { status: 400 }
-      );
-    }
 
     // Build update object for allowed fields
     const allowedFields = ["score", "remark"];
@@ -109,17 +96,17 @@ export async function PUT(
 
     const updatedExam = await Exam.findOneAndUpdate(
       { 
-        _id: examId,
-        "testingAreas._id": testingAreaId,
-        "testingAreas.marks._id": params.id
+        _id: params.examId,
+        "testingAreas._id": params.testingAreaId,
+        "testingAreas.marks._id": params.markId
       },
       { $set: updateFields },
       { 
         new: true, 
         runValidators: true,
         arrayFilters: [
-          { "area._id": testingAreaId },
-          { "mark._id": params.id }
+          { "area._id": params.testingAreaId },
+          { "mark._id": params.markId }
         ]
       }
     ).populate("testingAreas.marks.student", "firstName lastName admissionNumber");
@@ -132,8 +119,8 @@ export async function PUT(
     }
 
     // Find the updated mark
-    const testingArea = updatedExam.testingAreas.find(ta => ta._id?.toString() === testingAreaId);
-    const updatedMark = testingArea?.marks.find(m => m._id?.toString() === params.id);
+    const testingArea = updatedExam.testingAreas.find(ta => ta._id?.toString() === params.testingAreaId);
+    const updatedMark = testingArea?.marks.find(m => m._id?.toString() === params.markId);
 
     return NextResponse.json({
       success: true,
@@ -151,30 +138,19 @@ export async function PUT(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { examId: string; testingAreaId: string; markId: string } }
 ) {
   try {
     await dbCon();
-    
-    const { searchParams } = new URL(req.url);
-    const examId = searchParams.get("examId");
-    const testingAreaId = searchParams.get("testingAreaId");
-    
-    if (!examId || !testingAreaId) {
-      return NextResponse.json(
-        { success: false, error: "examId and testingAreaId parameters are required" },
-        { status: 400 }
-      );
-    }
 
     const updatedExam = await Exam.findOneAndUpdate(
       { 
-        _id: examId,
-        "testingAreas._id": testingAreaId
+        _id: params.examId,
+        "testingAreas._id": params.testingAreaId
       },
       { 
         $pull: { 
-          "testingAreas.$.marks": { _id: params.id } 
+          "testingAreas.$.marks": { _id: params.markId } 
         } 
       },
       { new: true }

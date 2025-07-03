@@ -3,7 +3,10 @@ import { Exam } from "@/models/Exam";
 import { Student } from "@/models/Student";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
   try {
     await dbCon();
     
@@ -12,17 +15,16 @@ export async function GET(req: NextRequest) {
     
     const { searchParams } = new URL(req.url);
     const testingAreaId = searchParams.get("testingAreaId");
-    const examId = searchParams.get("examId");
     const studentId = searchParams.get("studentId");
     
-    if (!testingAreaId || !examId) {
+    if (!testingAreaId) {
       return NextResponse.json(
-        { success: false, error: "testingAreaId and examId parameters are required" },
+        { success: false, error: "testingAreaId parameter is required" },
         { status: 400 }
       );
     }
 
-    const exam = await Exam.findById(examId)
+    const exam = await Exam.findById(params.id)
       .populate("testingAreas.marks.student", "firstName lastName admissionNumber");
 
     if (!exam) {
@@ -57,6 +59,12 @@ export async function GET(req: NextRequest) {
         name: testingArea.name,
         outOf: testingArea.outOf,
         status: testingArea.status
+      },
+      exam: {
+        _id: exam._id,
+        name: exam.name,
+        term: exam.term,
+        year: exam.year
       }
     });
   } catch (error: any) {
@@ -68,7 +76,10 @@ export async function GET(req: NextRequest) {
   }
 }
 
-export async function POST(req: NextRequest) {
+export async function POST(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
   try {
     await dbCon();
     
@@ -77,13 +88,13 @@ export async function POST(req: NextRequest) {
     
     const body = await req.json();
 
-    // Validate required fields
-    const { examId, testingAreaId, student, score } = body;
-    if (!examId || !testingAreaId || !student || score === undefined) {
+    // Validate required fields (examId is from params)
+    const { testingAreaId, student, score } = body;
+    if (!testingAreaId || !student || score === undefined) {
       return NextResponse.json(
         { 
           success: false, 
-          error: "Missing required fields: examId, testingAreaId, student, score" 
+          error: "Missing required fields: testingAreaId, student, score" 
         },
         { status: 400 }
       );
@@ -91,7 +102,7 @@ export async function POST(req: NextRequest) {
 
     // Check if student already has a mark in this testing area
     const existingExam = await Exam.findOne({
-      _id: examId,
+      _id: params.id,
       "testingAreas._id": testingAreaId,
       "testingAreas.marks.student": student
     });
@@ -114,7 +125,7 @@ export async function POST(req: NextRequest) {
     // Add mark to testing area
     const updatedExam = await Exam.findOneAndUpdate(
       { 
-        _id: examId, 
+        _id: params.id, 
         "testingAreas._id": testingAreaId 
       },
       { 
@@ -154,7 +165,10 @@ export async function POST(req: NextRequest) {
 }
 
 // Bulk create marks for multiple students
-export async function PATCH(req: NextRequest) {
+export async function PATCH(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
   try {
     await dbCon();
     
@@ -163,12 +177,12 @@ export async function PATCH(req: NextRequest) {
     
     const body = await req.json();
 
-    const { examId, testingAreaId, marks } = body;
-    if (!examId || !testingAreaId || !marks || !Array.isArray(marks)) {
+    const { testingAreaId, marks } = body;
+    if (!testingAreaId || !marks || !Array.isArray(marks)) {
       return NextResponse.json(
         { 
           success: false, 
-          error: "Missing required fields: examId, testingAreaId, marks (array)" 
+          error: "Missing required fields: testingAreaId, marks (array)" 
         },
         { status: 400 }
       );
@@ -194,7 +208,7 @@ export async function PATCH(req: NextRequest) {
     // Add all marks to testing area
     const updatedExam = await Exam.findOneAndUpdate(
       { 
-        _id: examId, 
+        _id: params.id, 
         "testingAreas._id": testingAreaId 
       },
       { 
@@ -221,6 +235,138 @@ export async function PATCH(req: NextRequest) {
     });
   } catch (error: any) {
     console.error("Error bulk creating marks:", error);
+    return NextResponse.json(
+      { success: false, error: error.message },
+      { status: 500 }
+    );
+  }
+}
+
+// Update a specific mark
+export async function PUT(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  try {
+    await dbCon();
+    
+    // Ensure models are registered
+    Student;
+    
+    const body = await req.json();
+    
+    const { testingAreaId, markId } = body;
+    if (!testingAreaId || !markId) {
+      return NextResponse.json(
+        { success: false, error: "testingAreaId and markId are required in request body" },
+        { status: 400 }
+      );
+    }
+
+    // Build update object for allowed fields
+    const allowedFields = ["score", "remark"];
+    const updateFields: any = {};
+    
+    allowedFields.forEach(field => {
+      if (body[field] !== undefined) {
+        updateFields[`testingAreas.$[area].marks.$[mark].${field}`] = body[field];
+      }
+    });
+
+    if (Object.keys(updateFields).length === 0) {
+      return NextResponse.json(
+        { success: false, error: "No valid fields to update" },
+        { status: 400 }
+      );
+    }
+
+    const updatedExam = await Exam.findOneAndUpdate(
+      { 
+        _id: params.id,
+        "testingAreas._id": testingAreaId,
+        "testingAreas.marks._id": markId
+      },
+      { $set: updateFields },
+      { 
+        new: true, 
+        runValidators: true,
+        arrayFilters: [
+          { "area._id": testingAreaId },
+          { "mark._id": markId }
+        ]
+      }
+    ).populate("testingAreas.marks.student", "firstName lastName admissionNumber");
+
+    if (!updatedExam) {
+      return NextResponse.json(
+        { success: false, error: "Exam, testing area, or mark not found" },
+        { status: 404 }
+      );
+    }
+
+    // Find the updated mark
+    const testingArea = updatedExam.testingAreas.find(ta => ta._id?.toString() === testingAreaId);
+    const updatedMark = testingArea?.marks.find(m => m._id?.toString() === markId);
+
+    return NextResponse.json({
+      success: true,
+      data: updatedMark,
+      message: "Mark updated successfully"
+    });
+  } catch (error: any) {
+    console.error("Error updating mark:", error);
+    return NextResponse.json(
+      { success: false, error: error.message },
+      { status: 500 }
+    );
+  }
+}
+
+// Delete a specific mark
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  try {
+    await dbCon();
+    
+    const { searchParams } = new URL(req.url);
+    const testingAreaId = searchParams.get("testingAreaId");
+    const markId = searchParams.get("markId");
+    
+    if (!testingAreaId || !markId) {
+      return NextResponse.json(
+        { success: false, error: "testingAreaId and markId parameters are required" },
+        { status: 400 }
+      );
+    }
+
+    const updatedExam = await Exam.findOneAndUpdate(
+      { 
+        _id: params.id,
+        "testingAreas._id": testingAreaId
+      },
+      { 
+        $pull: { 
+          "testingAreas.$.marks": { _id: markId } 
+        } 
+      },
+      { new: true }
+    );
+
+    if (!updatedExam) {
+      return NextResponse.json(
+        { success: false, error: "Exam or testing area not found" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json({
+      success: true,
+      message: "Mark deleted successfully"
+    });
+  } catch (error: any) {
+    console.error("Error deleting mark:", error);
     return NextResponse.json(
       { success: false, error: error.message },
       { status: 500 }

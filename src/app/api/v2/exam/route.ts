@@ -1,20 +1,21 @@
 import { dbCon } from "@/libs/mongoose/dbCon";
 import { Exam } from "@/models/Exam";
-import { School } from "@/models/School";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
     await dbCon();
     
-    // Ensure models are registered
-    School;
-    
     const { searchParams } = new URL(req.url);
     const school = searchParams.get("school");
     const term = searchParams.get("term");
     const year = searchParams.get("year");
-    
+    console.log("Fetching exams with parameters:", {
+      school,
+      term,
+      year
+    });
+
     // Build query object
     const query: any = {};
     if (school) query.school = school;
@@ -42,10 +43,6 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     await dbCon();
-    
-    // Ensure models are registered
-    School;
-    
     const body = await req.json();
 
     // Validate required fields
