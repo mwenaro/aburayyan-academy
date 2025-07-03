@@ -10,14 +10,29 @@ const breadcrumbItems = [
 ];
 
 export default async function page({searchParams}:any) {
-  const {data=[], meta:{total,  totalPages}} = await getData('/v1/exam',searchParams);
+  try {
+    // Try v3 API first, fallback to v1 if not available
+    const { data = [], meta = { total: 0, totalPages: 1 } } = await getData('/v3/exam', searchParams);
 
-  return (
-    <PageContainer>
-      <div className="space-y-2">
-        <Breadcrumbs items={breadcrumbItems} />
-        <ExamClient data={data} pageCount={totalPages} total={total}  />
-      </div>
-    </PageContainer>
-  );
+    return (
+      <PageContainer>
+        <div className="space-y-2">
+          <Breadcrumbs items={breadcrumbItems} />
+          <ExamClient data={data} pageCount={meta.totalPages} total={meta.total} />
+        </div>
+      </PageContainer>
+    );
+  } catch (error) {
+    // Fallback to v1 API
+    const { data = [], meta: { total = 0, totalPages = 1 } = {} } = await getData('/v1/exam', searchParams);
+
+    return (
+      <PageContainer>
+        <div className="space-y-2">
+          <Breadcrumbs items={breadcrumbItems} />
+          <ExamClient data={data} pageCount={totalPages} total={total} />
+        </div>
+      </PageContainer>
+    );
+  }
 }
