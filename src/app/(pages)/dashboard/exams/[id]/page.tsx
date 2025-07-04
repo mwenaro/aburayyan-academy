@@ -26,14 +26,15 @@ export default async function Page({ params: { id } }: any) {
   // If existing exam ID, show exam details with testing areas
   try {
     const examResponse = await getData(`/v3/exam/${id}`);
-    const testingAreasResponse = await getData(`/v3/exam/${id}/testing-area`);
+    // const testingAreasResponse = await getData(`/v3/exam/${id}/testing-area`);
+    const testingAreasResponse= examResponse?.data?.testingAreas || [];
     
     const exam = examResponse?.data || examResponse;
     const testingAreas = testingAreasResponse?.data || testingAreasResponse || [];
-    
-    if (!exam) {
-      throw new Error("Exam not found");
-    }
+    console.log({exam, examResponse, testingAreas, testingAreasResponse});
+    // if (!exam) {
+    //   throw new Error("Exam not found");
+    // }
     
     const breadcrumbItems = [
       { title: "Dashboard", link: "/dashboard" },

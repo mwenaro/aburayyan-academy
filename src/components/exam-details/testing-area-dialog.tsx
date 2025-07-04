@@ -140,7 +140,7 @@ export const TestingAreaDialog: React.FC<TestingAreaDialogProps> = ({
         axios.get('/api/v1/class'),
         axios.get('/api/v1/teacher'),
       ]);
-
+// console.log("data here",{teachers: teachersRes.data.data});
       setSubjects(subjectsRes.data.data || []);
       setClasses(classesRes.data.data || []);
       setTeachers(teachersRes.data.data || []);
@@ -280,7 +280,7 @@ export const TestingAreaDialog: React.FC<TestingAreaDialogProps> = ({
                 name="teacher"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Teacher (Optional)</FormLabel>
+                    <FormLabel>Teacher </FormLabel>
                     <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
                         <SelectTrigger>
@@ -290,7 +290,7 @@ export const TestingAreaDialog: React.FC<TestingAreaDialogProps> = ({
                       <SelectContent>
                         {teachers.map((teacher) => (
                           <SelectItem key={teacher._id} value={teacher._id}>
-                            {teacher.firstName} {teacher.lastName}
+                            {teacher.firstName} {teacher.lastName} {teacher.name}
                           </SelectItem>
                         ))}
                       </SelectContent>

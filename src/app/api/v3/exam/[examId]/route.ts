@@ -9,7 +9,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { examId: string } }
 ) {
   try {
     await dbCon();
@@ -21,7 +21,7 @@ export async function GET(
     Teacher;
     Student;
     
-    const exam = await Exam.findById(params.id)
+    const exam = await Exam.findById(params.examId)
       .populate("school", "name")
       .populate("testingAreas.subject", "name shortForm")
       .populate("testingAreas.class", "name grade")
@@ -43,7 +43,7 @@ export async function GET(
   } catch (error: any) {
     console.error("Error fetching exam:", error);
     return NextResponse.json(
-      { success: false, error: error.message },
+      { success: false, error: error.message, data: null },
       { status: 500 }
     );
   }
