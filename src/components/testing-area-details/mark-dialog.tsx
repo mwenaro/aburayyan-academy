@@ -111,9 +111,17 @@ export const MarkDialog: React.FC<MarkDialogProps> = ({
         ? testingArea.class._id 
         : testingArea.class;
       
+      console.log("Loading students for class:", classId, "testingArea:", testingArea);
+      
       const response = await axios.get(`/api/v1/student?class=${classId}`);
-      setStudents(response.data.data || []);
+      console.log("Students response:", response.data);
+      
+      const studentsData = response.data.data || response.data || [];
+      console.log("Processed students data:", studentsData);
+      
+      setStudents(studentsData);
     } catch (error) {
+      console.error("Error loading students:", error);
       toast({
         title: "Error",
         description: "Failed to load students",
@@ -196,11 +204,17 @@ export const MarkDialog: React.FC<MarkDialogProps> = ({
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {students.map((student) => (
-                        <SelectItem key={student._id} value={student._id}>
-                          {student.firstName} {student.lastName} ({student.admissionNumber})
+                      {students.length === 0 ? (
+                        <SelectItem value="no-students" disabled>
+                          No students found
                         </SelectItem>
-                      ))}
+                      ) : (
+                        students.map((student) => (
+                          <SelectItem key={student._id} value={student._id}>
+                            {student.firstName} {student.lastName} ({student.admissionNumber})
+                          </SelectItem>
+                        ))
+                      )}
                     </SelectContent>
                   </Select>
                   <FormMessage />

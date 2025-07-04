@@ -133,6 +133,22 @@ export const TestingAreaDialog: React.FC<TestingAreaDialogProps> = ({
     }
   }, [open]);
 
+  // Auto-generate name when subject and class are selected
+  useEffect(() => {
+    const selectedSubject = form.watch("subject");
+    const selectedClass = form.watch("class");
+    
+    if (selectedSubject && selectedClass) {
+      const subjectName = subjects.find(s => s._id === selectedSubject)?.name;
+      const className = classes.find(c => c._id === selectedClass);
+      
+      if (subjectName && className) {
+        const generatedName = `${subjectName} - Grade ${className.grade}`;
+        form.setValue("name", generatedName);
+      }
+    }
+  }, [form.watch("subject"), form.watch("class"), subjects, classes, form]);
+
   const loadDropdownData = async () => {
     try {
       const [subjectsRes, classesRes, teachersRes] = await Promise.all([
@@ -140,7 +156,7 @@ export const TestingAreaDialog: React.FC<TestingAreaDialogProps> = ({
         axios.get('/api/v1/class'),
         axios.get('/api/v1/teacher'),
       ]);
-
+// console.log("data here",{teachers: teachersRes.data.data});
       setSubjects(subjectsRes.data.data || []);
       setClasses(classesRes.data.data || []);
       setTeachers(teachersRes.data.data || []);
@@ -215,7 +231,12 @@ export const TestingAreaDialog: React.FC<TestingAreaDialogProps> = ({
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="e.g., Mathematics - Grade 5" {...field} />
+                    <Input 
+                      placeholder="e.g., Mathematics - Grade 5" 
+                      {...field} 
+                      readOnly
+                      className="bg-gray-50 text-gray-600"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -280,7 +301,7 @@ export const TestingAreaDialog: React.FC<TestingAreaDialogProps> = ({
                 name="teacher"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Teacher (Optional)</FormLabel>
+                    <FormLabel>Teacher </FormLabel>
                     <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
                         <SelectTrigger>
@@ -290,7 +311,7 @@ export const TestingAreaDialog: React.FC<TestingAreaDialogProps> = ({
                       <SelectContent>
                         {teachers.map((teacher) => (
                           <SelectItem key={teacher._id} value={teacher._id}>
-                            {teacher.firstName} {teacher.lastName}
+                            {teacher.firstName} {teacher.lastName} {teacher.name}
                           </SelectItem>
                         ))}
                       </SelectContent>
