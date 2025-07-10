@@ -71,7 +71,7 @@ studentSchema.pre("save", async function (next) {
     let regnoExists = true;
     let newRegno = "";
 
-    // Loop until we find a regno that doesn't exist
+    // Loop until we find a regno that doesn&apos;t exist
     while (regnoExists) {
       newRegno = `abu/s/${currentYear}/${String(nextNumber).padStart(3, "0")}`;
       const existing = await StudentModel.findOne({ regno: newRegno }).lean();

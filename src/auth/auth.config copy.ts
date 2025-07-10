@@ -94,7 +94,7 @@
 //               );
 //             }
 //           } else {
-//             // If user doesn't exist, register a new user
+//             // If user doesn&apos;t exist, register a new user
 //             existingUser = await userService.create({
 //               name: user.name!,
 //               email: user.email!,

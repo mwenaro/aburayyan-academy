@@ -4,6 +4,8 @@ import { ColumnDef } from "@tanstack/react-table";
 import { IExam } from "@/models/Exam";
 import { ISchool } from "@/models/School";
 import { CellAction } from "./cell-action";
+import Link from "next/link";
+import { strCapitalize } from "@/libs/str_functions";
 
 export const columns: ColumnDef<IExam>[] = [
   {
@@ -28,6 +30,11 @@ export const columns: ColumnDef<IExam>[] = [
   {
     accessorKey: "name",
     header: "Exam Name",
+    cell: ({ row:{original:{name, _id}} }) => (
+      <Link href={`/dashboard/exams/${_id!}`} className="hover:underline hover:text-blue-600">
+        {strCapitalize(name! || "-")}
+      </Link>
+    ),
   },
   {
     accessorKey: "term",
