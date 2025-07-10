@@ -34,6 +34,7 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { ITestingArea, IMarkScore } from "@/models/Exam";
 import { Plus, Trash2, Users } from "lucide-react";
+import { strCapitalize } from "@/libs/str_functions";
 
 const bulkMarkSchema = z.object({
   marks: z.array(z.object({
@@ -146,7 +147,7 @@ export const BulkMarksDialog: React.FC<BulkMarksDialogProps> = ({
 
   const getStudentName = (studentId: string) => {
     const student = students.find(s => s._id === studentId);
-    return student ? `${student.firstName} ${student.lastName} (${student.admissionNumber})` : "Select student";
+    return student ? `${strCapitalize(student.name)} (${student.admissionNumber || ""})` : "Select student";
   };
 
   return (
@@ -207,7 +208,7 @@ export const BulkMarksDialog: React.FC<BulkMarksDialogProps> = ({
                                   <option value="">Select student</option>
                                   {students.map((student) => (
                                     <option key={student._id} value={student._id}>
-                                      {student.firstName} {student.lastName} ({student.admissionNumber})
+                                      {strCapitalize(student.name)}  ({student.admissionNumber || ""})
                                     </option>
                                   ))}
                                 </select>

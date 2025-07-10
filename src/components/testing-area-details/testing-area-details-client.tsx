@@ -33,6 +33,7 @@ import { useToast } from "@/components/ui/use-toast";
 import axios from "axios";
 import { MarkDialog } from "@/components/testing-area-details/mark-dialog";
 import { BulkMarksDialog } from "@/components/testing-area-details/bulk-marks-dialog";
+import { strCapitalize } from "@/libs/str_functions";
 
 interface TestingAreaDetailsClientProps {
   exam: IExam;
@@ -53,7 +54,7 @@ export const TestingAreaDetailsClient: React.FC<TestingAreaDetailsClientProps> =
   const [bulkDialogOpen, setBulkDialogOpen] = useState(false);
   const [selectedMark, setSelectedMark] = useState<IMarkScore | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-
+console.log({marks})
   const handleDeleteMark = async (markId: string) => {
     setIsLoading(true);
     try {
@@ -331,8 +332,8 @@ export const TestingAreaDetailsClient: React.FC<TestingAreaDetailsClientProps> =
                     {marks.map((mark) => (
                       <TableRow key={mark._id?.toString()}>
                         <TableCell className="font-medium">
-                          {typeof mark.student === 'object' && 'firstName' in mark.student && 'lastName' in mark.student
-                            ? `${mark.student.firstName} ${mark.student.lastName}`
+                          {typeof mark.student === 'object' && 'name' in mark.student
+                            ? strCapitalize(mark.student.name)
                             : 'N/A'
                           }
                         </TableCell>

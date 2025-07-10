@@ -59,8 +59,8 @@ export async function POST(
     // Populate the response
     await exam.populate("testingAreas.subject", "name shortForm");
     await exam.populate("testingAreas.class", "name grade");
-    await exam.populate("testingAreas.teacher", "firstName lastName");
-    await exam.populate("testingAreas.invigilators", "firstName lastName");
+    await exam.populate("testingAreas.teacher", "firstName lastName name");
+    await exam.populate("testingAreas.invigilators", "firstName lastName name");
 
     const populatedTestingArea = exam.testingAreas.find(ta => 
       ta._id?.toString() === savedTestingArea._id?.toString()
@@ -136,8 +136,8 @@ export async function PUT(
     // Populate the response
     await exam.populate("testingAreas.subject", "name shortForm");
     await exam.populate("testingAreas.class", "name grade");
-    await exam.populate("testingAreas.teacher", "firstName lastName");
-    await exam.populate("testingAreas.invigilators", "firstName lastName");
+    await exam.populate("testingAreas.teacher", "firstName lastName name");
+    await exam.populate("testingAreas.invigilators", "firstName lastName name");
 
     const updatedTestingArea = exam.testingAreas.find(ta => 
       ta._id?.toString() === testingAreaId

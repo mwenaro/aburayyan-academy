@@ -33,6 +33,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { ITestingArea, IMarkScore } from "@/models/Exam";
+import { strCapitalize } from "@/libs/str_functions";
 
 const markSchema = z.object({
   student: z.string().min(1, "Student is required"),
@@ -211,7 +212,7 @@ export const MarkDialog: React.FC<MarkDialogProps> = ({
                       ) : (
                         students.map((student) => (
                           <SelectItem key={student._id} value={student._id}>
-                            {student.firstName} {student.lastName} ({student.admissionNumber})
+                           {strCapitalize(student.name)}  ({student.admissionNumber || ""})
                           </SelectItem>
                         ))
                       )}

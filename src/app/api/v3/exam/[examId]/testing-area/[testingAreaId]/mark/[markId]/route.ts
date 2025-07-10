@@ -14,7 +14,7 @@ export async function GET(
     Student;
 
     const exam = await Exam.findById(params.examId)
-      .populate("testingAreas.marks.student", "firstName lastName admissionNumber");
+      .populate("testingAreas.marks.student", "firstName lastName admissionNumber name");
 
     if (!exam) {
       return NextResponse.json(
@@ -109,7 +109,7 @@ export async function PUT(
           { "mark._id": params.markId }
         ]
       }
-    ).populate("testingAreas.marks.student", "firstName lastName admissionNumber");
+    ).populate("testingAreas.marks.student", "firstName lastName admissionNumber name");
 
     if (!updatedExam) {
       return NextResponse.json(

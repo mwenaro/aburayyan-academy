@@ -17,7 +17,7 @@ export async function GET(
     const studentId = searchParams.get("studentId");
 
     const exam = await Exam.findById(params.examId)
-      .populate("testingAreas.marks.student", "firstName lastName admissionNumber");
+      .populate("testingAreas.marks.student", "firstName lastName admissionNumber name");
 
     if (!exam) {
       return NextResponse.json(
@@ -126,7 +126,7 @@ export async function POST(
         } 
       },
       { new: true, runValidators: true }
-    ).populate("testingAreas.marks.student", "firstName lastName admissionNumber");
+    ).populate("testingAreas.marks.student", "firstName lastName admissionNumber name");
 
     if (!updatedExam) {
       return NextResponse.json(
@@ -209,7 +209,7 @@ export async function PATCH(
         } 
       },
       { new: true, runValidators: true }
-    ).populate("testingAreas.marks.student", "firstName lastName admissionNumber");
+    ).populate("testingAreas.marks.student", "firstName lastName admissionNumber name");
 
     if (!updatedExam) {
       return NextResponse.json(

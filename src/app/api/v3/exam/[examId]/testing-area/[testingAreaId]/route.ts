@@ -20,9 +20,9 @@ export async function GET(
     const exam = await Exam.findById(params.examId)
       .populate("testingAreas.subject", "name shortForm")
       .populate("testingAreas.class", "name grade")
-      .populate("testingAreas.teacher", "firstName lastName")
-      .populate("testingAreas.invigilators", "firstName lastName")
-      .populate("testingAreas.marks.student", "firstName lastName admissionNumber");
+      .populate("testingAreas.teacher", "firstName lastName name")
+      .populate("testingAreas.invigilators", "firstName lastName name")
+      .populate("testingAreas.marks.student", "firstName lastName admissionNumber name");
 
     if (!exam) {
       return NextResponse.json(
