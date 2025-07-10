@@ -23,7 +23,14 @@ export async function GET() {
       Exam.countDocuments(),
       User.countDocuments()
     ]);
-
+    console.log("Dashboard stats fetched successfully", {
+      totalStudents,
+      totalTeachers,
+      totalSubjects,
+      totalClasses,
+      totalExams,
+      totalUsers
+    });
     return NextResponse.json({
       totalStudents,
       totalTeachers,
