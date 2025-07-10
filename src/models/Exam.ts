@@ -151,14 +151,26 @@ ExamSchema.pre<IExam>("save", function (next) {
       // Calculate grades for marks
       if (testingArea.marks && testingArea.marks.length > 0) {
         testingArea.marks.forEach((mark) => {
-          if (mark.score >= 0 && testingArea.outOf > 0) {
-            const percentage = (mark.score / testingArea.outOf) * 100;
+          // Ensure score and outOf are valid numbers
+          const score = Number(mark.score);
+          const outOf = Number(testingArea.outOf);
+          
+          if (!isNaN(score) && !isNaN(outOf) && score >= 0 && outOf > 0) {
+            const percentage = (score / outOf) * 100;
             
             // Assign grade based on CBC bands
-            if (percentage >= 80) mark.grade = { name: "E", points: 4 };
-            else if (percentage >= 70) mark.grade = { name: "M", points: 3 };
-            else if (percentage >= 50) mark.grade = { name: "A", points: 2 };
-            else mark.grade = { name: "B", points: 1 };
+            if (percentage >= 80) {
+              mark.grade = { name: "E", points: 4 };
+            } else if (percentage >= 70) {
+              mark.grade = { name: "M", points: 3 };
+            } else if (percentage >= 50) {
+              mark.grade = { name: "A", points: 2 };
+            } else {
+              mark.grade = { name: "B", points: 1 };
+            }
+          } else {
+            // Set default grade if score/outOf is invalid
+            mark.grade = { name: "B", points: 1 };
           }
         });
       }
@@ -166,6 +178,25 @@ ExamSchema.pre<IExam>("save", function (next) {
   }
   next();
 });
+
+// Utility function to calculate CBC grade based on score and outOf
+export const calculateGrade = (score: number, outOf: number): { name: string; points: number } => {
+  // Ensure score and outOf are valid numbers
+  const numScore = Number(score);
+  const numOutOf = Number(outOf);
+  
+  if (isNaN(numScore) || isNaN(numOutOf) || numScore < 0 || numOutOf <= 0) {
+    return { name: "B", points: 1 };
+  }
+  
+  const percentage = (numScore / numOutOf) * 100;
+  
+  // Assign grade based on CBC bands
+  if (percentage >= 80) return { name: "E", points: 4 };
+  else if (percentage >= 70) return { name: "M", points: 3 };
+  else if (percentage >= 50) return { name: "A", points: 2 };
+  else return { name: "B", points: 1 };
+};
 
 // Create and export the model
 export const Exam: Model<IExam> = mongoose.models.Exam || mongoose.model<IExam>("Exam", ExamSchema);

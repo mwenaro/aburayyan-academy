@@ -35,6 +35,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { ITestingArea, IMarkScore } from "@/models/Exam";
 import { Plus, Trash2, Users } from "lucide-react";
 import { strCapitalize } from "@/libs/str_functions";
+import { IStudent } from "@/models/Student";
 
 const bulkMarkSchema = z.object({
   marks: z.array(z.object({
@@ -52,6 +53,7 @@ interface BulkMarksDialogProps {
   examId: string;
   testingAreaId: string;
   testingArea: ITestingArea;
+  currentMarks?: IMarkScore[]; // Add current marks prop
   onSaved: (marks: IMarkScore[]) => void;
 }
 
@@ -61,6 +63,7 @@ export const BulkMarksDialog: React.FC<BulkMarksDialogProps> = ({
   examId,
   testingAreaId,
   testingArea,
+  currentMarks = [],
   onSaved,
 }) => {
   const { toast } = useToast();
@@ -90,7 +93,7 @@ export const BulkMarksDialog: React.FC<BulkMarksDialogProps> = ({
     if (open) {
       loadStudents();
     }
-  }, [open]);
+  }, [open, currentMarks]); // Re-load when currentMarks changes
 
   const loadStudents = async () => {
     try {
@@ -100,8 +103,26 @@ export const BulkMarksDialog: React.FC<BulkMarksDialogProps> = ({
         : testingArea.class;
       
       const response = await axios.get(`/api/v1/student?class=${classId}`);
-      setStudents(response.data.data || []);
+      const allStudents: IStudent[] = response.data.data || [];
+      
+      // Get students who already have marks in this testing area (use currentMarks instead of testingArea.marks)
+      const studentsWithMarks = currentMarks?.map(mark => {
+        const studentId = typeof mark.student === 'object' && '_id' in mark.student 
+          ? mark.student._id 
+          : mark.student;
+        return String(studentId);
+      }) || [];
+      
+      // Filter out students who already have marks
+      const availableStudents = allStudents.filter(student => {
+        const studentIdStr = String(student._id);
+        const hasMarks = studentsWithMarks.includes(studentIdStr);
+        return !hasMarks;
+      });
+      
+      setStudents(availableStudents);
     } catch (error) {
+      console.error("Error loading students:", error);
       toast({
         title: "Error",
         description: "Failed to load students",
@@ -110,8 +131,8 @@ export const BulkMarksDialog: React.FC<BulkMarksDialogProps> = ({
     }
   };
 
-  const loadAllStudents = () => {
-    // Clear current marks and add all students
+  const loadAllAvailableStudents = () => {
+    // Clear current marks and add all available students (who don't have marks yet)
     form.setValue("marks", students.map(student => ({
       student: student._id,
       score: 0,
@@ -165,6 +186,7 @@ export const BulkMarksDialog: React.FC<BulkMarksDialogProps> = ({
             type="button"
             variant="outline"
             onClick={() => append({ student: "", score: 0, remark: "" })}
+            disabled={students.length === 0}
           >
             <Plus className="mr-2 h-4 w-4" />
             Add Row
@@ -172,12 +194,34 @@ export const BulkMarksDialog: React.FC<BulkMarksDialogProps> = ({
           <Button
             type="button"
             variant="outline"
-            onClick={loadAllStudents}
+            onClick={loadAllAvailableStudents}
+            disabled={students.length === 0}
           >
             <Users className="mr-2 h-4 w-4" />
-            Load All Students ({students.length})
+            Load Available Students ({students.length})
           </Button>
         </div>
+
+        {students.length === 0 && (
+          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <Users className="h-5 w-5 text-yellow-400" />
+              </div>
+              <div className="ml-3">
+                <h3 className="text-sm font-medium text-yellow-800">
+                  No Students Available
+                </h3>
+                <div className="mt-2 text-sm text-yellow-700">
+                  <p>
+                    All students in this class already have marks for this testing area. 
+                    You can edit existing marks individually if needed.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -205,7 +249,12 @@ export const BulkMarksDialog: React.FC<BulkMarksDialogProps> = ({
                                   {...field}
                                   className="w-full p-2 border rounded-md text-sm"
                                 >
-                                  <option value="">Select student</option>
+                                  <option value="">
+                                    {students.length === 0 
+                                      ? "No students available" 
+                                      : "Select student"
+                                    }
+                                  </option>
                                   {students.map((student) => (
                                     <option key={student._id} value={student._id}>
                                       {strCapitalize(student.name)}  ({student.admissionNumber || ""})

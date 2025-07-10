@@ -1,5 +1,5 @@
 import { dbCon } from "@/libs/mongoose/dbCon";
-import { Exam } from "@/models/Exam";
+import { Exam, calculateGrade } from "@/models/Exam";
 import { Student } from "@/models/Student";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -106,12 +106,24 @@ export async function POST(
       );
     }
 
-    // Create mark data
+    // Get the testing area to access outOf value
+    const examForOutOf = await Exam.findById(params.examId);
+    const testingAreaForOutOf = examForOutOf?.testingAreas.find(ta => ta._id?.toString() === params.testingAreaId);
+    
+    if (!testingAreaForOutOf) {
+      return NextResponse.json(
+        { success: false, error: "Testing area not found" },
+        { status: 404 }
+      );
+    }
+
+    // Create mark data with calculated grade
+    const grade = calculateGrade(score, testingAreaForOutOf.outOf);
     const markData = {
       student,
       score,
+      grade,
       remark: body.remark || ""
-      // grade will be auto-calculated by middleware
     };
 
     // Add mark to testing area
@@ -189,12 +201,23 @@ export async function PATCH(
       );
     }
 
-    // Process marks data
+    // Get the testing area to access outOf value
+    const examForOutOf = await Exam.findById(params.examId);
+    const testingAreaForOutOf = examForOutOf?.testingAreas.find(ta => ta._id?.toString() === params.testingAreaId);
+    
+    if (!testingAreaForOutOf) {
+      return NextResponse.json(
+        { success: false, error: "Testing area not found" },
+        { status: 404 }
+      );
+    }
+
+    // Process marks data with calculated grades
     const marksData = marks.map(mark => ({
       student: mark.student,
       score: mark.score,
+      grade: calculateGrade(mark.score, testingAreaForOutOf.outOf),
       remark: mark.remark || ""
-      // grade will be auto-calculated by middleware
     }));
 
     // Add all marks to testing area

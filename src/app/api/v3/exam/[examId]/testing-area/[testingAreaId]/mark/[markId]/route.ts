@@ -1,5 +1,5 @@
 import { dbCon } from "@/libs/mongoose/dbCon";
-import { Exam } from "@/models/Exam";
+import { Exam, calculateGrade } from "@/models/Exam";
 import { Student } from "@/models/Student";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -77,8 +77,26 @@ export async function PUT(
     
     const body = await req.json();
 
+    // If score is being updated, we need to recalculate the grade
+    if (body.score !== undefined) {
+      // Get the testing area to access outOf value
+      const examForOutOf = await Exam.findById(params.examId);
+      const testingAreaForOutOf = examForOutOf?.testingAreas.find(ta => ta._id?.toString() === params.testingAreaId);
+      
+      if (!testingAreaForOutOf) {
+        return NextResponse.json(
+          { success: false, error: "Testing area not found" },
+          { status: 404 }
+        );
+      }
+
+      // Calculate new grade
+      const newGrade = calculateGrade(body.score, testingAreaForOutOf.outOf);
+      body.grade = newGrade;
+    }
+
     // Build update object for allowed fields
-    const allowedFields = ["score", "remark"];
+    const allowedFields = ["score", "remark", "grade"];
     const updateFields: any = {};
     
     allowedFields.forEach(field => {

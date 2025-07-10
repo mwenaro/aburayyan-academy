@@ -54,7 +54,6 @@ export const TestingAreaDetailsClient: React.FC<TestingAreaDetailsClientProps> =
   const [bulkDialogOpen, setBulkDialogOpen] = useState(false);
   const [selectedMark, setSelectedMark] = useState<IMarkScore | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-console.log({marks})
   const handleDeleteMark = async (markId: string) => {
     setIsLoading(true);
     try {
@@ -405,6 +404,7 @@ console.log({marks})
         testingAreaId={testingArea._id?.toString() || ""}
         testingArea={testingArea}
         mark={selectedMark}
+        currentMarks={marks}
         onSaved={handleMarkSaved}
       />
 
@@ -415,6 +415,7 @@ console.log({marks})
         examId={exam._id?.toString() || ""}
         testingAreaId={testingArea._id?.toString() || ""}
         testingArea={testingArea}
+        currentMarks={marks}
         onSaved={handleBulkMarksSaved}
       />
 

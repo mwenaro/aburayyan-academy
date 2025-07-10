@@ -34,6 +34,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { ITestingArea, IMarkScore } from "@/models/Exam";
 import { strCapitalize } from "@/libs/str_functions";
+import { IStudent } from "@/models/Student";
 
 const markSchema = z.object({
   student: z.string().min(1, "Student is required"),
@@ -50,6 +51,7 @@ interface MarkDialogProps {
   testingAreaId: string;
   testingArea: ITestingArea;
   mark?: IMarkScore | null;
+  currentMarks?: IMarkScore[]; // Add current marks prop
   onSaved: (mark: IMarkScore) => void;
 }
 
@@ -60,6 +62,7 @@ export const MarkDialog: React.FC<MarkDialogProps> = ({
   testingAreaId,
   testingArea,
   mark,
+  currentMarks = [],
   onSaved,
 }) => {
   const { toast } = useToast();
@@ -103,7 +106,7 @@ export const MarkDialog: React.FC<MarkDialogProps> = ({
     if (open) {
       loadStudents();
     }
-  }, [open]);
+  }, [open, currentMarks]); // Re-load when currentMarks changes
 
   const loadStudents = async () => {
     try {
@@ -112,15 +115,30 @@ export const MarkDialog: React.FC<MarkDialogProps> = ({
         ? testingArea.class._id 
         : testingArea.class;
       
-      console.log("Loading students for class:", classId, "testingArea:", testingArea);
-      
       const response = await axios.get(`/api/v1/student?class=${classId}`);
-      console.log("Students response:", response.data);
+      const allStudents: IStudent[] = response.data.data || response.data || [];
       
-      const studentsData = response.data.data || response.data || [];
-      console.log("Processed students data:", studentsData);
+      // Get students who already have marks in this testing area (use currentMarks instead of testingArea.marks)
+      const studentsWithMarks = currentMarks?.map(mark => {
+        const studentId = typeof mark.student === 'object' && '_id' in mark.student 
+          ? mark.student._id 
+          : mark.student;
+        return String(studentId);
+      }) || [];
       
-      setStudents(studentsData);
+      // If editing a mark, include the current student in available options
+      let availableStudents;
+      if (mark) {
+        // When editing, show all students (the select will be disabled anyway)
+        availableStudents = allStudents;
+      } else {
+        // When creating new mark, filter out students who already have marks
+        availableStudents = allStudents.filter(student => 
+          !studentsWithMarks.includes(String(student._id))
+        );
+      }
+      
+      setStudents(availableStudents);
     } catch (error) {
       console.error("Error loading students:", error);
       toast({
@@ -207,7 +225,7 @@ export const MarkDialog: React.FC<MarkDialogProps> = ({
                     <SelectContent>
                       {students.length === 0 ? (
                         <SelectItem value="no-students" disabled>
-                          No students found
+                          {mark ? "No students found" : "All students in this class already have marks"}
                         </SelectItem>
                       ) : (
                         students.map((student) => (
