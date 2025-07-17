@@ -1,10 +1,10 @@
 import {
   AlertTriangle,
   ArrowRight,
+  BarChart3,
   Check,
   ChevronLeft,
   ChevronRight,
-  CircuitBoardIcon,
   Command,
   CreditCard,
   File,
@@ -44,7 +44,7 @@ export const Icons = {
   close: X,
   profile: User2Icon,
   spinner: Loader2,
-  kanban: CircuitBoardIcon,
+  kanban: BarChart3,
   chevronLeft: ChevronLeft,
   chevronRight: ChevronRight,
   trash: Trash,
@@ -69,6 +69,7 @@ export const Icons = {
   student: GraduationCap,
   class: FaBuildingColumns,
   subject: MdLibraryBooks,
+  reports: BarChart3,
 
   gitHub: ({ ...props }: LucideProps) => (
     <svg
@@ -89,4 +90,5 @@ export const Icons = {
   ),
   twitter: Twitter,
   check: Check,
+  report: BarChart3,
 };
