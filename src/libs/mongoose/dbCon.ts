@@ -1,5 +1,12 @@
 import mongoose from "mongoose";
 
+// Cache the database connection
+let cached = (global as any).mongoose;
+
+if (!cached) {
+  cached = (global as any).mongoose = { conn: null, promise: null };
+}
+
 function getDbURI(dbname: string) {
   const user = encodeURIComponent(process.env.NEXT_PUBLIC_MONGODB_USER || "");
   const pwd = encodeURIComponent(process.env.NEXT_PUBLIC_MONGODB_PWD || "");
@@ -16,16 +23,54 @@ export async function dbCon() {
     process.env.APP_NAME || process.env.DARAJA_API_APP_NAME || "test-db";
   const MONGO_DB_URI = getDbURI(dbName);
 
-  // if (mongoose.connection.readyState >= 1) {
-  //   console.log("MongoDB already connected");
-  //   return;
-  // }
+  // If we have a cached connection, return it
+  if (cached.conn) {
+    return cached.conn;
+  }
+
+  // If we don't have a connection, but we have a promise, return it
+  if (!cached.promise) {
+    const opts = {
+      bufferCommands: false,
+    };
+
+    cached.promise = mongoose.connect(MONGO_DB_URI, opts).then((mongoose) => {
+      console.log("MongoDB connected successfully");
+      return mongoose;
+    });
+  }
 
   try {
-    await mongoose.connect(MONGO_DB_URI);
-    console.log("MongoDB connected successfully");
+    cached.conn = await cached.promise;
   } catch (error) {
+    cached.promise = null;
     console.error("MongoDB connection error:", error);
     throw error;
+  }
+
+  return cached.conn;
+}
+
+// Additional utility functions for connection management
+export function isConnected(): boolean {
+  return mongoose.connection.readyState === 1;
+}
+
+export function getConnectionState(): string {
+  const states = {
+    0: 'disconnected',
+    1: 'connected',
+    2: 'connecting',
+    3: 'disconnecting'
+  };
+  return states[mongoose.connection.readyState as keyof typeof states] || 'unknown';
+}
+
+export async function disconnect(): Promise<void> {
+  if (cached.conn) {
+    await mongoose.disconnect();
+    cached.conn = null;
+    cached.promise = null;
+    console.log("MongoDB disconnected");
   }
 }
