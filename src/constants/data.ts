@@ -150,6 +150,12 @@ export const navItems: NavItem[] = [
     label: 'exam'
   },
   {
+    title: 'Reports',
+    href: '/dashboard/reports',
+    icon: 'reports',
+    label: 'reports'
+  },
+  {
     title: 'Invite',
     href: '/dashboard/invite',
     icon: 'user',
