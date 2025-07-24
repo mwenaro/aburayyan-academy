@@ -112,6 +112,17 @@ export default function DownloadsPage() {
 
       if (response.ok) {
         const blob = await response.blob();
+        
+        // Check if the blob has content
+        if (blob.size === 0) {
+          toast({
+            title: "Error",
+            description: "Downloaded file is empty. Please try again.",
+            variant: "destructive",
+          });
+          return;
+        }
+        
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.style.display = 'none';
@@ -130,9 +141,11 @@ export default function DownloadsPage() {
           description: `${type === 'excel' ? 'Excel' : 'Word'} template downloaded successfully!`,
         });
       } else {
+        const errorData = await response.text();
+        console.error("Download failed:", response.status, errorData);
         toast({
           title: "Error",
-          description: "Failed to download template",
+          description: `Failed to download template: ${response.status} ${response.statusText}`,
           variant: "destructive",
         });
       }

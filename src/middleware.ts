@@ -15,6 +15,14 @@ export default withAuth(
     const protectedMethods = ["POST", "PUT", "DELETE"];
     const isApiRequest = url.pathname.startsWith("/api");
     const isProtectedRoute = !isApiRequest; // All non-API routes matched by the middleware
+    
+    // Public API endpoints that don't require authentication
+    const publicApiEndpoints = [
+      "/api/v1/students/public",
+      "/api/v1/classes/public", 
+      "/api/v1/downloads/template"
+    ];
+    const isPublicApiEndpoint = publicApiEndpoints.some(endpoint => url.pathname.startsWith(endpoint));
 
     // Redirect unauthenticated users to NextAuth sign-in for protected routes
     if (isProtectedRoute && !(req as any).nextauth?.token) {
@@ -23,7 +31,7 @@ export default withAuth(
       return NextResponse.redirect(signinUrl);
     }
 
-    if (isApiRequest && protectedMethods.includes(method)) {
+    if (isApiRequest && protectedMethods.includes(method) && !isPublicApiEndpoint) {
       const token = req.nextauth?.token as JWT | undefined;
       const userIsAdmin = token?.role === "admin";
       const requestApiKey = headers.get("x-api-key");
