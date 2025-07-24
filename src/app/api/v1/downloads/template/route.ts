@@ -13,10 +13,15 @@ interface TemplateRequest {
 
 export async function POST(request: NextRequest) {
   try {
+    console.log("Template download request received");
+    
     const body: TemplateRequest = await request.json();
+    console.log("Request body:", JSON.stringify(body, null, 2));
+    
     const { studentName, grade, regno, type, includeHeader = false } = body;
 
     if (!studentName || !grade || !regno || !type) {
+      console.log("Missing required fields:", { studentName, grade, regno, type });
       return NextResponse.json(
         { error: "Missing required fields: studentName, grade, regno, type" },
         { status: 400 }
@@ -27,6 +32,7 @@ export async function POST(request: NextRequest) {
     const fileName = `${sanitizedName}-${grade}-exam-${type === 'excel' ? 'excel' : 'word'}`;
 
     if (type === 'excel') {
+      console.log("Generating Excel template");
       // Create Excel template
       const workbook = new ExcelJS.Workbook();
       const worksheet = workbook.addWorksheet('Template');
@@ -48,18 +54,35 @@ export async function POST(request: NextRequest) {
       // Don't add any content - keep the template completely blank
       // Remove all the pre-filled content like headers, questions, etc.
       // The template should be empty except for the optional header
+      
+      // Add at least one empty row to ensure the worksheet isn't completely empty
+      if (!includeHeader) {
+        worksheet.addRow([]);
+      }
 
       // Generate Excel buffer
+      console.log("Creating Excel buffer");
       const buffer = await workbook.xlsx.writeBuffer();
+      console.log("Excel buffer created, size:", buffer.byteLength);
+
+      if (buffer.byteLength === 0) {
+        throw new Error("Generated Excel buffer is empty");
+      }
 
       return new NextResponse(buffer as any, {
+        status: 200,
         headers: {
           'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
           'Content-Disposition': `attachment; filename="${fileName}.xlsx"`,
+          'Content-Length': buffer.byteLength.toString(),
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0',
         },
       });
 
     } else if (type === 'word') {
+      console.log("Generating Word template");
       // Create Word template
       const docChildren = [];
 
@@ -81,7 +104,18 @@ export async function POST(request: NextRequest) {
         );
       }
 
-      // Template is completely blank - no questions, no content
+      // Add at least one empty paragraph to ensure the document isn't completely empty
+      if (docChildren.length === 0) {
+        docChildren.push(
+          new Paragraph({
+            children: [
+              new TextRun({
+                text: " ", // Single space to ensure document isn't empty
+              }),
+            ],
+          })
+        );
+      }
 
       const doc = new Document({
         sections: [
@@ -93,12 +127,23 @@ export async function POST(request: NextRequest) {
       });
 
       // Generate Word buffer
+      console.log("Creating Word buffer");
       const buffer = await Packer.toBuffer(doc);
+      console.log("Word buffer created, size:", buffer.byteLength);
+
+      if (buffer.byteLength === 0) {
+        throw new Error("Generated Word buffer is empty");
+      }
 
       return new NextResponse(buffer as any, {
+        status: 200,
         headers: {
           'Content-Type': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
           'Content-Disposition': `attachment; filename="${fileName}.docx"`,
+          'Content-Length': buffer.byteLength.toString(),
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0',
         },
       });
     }
@@ -115,4 +160,9 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
+}
+
+export async function GET(request: NextRequest) {
+  // Redirect GET requests to the downloads page
+  return NextResponse.redirect(new URL('/downloads-templates', request.url));
 }
