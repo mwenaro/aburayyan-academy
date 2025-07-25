@@ -9,24 +9,29 @@ import { dbCon } from "@/libs/mongoose/dbCon";
 // import { ScrollArea } from '@/components/ui/scroll-area';
 import React from "react";
 
-const breadcrumbItems = [
-  { title: "Dashboard", link: "/dashboard" },
-  { title: "Students", link: "/dashboard/students" },
-  { title: "Create", link: "/dashboard/students/create" },
-];
 export default async function Page({ params: { id } }: any) {
   await dbCon();
   const initData =
     id !== "new" ? await Student.findById(id) : null;
   
-  // Temporarily simplified - just pass empty array to test
- let classes: { id: string; name: string }[] = [];
+  // Dynamic breadcrumbs based on whether we're creating or editing
+  const breadcrumbItems = [
+    { title: "Dashboard", link: "/dashboard" },
+    { title: "Students", link: "/dashboard/students" },
+    { 
+      title: id === "new" ? "Create" : `Edit ${initData?.name || 'Student'}`, 
+      link: id === "new" ? "/dashboard/students/new" : `/dashboard/students/${id}` 
+    },
+  ];
   
-  // Uncomment this once we fix the main issue:
-   classes = (await ClassModel.find({})).map((cls) => ({
+  // Get all classes for the form select
+  let classes: { id: string; name: string }[] = [];
+  
+  classes = (await ClassModel.find({})).map((cls) => ({
     id: cls._id,
     name: strCapitalize(cls.name),
   }));
+  
   return (
     <PageContainer scrollable={true}>
        <div className="space-y-4">

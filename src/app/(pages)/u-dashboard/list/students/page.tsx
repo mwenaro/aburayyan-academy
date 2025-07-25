@@ -65,6 +65,7 @@ const StudentListPage = () => {
               <Image src="/view.png" alt="View" width={16} height={16} />
             </Button>
           </Link>
+          <FormModal table="student" type="update" data={student} />
           <FormModal table="student" type="delete" id={student._id as string} />
         </div>
       </td>
