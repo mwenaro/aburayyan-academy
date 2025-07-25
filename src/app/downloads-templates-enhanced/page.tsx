@@ -714,7 +714,7 @@ export default function DownloadsPage() {
                 <div className="space-y-2 text-gray-600">
                   <p>1. Use the grade filter to narrow down the student list (optional)</p>
                   <p>2. Select your name from the dropdown menu</p>
-                  <p>3. Once selected, you'll see all available downloads for your grade:</p>
+                  <p>3. Once selected, you&apos;ll see all available downloads for your grade:</p>
                   <ul className="ml-6 space-y-1">
                     <li>• Generated templates (blank Excel/Word files with your name)</li>
                     <li>• Educational resources uploaded by teachers for your grade</li>
