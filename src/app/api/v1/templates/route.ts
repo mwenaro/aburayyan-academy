@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@/auth/auth";
+import { getServerSession } from "@/auth/auth";
 import { dbCon } from "@/libs/mongoose/dbCon";
 import { Template } from "@/models/Template";
 import { ClassModel } from "@/models/Class";
@@ -86,7 +86,7 @@ export async function GET(request: NextRequest) {
 // POST - Create a new template
 export async function POST(request: NextRequest) {
   try {
-    const session = await auth();
+    const session = await getServerSession();
     
     if (!session?.user) {
       return NextResponse.json(

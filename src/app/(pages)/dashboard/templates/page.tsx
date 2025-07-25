@@ -163,7 +163,7 @@ export default function TemplatesPage() {
         title: uploadForm.title,
         description: uploadForm.description,
         fileName: uploadForm.file.name,
-        filePath: uploadResult.filePath,
+        filePath: `/uploads/${uploadResult.filename}`, // Construct full path from filename
         fileType: uploadForm.file.name.split('.').pop()?.toLowerCase() || 'other',
         fileSize: uploadForm.file.size,
         grade: uploadForm.grade,

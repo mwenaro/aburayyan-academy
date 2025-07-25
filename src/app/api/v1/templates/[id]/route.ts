@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@/auth/auth";
+import { getServerSession } from "@/auth/auth";
 import { dbCon } from "@/libs/mongoose/dbCon";
 import { Template } from "@/models/Template";
 
@@ -40,7 +40,7 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   try {
-    const session = await auth();
+    const session = await getServerSession();
     
     if (!session?.user) {
       return NextResponse.json(
@@ -118,7 +118,7 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    const session = await auth();
+    const session = await getServerSession();
     
     if (!session?.user) {
       return NextResponse.json(
