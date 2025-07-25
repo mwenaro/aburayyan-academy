@@ -21,6 +21,11 @@ export async function GET(
       );
     }
 
+    // Get student information from query parameters for exam templates
+    const { searchParams } = new URL(request.url);
+    const studentName = searchParams.get('studentName');
+    const studentGrade = searchParams.get('studentGrade');
+
     try {
       // Try to read the file from the uploads directory
       const filePath = join(process.cwd(), 'public', template.filePath);
@@ -31,10 +36,21 @@ export async function GET(
         $inc: { downloadCount: 1 }
       });
 
+      // Determine the filename
+      let downloadFileName = template.fileName;
+      
+      // For exam templates with student info, prepend student name and grade
+      if (template.category === 'exam' && studentName && studentGrade) {
+        const cleanStudentName = studentName.replace(/[^a-zA-Z0-9\s]/g, '').trim();
+        const fileExtension = template.fileName.split('.').pop();
+        const baseFileName = template.fileName.replace(/\.[^/.]+$/, ""); // Remove extension
+        downloadFileName = `${cleanStudentName} - ${studentGrade} - ${baseFileName}.${fileExtension}`;
+      }
+
       // Set appropriate headers for file download
       const headers = new Headers();
       headers.set('Content-Type', getContentType(template.fileType));
-      headers.set('Content-Disposition', `attachment; filename="${template.fileName}"`);
+      headers.set('Content-Disposition', `attachment; filename="${downloadFileName}"`);
       headers.set('Content-Length', fileBuffer.length.toString());
 
       return new NextResponse(new Uint8Array(fileBuffer), {

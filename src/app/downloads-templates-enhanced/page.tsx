@@ -7,7 +7,6 @@ import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Download, FileText, Users, Filter, Search, Calendar, User } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -79,10 +78,19 @@ export default function DownloadsPage() {
     fetchUploadedTemplates();
   }, []);
 
-  // Filter uploaded templates based on search and filters
+  // Filter uploaded templates based on selected student's grade
   useEffect(() => {
-    filterUploadedTemplates();
-  }, [uploadedTemplates, templateSearchTerm, selectedTemplateGrade, selectedTemplateCategory]);
+    if (selectedStudent) {
+      // When a student is selected, filter templates by their grade
+      const studentGradeTemplates = uploadedTemplates.filter(template => 
+        template.grade === selectedStudent.class.name
+      );
+      setFilteredTemplates(studentGradeTemplates);
+    } else {
+      // When no student is selected, apply normal filters
+      filterUploadedTemplates();
+    }
+  }, [selectedStudent, uploadedTemplates, templateSearchTerm, selectedTemplateGrade, selectedTemplateCategory]);
 
   const fetchData = async () => {
     try {
@@ -280,9 +288,29 @@ export default function DownloadsPage() {
     }
   };
 
-  const handleUploadedTemplateDownload = async (templateId: string, templateTitle: string) => {
+  const handleUploadedTemplateDownload = async (templateId: string, templateTitle: string, templateCategory?: string) => {
     try {
-      const response = await fetch(`/api/v1/templates/${templateId}/download`);
+      // For exam templates, check if a student is selected
+      if (templateCategory === 'exam' && !selectedStudent) {
+        toast({
+          title: "Student Required",
+          description: "Please select a student before downloading an exam template",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Build URL with student parameters for exam templates
+      let downloadUrl = `/api/v1/templates/${templateId}/download`;
+      if (templateCategory === 'exam' && selectedStudent) {
+        const params = new URLSearchParams({
+          studentName: selectedStudent.name,
+          studentGrade: selectedStudent.class.name
+        });
+        downloadUrl += `?${params.toString()}`;
+      }
+
+      const response = await fetch(downloadUrl);
       
       if (response.ok) {
         const blob = await response.blob();
@@ -380,27 +408,18 @@ export default function DownloadsPage() {
           </p>
         </div>
 
-        {/* Tabs for different download types */}
-        <Tabs defaultValue="generated" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="generated">Generated Templates</TabsTrigger>
-            <TabsTrigger value="uploaded">Educational Resources</TabsTrigger>
-          </TabsList>
-          
-          {/* Generated Templates Tab */}
-          <TabsContent value="generated" className="space-y-6">
-            {/* Selection Card */}
-            <Card className="shadow-lg">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Users className="h-5 w-5" />
-                  Generate Personalized Template
-                </CardTitle>
-                <CardDescription>
-                  Choose your grade first, then select your name to generate a personalized exam template
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
+        {/* Student Selection Section */}
+        <Card className="shadow-lg">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Users className="h-5 w-5" />
+              Select Your Information
+            </CardTitle>
+            <CardDescription>
+              Choose your grade and name to see available templates
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
                 {/* Grade Filter */}
                 <div className="space-y-2">
                   <Label>Filter by Grade (Optional)</Label>
@@ -558,36 +577,21 @@ export default function DownloadsPage() {
               </Card>
             )}
 
-            {/* Instructions */}
-            <Card className="shadow-lg">
-              <CardHeader>
-                <CardTitle>Instructions</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-2 text-gray-600">
-                  <p>1. Use the grade filter to narrow down the student list (optional)</p>
-                  <p>2. Select your name from the dropdown menu</p>
-                  <p>3. Choose your preferred template format (Excel or Word)</p>
-                  <p>4. Click download to get your personalized exam template</p>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          {/* Uploaded Templates Tab */}
-          <TabsContent value="uploaded" className="space-y-6">
-            {/* Filters */}
-            <Card className="shadow-lg">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Filter className="h-5 w-5" />
-                  Find Templates
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div>
-                    <Label>Search</Label>
+            {/* Uploaded Templates for Student's Grade */}
+            {selectedStudent && (
+              <Card className="shadow-lg">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <FileText className="h-5 w-5" />
+                    Available Templates for {selectedStudent.class.name}
+                  </CardTitle>
+                  <CardDescription>
+                    Educational resources uploaded by teachers for your grade
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {/* Optional Search for Templates */}
+                  <div className="mb-6">
                     <div className="relative">
                       <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                       <Input
@@ -599,157 +603,126 @@ export default function DownloadsPage() {
                     </div>
                   </div>
 
-                  <div>
-                    <Label>Grade</Label>
-                    <Select value={selectedTemplateGrade} onValueChange={setSelectedTemplateGrade}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">All Grades</SelectItem>
-                        {templateGrades.map((grade) => (
-                          <SelectItem key={grade} value={grade}>{grade}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
+                  {/* Templates Grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {isLoadingTemplates ? (
+                      Array(6).fill(0).map((_, i) => (
+                        <Card key={i} className="shadow-lg">
+                          <CardContent className="p-6">
+                            <div className="animate-pulse">
+                              <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+                              <div className="h-3 bg-gray-200 rounded w-1/2 mb-4"></div>
+                              <div className="h-8 bg-gray-200 rounded"></div>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      ))
+                    ) : filteredTemplates.length === 0 ? (
+                      <div className="col-span-full text-center py-12">
+                        <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                        <h3 className="text-lg font-medium text-gray-900 mb-2">No templates found</h3>
+                        <p className="text-gray-600">
+                          {templateSearchTerm 
+                            ? "Try adjusting your search term"
+                            : `No educational resources have been uploaded for ${selectedStudent.class.name} yet`
+                          }
+                        </p>
+                      </div>
+                    ) : (
+                      filteredTemplates.map((template) => (
+                        <Card key={template._id} className="shadow-lg hover:shadow-xl transition-shadow">
+                          <CardContent className="p-6">
+                            <div className="space-y-4">
+                              {/* Header */}
+                              <div>
+                                <h3 className="font-semibold text-lg mb-2">{template.title}</h3>
+                                {template.description && (
+                                  <p className="text-sm text-gray-600 mb-3">
+                                    {template.description.length > 100
+                                      ? `${template.description.substring(0, 100)}...`
+                                      : template.description
+                                    }
+                                  </p>
+                                )}
+                              </div>
 
-                  <div>
-                    <Label>Category</Label>
-                    <Select value={selectedTemplateCategory} onValueChange={setSelectedTemplateCategory}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">All Categories</SelectItem>
-                        <SelectItem value="exam">Exam</SelectItem>
-                        <SelectItem value="assignment">Assignment</SelectItem>
-                        <SelectItem value="worksheet">Worksheet</SelectItem>
-                        <SelectItem value="lesson-plan">Lesson Plan</SelectItem>
-                        <SelectItem value="other">Other</SelectItem>
-                      </SelectContent>
-                    </Select>
+                              {/* Metadata */}
+                              <div className="space-y-2">
+                                <div className="flex items-center justify-between">
+                                  <Badge variant="outline">
+                                    {template.category}
+                                  </Badge>
+                                  <span className="text-xs text-gray-500">
+                                    {template.fileSizeFormatted}
+                                  </span>
+                                </div>
+
+                                {template.subject && (
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-xs text-gray-500">Subject:</span>
+                                    <Badge variant="secondary" className="text-xs">
+                                      {template.subject}
+                                    </Badge>
+                                  </div>
+                                )}
+
+                                {template.tags && template.tags.length > 0 && (
+                                  <div className="flex flex-wrap gap-1">
+                                    {template.tags.slice(0, 3).map((tag, index) => (
+                                      <Badge key={index} variant="outline" className="text-xs">
+                                        {tag}
+                                      </Badge>
+                                    ))}
+                                    {template.tags.length > 3 && (
+                                      <Badge variant="outline" className="text-xs">
+                                        +{template.tags.length - 3} more
+                                      </Badge>
+                                    )}
+                                  </div>
+                                )}
+
+                                <div className="flex items-center justify-between text-xs text-gray-500">
+                                  <span>By {template.uploadedBy.userName}</span>
+                                  <span>{template.downloadCount} downloads</span>
+                                </div>
+                              </div>
+
+                              {/* Download Button */}
+                              <Button 
+                                onClick={() => handleUploadedTemplateDownload(template._id, template.title, template.category)}
+                                className="w-full"
+                              >
+                                <Download className="h-4 w-4 mr-2" />
+                                Download
+                              </Button>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      ))
+                    )}
                   </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Instructions */}
+            <Card className="shadow-lg">
+              <CardHeader>
+                <CardTitle>Instructions</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2 text-gray-600">
+                  <p>1. Use the grade filter to narrow down the student list (optional)</p>
+                  <p>2. Select your name from the dropdown menu</p>
+                  <p>3. Once selected, you'll see all available downloads for your grade:</p>
+                  <ul className="ml-6 space-y-1">
+                    <li>• Generated templates (blank Excel/Word files with your name)</li>
+                    <li>• Educational resources uploaded by teachers for your grade</li>
+                  </ul>
+                  <p>4. For exam downloads, your name and grade will be automatically added to the filename</p>
                 </div>
               </CardContent>
             </Card>
-
-            {/* Templates Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {isLoadingTemplates ? (
-                Array(6).fill(0).map((_, i) => (
-                  <Card key={i} className="shadow-lg">
-                    <CardContent className="p-6">
-                      <div className="animate-pulse">
-                        <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
-                        <div className="h-3 bg-gray-200 rounded w-1/2 mb-4"></div>
-                        <div className="h-8 bg-gray-200 rounded"></div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))
-              ) : filteredTemplates.length === 0 ? (
-                <div className="col-span-full text-center py-12">
-                  <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">No templates found</h3>
-                  <p className="text-gray-600">
-                    {templateSearchTerm || selectedTemplateGrade !== 'all' || selectedTemplateCategory !== 'all'
-                      ? "Try adjusting your filters"
-                      : "No educational resources have been uploaded yet"
-                    }
-                  </p>
-                </div>
-              ) : (
-                filteredTemplates.map((template) => (
-                  <Card key={template._id} className="shadow-lg hover:shadow-xl transition-shadow">
-                    <CardContent className="p-6">
-                      <div className="space-y-4">
-                        {/* Header */}
-                        <div>
-                          <h3 className="font-semibold text-lg mb-2">{template.title}</h3>
-                          {template.description && (
-                            <p className="text-sm text-gray-600 mb-3">
-                              {template.description.length > 100
-                                ? `${template.description.substring(0, 100)}...`
-                                : template.description
-                              }
-                            </p>
-                          )}
-                        </div>
-
-                        {/* Metadata */}
-                        <div className="space-y-2">
-                          <div className="flex items-center justify-between">
-                            <Badge variant="outline">{template.grade}</Badge>
-                            <Badge className={getCategoryBadgeColor(template.category)}>
-                              {template.category}
-                            </Badge>
-                          </div>
-                          
-                          {template.subject && (
-                            <div className="flex items-center justify-between">
-                              <span className="text-sm text-gray-500">Subject:</span>
-                              <Badge variant="outline">{template.subject}</Badge>
-                            </div>
-                          )}
-
-                          <div className="flex items-center justify-between text-sm text-gray-500">
-                            <div className="flex items-center gap-1">
-                              <FileText className="h-4 w-4" />
-                              <span>{template.fileName}</span>
-                            </div>
-                            <span>{template.fileSizeFormatted}</span>
-                          </div>
-
-                          <div className="flex items-center justify-between text-sm text-gray-500">
-                            <div className="flex items-center gap-1">
-                              <Users className="h-4 w-4" />
-                              <span>{template.downloadCount} downloads</span>
-                            </div>
-                            <div className="flex items-center gap-1">
-                              <Calendar className="h-4 w-4" />
-                              <span>{formatDate(template.createdAt)}</span>
-                            </div>
-                          </div>
-
-                          <div className="flex items-center gap-1 text-sm text-gray-500">
-                            <User className="h-4 w-4" />
-                            <span>By {template.uploadedBy.userName}</span>
-                          </div>
-                        </div>
-
-                        {/* Tags */}
-                        {template.tags && template.tags.length > 0 && (
-                          <div className="flex flex-wrap gap-1">
-                            {template.tags.slice(0, 3).map((tag, index) => (
-                              <Badge key={index} variant="outline" className="text-xs">
-                                {tag}
-                              </Badge>
-                            ))}
-                            {template.tags.length > 3 && (
-                              <Badge variant="outline" className="text-xs">
-                                +{template.tags.length - 3}
-                              </Badge>
-                            )}
-                          </div>
-                        )}
-
-                        {/* Download Button */}
-                        <Button 
-                          onClick={() => handleUploadedTemplateDownload(template._id, template.title)}
-                          className="w-full"
-                        >
-                          <Download className="h-4 w-4 mr-2" />
-                          Download
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))
-              )}
-            </div>
-          </TabsContent>
-        </Tabs>
 
         {/* Footer */}
         <div className="text-center mt-12 text-gray-500">
