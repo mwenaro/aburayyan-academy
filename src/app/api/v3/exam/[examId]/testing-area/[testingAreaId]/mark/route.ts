@@ -1,5 +1,5 @@
 import { dbCon } from "@/libs/mongoose/dbCon";
-import { Exam, calculateGrade } from "@/models/Exam";
+import { Exam, calculateGradeWithSystem } from "@/models/Exam";
 import { Student } from "@/models/Student";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -117,8 +117,8 @@ export async function POST(
       );
     }
 
-    // Create mark data with calculated grade
-    const grade = calculateGrade(score, testingAreaForOutOf.outOf);
+    // Create mark data with calculated grade using testing area's grading system
+    const grade = calculateGradeWithSystem(score, testingAreaForOutOf.outOf, testingAreaForOutOf.gradingSystem || "general");
     const markData = {
       student,
       score,
@@ -212,11 +212,11 @@ export async function PATCH(
       );
     }
 
-    // Process marks data with calculated grades
+    // Process marks data with calculated grades using testing area's grading system
     const marksData = marks.map(mark => ({
       student: mark.student,
       score: mark.score,
-      grade: calculateGrade(mark.score, testingAreaForOutOf.outOf),
+      grade: calculateGradeWithSystem(mark.score, testingAreaForOutOf.outOf, testingAreaForOutOf.gradingSystem || "general"),
       remark: mark.remark || ""
     }));
 

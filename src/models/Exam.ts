@@ -5,6 +5,54 @@ import { IClass } from "./Class";
 import { ITeacher } from "./Teacher";
 import { IStudent } from "./Student";
 
+// Define grading system types
+export type GradingSystemType = "general" | "lower" | "cbc";
+
+// Define grading system interface
+export interface IGradingSystem {
+  name: string;
+  type: GradingSystemType;
+  bands: {
+    min: number;
+    max: number;
+    grade: { name: string; points: number };
+  }[];
+}
+
+// Define the available grading systems
+export const GRADING_SYSTEMS: Record<GradingSystemType, IGradingSystem> = {
+  general: {
+    name: "General Grading System",
+    type: "general",
+    bands: [
+      { min: 75, max: 100, grade: { name: "E.E", points: 4 } },
+      { min: 50, max: 74, grade: { name: "M.E", points: 3 } },
+      { min: 25, max: 49, grade: { name: "A.E", points: 2 } },
+      { min: 0, max: 24, grade: { name: "B.E", points: 1 } }
+    ]
+  },
+  lower: {
+    name: "Lower Grading System",
+    type: "lower",
+    bands: [
+      { min: 80, max: 100, grade: { name: "E.E", points: 4 } },
+      { min: 60, max: 79, grade: { name: "M.E", points: 3 } },
+      { min: 50, max: 59, grade: { name: "A.E", points: 2 } },
+      { min: 0, max: 49, grade: { name: "B.E", points: 1 } }
+    ]
+  },
+  cbc: {
+    name: "CBC Grading System",
+    type: "cbc",
+    bands: [
+      { min: 80, max: 100, grade: { name: "E.E", points: 4 } },
+      { min: 70, max: 79, grade: { name: "M.E", points: 3 } },
+      { min: 50, max: 69, grade: { name: "A.E", points: 2 } },
+      { min: 0, max: 49, grade: { name: "B.E", points: 1 } }
+    ]
+  }
+};
+
 // Define the MarkScore interface for inline marks within testing areas
 export interface IMarkScore {
   _id?: mongoose.Types.ObjectId; // Auto-generated ID for each mark
@@ -25,6 +73,7 @@ export interface ITestingArea {
   dateDone?: Date; // Date when the exam was actually completed
   status: "DONE" | "PENDING"; // Status of the exam
   outOf: number; // Maximum possible score for this testing area
+  gradingSystem: GradingSystemType; // Grading system to use for this testing area
   invigilators: (mongoose.Types.ObjectId | ITeacher)[]; // Array of teachers who supervised the exam
   marks: IMarkScore[]; // Array of inline mark scores for this specific testing area
 }
@@ -101,6 +150,12 @@ const ExamSchema: Schema = new Schema<IExam>(
           min: 1,
           default: 100,
         },
+        gradingSystem: {
+          type: String,
+          enum: ["general", "lower", "cbc"],
+          default: "general",
+          required: true,
+        },
         invigilators: [
           {
             type: Schema.Types.ObjectId,
@@ -122,7 +177,7 @@ const ExamSchema: Schema = new Schema<IExam>(
             },
             grade: {
               type: { name: String, points: Number },
-              default: { name: "B", points: 1 },
+              default: { name: "B.E", points: 1 },
             },
             remark: {
               type: String,
@@ -151,27 +206,8 @@ ExamSchema.pre<IExam>("save", function (next) {
       // Calculate grades for marks
       if (testingArea.marks && testingArea.marks.length > 0) {
         testingArea.marks.forEach((mark) => {
-          // Ensure score and outOf are valid numbers
-          const score = Number(mark.score);
-          const outOf = Number(testingArea.outOf);
-          
-          if (!isNaN(score) && !isNaN(outOf) && score >= 0 && outOf > 0) {
-            const percentage = (score / outOf) * 100;
-            
-            // Assign grade based on CBC bands
-            if (percentage >= 80) {
-              mark.grade = { name: "E", points: 4 };
-            } else if (percentage >= 70) {
-              mark.grade = { name: "M", points: 3 };
-            } else if (percentage >= 50) {
-              mark.grade = { name: "A", points: 2 };
-            } else {
-              mark.grade = { name: "B", points: 1 };
-            }
-          } else {
-            // Set default grade if score/outOf is invalid
-            mark.grade = { name: "B", points: 1 };
-          }
+          // Calculate grade using the testing area's grading system
+          mark.grade = calculateGradeWithSystem(mark.score, testingArea.outOf, testingArea.gradingSystem || "general");
         });
       }
     });
@@ -179,23 +215,55 @@ ExamSchema.pre<IExam>("save", function (next) {
   next();
 });
 
-// Utility function to calculate CBC grade based on score and outOf
-export const calculateGrade = (score: number, outOf: number): { name: string; points: number } => {
+// Utility function to calculate grade based on grading system
+export const calculateGradeWithSystem = (
+  score: number, 
+  outOf: number, 
+  gradingSystemType: GradingSystemType = "general"
+): { name: string; points: number } => {
   // Ensure score and outOf are valid numbers
   const numScore = Number(score);
   const numOutOf = Number(outOf);
   
   if (isNaN(numScore) || isNaN(numOutOf) || numScore < 0 || numOutOf <= 0) {
-    return { name: "B", points: 1 };
+    return { name: "B.E", points: 1 };
   }
   
   const percentage = (numScore / numOutOf) * 100;
+  const gradingSystem = GRADING_SYSTEMS[gradingSystemType];
   
-  // Assign grade based on CBC bands
-  if (percentage >= 80) return { name: "E", points: 4 };
-  else if (percentage >= 70) return { name: "M", points: 3 };
-  else if (percentage >= 50) return { name: "A", points: 2 };
-  else return { name: "B", points: 1 };
+  // Find the appropriate grade band
+  for (const band of gradingSystem.bands) {
+    if (percentage >= band.min && percentage <= band.max) {
+      return band.grade;
+    }
+  }
+  
+  // Default fallback
+  return { name: "B.E", points: 1 };
+};
+
+// Utility function to re-grade a testing area with a new grading system
+export const regradeTestingArea = (
+  testingArea: ITestingArea, 
+  newGradingSystem: GradingSystemType
+): ITestingArea => {
+  const updatedTestingArea = { ...testingArea };
+  updatedTestingArea.gradingSystem = newGradingSystem;
+  
+  // Recalculate all marks with the new grading system
+  if (updatedTestingArea.marks && updatedTestingArea.marks.length > 0) {
+    updatedTestingArea.marks.forEach((mark) => {
+      mark.grade = calculateGradeWithSystem(mark.score, updatedTestingArea.outOf, newGradingSystem);
+    });
+  }
+  
+  return updatedTestingArea;
+};
+
+// Legacy function for backward compatibility (now uses CBC system)
+export const calculateGrade = (score: number, outOf: number): { name: string; points: number } => {
+  return calculateGradeWithSystem(score, outOf, "cbc");
 };
 
 // Create and export the model

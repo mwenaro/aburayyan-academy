@@ -18,12 +18,21 @@ export async function POST(
     Teacher;
 
     const body = await req.json();
-    const { name, subject, class: classId, teacher, dueDate, outOf, invigilators } = body;
+    const { name, subject, class: classId, teacher, dueDate, outOf, gradingSystem, invigilators } = body;
 
     // Validate required fields
     if (!name || !subject || !classId || !dueDate || !outOf) {
       return NextResponse.json(
         { success: false, error: "Missing required fields" },
+        { status: 400 }
+      );
+    }
+
+    // Validate grading system if provided
+    const validGradingSystems = ["general", "lower", "cbc"];
+    if (gradingSystem && !validGradingSystems.includes(gradingSystem)) {
+      return NextResponse.json(
+        { success: false, error: "Invalid grading system. Must be one of: general, lower, cbc" },
         { status: 400 }
       );
     }
@@ -45,6 +54,7 @@ export async function POST(
       teacher: teacher || null,
       dueDate: new Date(dueDate),
       outOf: Number(outOf),
+      gradingSystem: gradingSystem || "general", // Default to general if not provided
       invigilators: invigilators || [],
       marks: []
     };
@@ -94,12 +104,21 @@ export async function PUT(
     Teacher;
 
     const body = await req.json();
-    const { testingAreaId, name, subject, class: classId, teacher, dueDate, outOf, invigilators } = body;
+    const { testingAreaId, name, subject, class: classId, teacher, dueDate, outOf, gradingSystem, invigilators } = body;
 
     // Validate required fields
     if (!testingAreaId || !name || !subject || !classId || !dueDate || !outOf) {
       return NextResponse.json(
         { success: false, error: "Missing required fields" },
+        { status: 400 }
+      );
+    }
+
+    // Validate grading system if provided
+    const validGradingSystems = ["general", "lower", "cbc"];
+    if (gradingSystem && !validGradingSystems.includes(gradingSystem)) {
+      return NextResponse.json(
+        { success: false, error: "Invalid grading system. Must be one of: general, lower, cbc" },
         { status: 400 }
       );
     }
@@ -129,6 +148,7 @@ export async function PUT(
     testingArea.teacher = teacher || null;
     testingArea.dueDate = new Date(dueDate);
     testingArea.outOf = Number(outOf);
+    testingArea.gradingSystem = gradingSystem || testingArea.gradingSystem || "general";
     testingArea.invigilators = invigilators || [];
 
     await exam.save();

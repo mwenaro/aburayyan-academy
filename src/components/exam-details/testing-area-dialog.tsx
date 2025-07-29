@@ -33,6 +33,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { ITestingArea } from "@/models/Exam";
+import { GRADING_SYSTEM_OPTIONS } from "@/constants/grading-systems";
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
@@ -52,6 +53,7 @@ const testingAreaSchema = z.object({
     required_error: "Due date is required",
   }),
   outOf: z.coerce.number().min(1, "Out of must be at least 1"),
+  gradingSystem: z.enum(["general", "lower", "cbc"]).default("general"),
   invigilators: z.array(z.string()).optional(),
 });
 
@@ -87,6 +89,7 @@ export const TestingAreaDialog: React.FC<TestingAreaDialogProps> = ({
       teacher: "",
       dueDate: new Date(),
       outOf: 100,
+      gradingSystem: "general",
       invigilators: [],
     },
   });
@@ -107,6 +110,7 @@ export const TestingAreaDialog: React.FC<TestingAreaDialogProps> = ({
           : String(testingArea.teacher || ""),
         dueDate: new Date(testingArea.dueDate),
         outOf: testingArea.outOf,
+        gradingSystem: testingArea.gradingSystem || "general",
         invigilators: testingArea.invigilators?.map(inv => 
           typeof inv === 'object' && inv && '_id' in inv 
             ? inv._id?.toString() || ""
@@ -335,6 +339,34 @@ export const TestingAreaDialog: React.FC<TestingAreaDialogProps> = ({
                 )}
               />
             </div>
+
+            <FormField
+              control={form.control}
+              name="gradingSystem"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Grading System</FormLabel>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select grading system" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {GRADING_SYSTEM_OPTIONS.map((option) => (
+                        <SelectItem key={option.value} value={option.value}>
+                          <div className="flex flex-col">
+                            <span className="font-medium">{option.label}</span>
+                            <span className="text-xs text-gray-500">{option.description}</span>
+                          </div>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             <FormField
               control={form.control}
