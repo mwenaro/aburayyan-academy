@@ -126,7 +126,7 @@ export async function POST(
       remark: body.remark || ""
     };
 
-    // Add mark to testing area
+    // Add mark to testing area and update status to DONE when first mark is added
     const updatedExam = await Exam.findOneAndUpdate(
       { 
         _id: params.examId, 
@@ -135,7 +135,11 @@ export async function POST(
       { 
         $push: { 
           "testingAreas.$.marks": markData 
-        } 
+        },
+        $set: {
+          "testingAreas.$.status": "DONE",
+          "testingAreas.$.dateDone": new Date()
+        }
       },
       { new: true, runValidators: true }
     ).populate("testingAreas.marks.student", "firstName lastName admissionNumber name");
@@ -220,7 +224,7 @@ export async function PATCH(
       remark: mark.remark || ""
     }));
 
-    // Add all marks to testing area
+    // Add all marks to testing area and update status to DONE when marks are added
     const updatedExam = await Exam.findOneAndUpdate(
       { 
         _id: params.examId, 
@@ -229,7 +233,11 @@ export async function PATCH(
       { 
         $push: { 
           "testingAreas.$.marks": { $each: marksData }
-        } 
+        },
+        $set: {
+          "testingAreas.$.status": "DONE",
+          "testingAreas.$.dateDone": new Date()
+        }
       },
       { new: true, runValidators: true }
     ).populate("testingAreas.marks.student", "firstName lastName admissionNumber name");

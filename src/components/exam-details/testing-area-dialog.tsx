@@ -125,6 +125,7 @@ export const TestingAreaDialog: React.FC<TestingAreaDialogProps> = ({
         teacher: "",
         dueDate: new Date(),
         outOf: 100,
+        gradingSystem: "general",
         invigilators: [],
       });
     }
@@ -142,16 +143,32 @@ export const TestingAreaDialog: React.FC<TestingAreaDialogProps> = ({
     const selectedSubject = form.watch("subject");
     const selectedClass = form.watch("class");
     
-    if (selectedSubject && selectedClass) {
+    if (selectedSubject && selectedClass && !testingArea) { // Only auto-generate for new testing areas
       const subjectName = subjects.find(s => s._id === selectedSubject)?.name;
-      const className = classes.find(c => c._id === selectedClass);
+      const classData = classes.find(c => c._id === selectedClass);
       
-      if (subjectName && className) {
-        const generatedName = `${subjectName} - Grade ${className.grade}`;
+      if (subjectName && classData) {
+        // Extract grade number from class data
+        let gradeNumber = classData.grade;
+        
+        // If grade is not available, try to extract from name
+        if (!gradeNumber || gradeNumber === "") {
+          const gradeMatch = classData.name?.match(/(\d+)/);
+          gradeNumber = gradeMatch ? gradeMatch[1] : "1";
+        }
+        
+        // Handle special cases for PP (Pre-Primary)
+        if (classData.name?.toLowerCase().includes('pp')) {
+          const ppMatch = classData.name.match(/pp\s*(\d+)/i);
+          gradeNumber = ppMatch ? `PP ${ppMatch[1]}` : "PP 1";
+        }
+        
+        // Format: "Mathematics Grade 5" or "Mathematics PP 1"
+        const generatedName = `${subjectName} Grade ${gradeNumber}`;
         form.setValue("name", generatedName);
       }
     }
-  }, [form.watch("subject"), form.watch("class"), subjects, classes, form]);
+  }, [form.watch("subject"), form.watch("class"), subjects, classes, form, testingArea]);
 
   const loadDropdownData = async () => {
     try {
@@ -228,32 +245,14 @@ export const TestingAreaDialog: React.FC<TestingAreaDialogProps> = ({
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Name</FormLabel>
-                  <FormControl>
-                    <Input 
-                      placeholder="e.g., Mathematics - Grade 5" 
-                      {...field} 
-                      readOnly
-                      className="bg-gray-50 text-gray-600"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
+            {/* Subject and Class Selection First */}
             <div className="grid grid-cols-2 gap-4">
               <FormField
                 control={form.control}
                 name="subject"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Subject</FormLabel>
+                    <FormLabel>Subject / Learning Area *</FormLabel>
                     <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
                         <SelectTrigger>
@@ -278,17 +277,17 @@ export const TestingAreaDialog: React.FC<TestingAreaDialogProps> = ({
                 name="class"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Class</FormLabel>
+                    <FormLabel>Grade / Class *</FormLabel>
                     <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select class" />
+                          <SelectValue placeholder="Select grade" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
                         {classes.map((cls) => (
                           <SelectItem key={cls._id} value={cls._id}>
-                            {cls.name} - Grade {cls.grade}
+                            {cls.name} {cls.grade && `(Grade ${cls.grade})`}
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -298,6 +297,29 @@ export const TestingAreaDialog: React.FC<TestingAreaDialogProps> = ({
                 )}
               />
             </div>
+
+            {/* Auto-generated Name Display */}
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Testing Area Name</FormLabel>
+                  <FormControl>
+                    <Input 
+                      placeholder="Select subject and grade to auto-generate name" 
+                      {...field} 
+                      readOnly
+                      className="bg-gray-50 text-gray-600"
+                    />
+                  </FormControl>
+                  <p className="text-xs text-muted-foreground">
+                    Name will be automatically generated: Subject Grade X (e.g., Mathematics Grade 5)
+                  </p>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             <div className="grid grid-cols-2 gap-4">
               <FormField

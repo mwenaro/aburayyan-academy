@@ -194,11 +194,23 @@ const ExamSchema: Schema = new Schema<IExam>(
   }
 );
 
-// Pre-save middleware to calculate grades for marks within testing areas
+// Pre-save middleware to calculate grades and update status for testing areas
 ExamSchema.pre<IExam>("save", function (next) {
   if (this.testingAreas && this.testingAreas.length > 0) {
     this.testingAreas.forEach((testingArea) => {
-      // Auto-set dateDone when status changes to DONE
+      // Auto-update status based on marks presence
+      const hasMarks = testingArea.marks && testingArea.marks.length > 0;
+      if (hasMarks && testingArea.status === "PENDING") {
+        testingArea.status = "DONE";
+        if (!testingArea.dateDone) {
+          testingArea.dateDone = new Date();
+        }
+      } else if (!hasMarks && testingArea.status === "DONE") {
+        testingArea.status = "PENDING";
+        testingArea.dateDone = undefined;
+      }
+      
+      // Auto-set dateDone when status changes to DONE (if not already set)
       if (testingArea.status === "DONE" && !testingArea.dateDone) {
         testingArea.dateDone = new Date();
       }
@@ -261,12 +273,60 @@ export const regradeTestingArea = (
   return updatedTestingArea;
 };
 
+// Utility function to update testing area status based on marks
+export const updateTestingAreaStatus = async (
+  examId: string, 
+  testingAreaId: string
+): Promise<void> => {
+  const exam = await Exam.findById(examId);
+  if (!exam) return;
+
+  const testingArea = exam.testingAreas.find(ta => ta._id?.toString() === testingAreaId);
+  if (!testingArea) return;
+
+  const hasMarks = testingArea.marks && testingArea.marks.length > 0;
+  const currentStatus = testingArea.status;
+
+  // Update status based on marks presence
+  if (hasMarks && currentStatus === "PENDING") {
+    // Has marks but status is PENDING - update to DONE
+    await Exam.findOneAndUpdate(
+      { 
+        _id: examId,
+        "testingAreas._id": testingAreaId
+      },
+      { 
+        $set: {
+          "testingAreas.$.status": "DONE",
+          "testingAreas.$.dateDone": new Date()
+        }
+      }
+    );
+  } else if (!hasMarks && currentStatus === "DONE") {
+    // No marks but status is DONE - update to PENDING
+    await Exam.findOneAndUpdate(
+      { 
+        _id: examId,
+        "testingAreas._id": testingAreaId
+      },
+      { 
+        $set: {
+          "testingAreas.$.status": "PENDING"
+        },
+        $unset: {
+          "testingAreas.$.dateDone": ""
+        }
+      }
+    );
+  }
+};
+
 // Legacy function for backward compatibility (now uses CBC system)
 export const calculateGrade = (score: number, outOf: number): { name: string; points: number } => {
   return calculateGradeWithSystem(score, outOf, "cbc");
 };
 
 // Create and export the model
-export const Exam: Model<IExam> = mongoose.models.Exam || mongoose.model<IExam>("Exam", ExamSchema);
+export const Exam: Model<IExam> = mongoose.models?.Exam || mongoose.model<IExam>("Exam", ExamSchema);
 
 
