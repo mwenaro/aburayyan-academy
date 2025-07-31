@@ -152,6 +152,10 @@ export const MarkDialog: React.FC<MarkDialogProps> = ({
       }
       
       console.log('Available students:', availableStudents.length);
+      
+      // Sort students alphabetically by name for consistent display
+      availableStudents.sort((a, b) => a.name.localeCompare(b.name));
+      
       setStudents(availableStudents);
     } catch (error) {
       console.error("Error loading students:", error);

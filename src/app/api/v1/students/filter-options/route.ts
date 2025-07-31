@@ -18,7 +18,8 @@ export async function GET(req: NextRequest) {
 
     // Group classes by grade
     const classesByGrade = grades.reduce((acc, grade) => {
-      acc[grade] = classes.filter(cls => cls.grade === grade);
+      acc[grade] = classes.filter(cls => cls.grade === grade)
+        .sort((a, b) => a.name.localeCompare(b.name)); // Sort classes alphabetically within each grade
       return acc;
     }, {} as Record<string, any[]>);
 
