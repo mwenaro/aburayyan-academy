@@ -3,22 +3,40 @@ import { School } from "@/models/School";
 import { Student } from "@/models/Student";
 import "@/models/Class"; // import without leaving unsed imports
 import { NextRequest, NextResponse } from "next/server";
-import { findWithQuery, getQueryOptions } from "@/contollers/fetchService";
+import { findWithQuery, findWithQueryWithGrade, getQueryOptions } from "@/contollers/fetchService";
 
 export async function GET(req: NextRequest) {
   try {
     await dbCon();
 
+    const { searchParams } = new URL(req.url);
+    const grade = searchParams.get("grade");
+    const classId = searchParams.get("classId");
+
     const queryOptions = getQueryOptions(req, {
-      searchableFields: ["name", "contactDetails.phone", "class.name"],
-      allowedFilters: ["class", "gen", "class.name"],
-      defaultSortBy: "createdAt",
-      defaultSortOrder: "desc",
+      searchableFields: ["name", "contactDetails.phone", "class.name", "regno"],
+      allowedFilters: ["class", "gen"],
+      defaultSortBy: "name",
+      defaultSortOrder: "asc",
       populate: ["class"],
     });
 
+    // Enhanced filtering for specific class ID
+    if (classId) {
+      queryOptions.filters = {
+        ...queryOptions.filters,
+        class: classId
+      };
+    }
+
+    // If grade is specified, use aggregation for grade filtering
+    if (grade && !classId) {
+      const result = await findWithQueryWithGrade(Student, queryOptions, grade);
+      return NextResponse.json(result);
+    }
+
+    // Use regular query for normal filtering
     const result = await findWithQuery(Student, queryOptions);
-    // console.log({ result });
     return NextResponse.json(result);
   } catch (error: any) {
     console.error("Error:", error.message);
