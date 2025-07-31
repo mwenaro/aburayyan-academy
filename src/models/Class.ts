@@ -50,4 +50,4 @@ const ClassSchema = new Schema<IClass>(
 
 // Mongoose Model
 export const ClassModel =
-  mongoose.models.Class || mongoose.model<IClass>("Class", ClassSchema);
+  mongoose.models?.Class || mongoose.model<IClass>("Class", ClassSchema);

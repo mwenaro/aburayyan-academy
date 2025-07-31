@@ -74,6 +74,100 @@ export async function findWithQuery<T>(model: Model<T>, options: QueryOptions) {
   };
 }
 
+// Enhanced function to support grade filtering
+export async function findWithQueryWithGrade<T>(model: Model<T>, options: QueryOptions, grade: string) {
+  const {
+    search,
+    searchableFields = [],
+    page = 1,
+    limit = 10,
+    sortBy = "createdAt",
+    sortOrder = "desc",
+    filters = {},
+    populate,
+  } = options;
+
+  const skip = (page - 1) * limit;
+  
+  // Build aggregation pipeline for grade filtering
+  const pipeline: any[] = [
+    // Lookup class information
+    {
+      $lookup: {
+        from: "classes",
+        localField: "class",
+        foreignField: "_id",
+        as: "classInfo"
+      }
+    },
+    {
+      $unwind: "$classInfo"
+    },
+    // Match by grade
+    {
+      $match: {
+        "classInfo.grade": grade,
+        ...filters
+      }
+    }
+  ];
+
+  // Add search functionality
+  if (search && searchableFields.length > 0) {
+    const searchConditions = searchableFields.map((field) => {
+      if (field.startsWith("class.")) {
+        const classField = field.replace("class.", "classInfo.");
+        return { [classField]: { $regex: search, $options: "i" } };
+      }
+      return { [field]: { $regex: search, $options: "i" } };
+    });
+    
+    pipeline.push({
+      $match: {
+        $or: searchConditions
+      }
+    });
+  }
+
+  // Add sorting
+  pipeline.push({
+    $sort: { [sortBy]: sortOrder === "asc" ? 1 : -1 }
+  });
+
+  // Get total count
+  const countPipeline = [...pipeline, { $count: "total" }];
+  const countResult = await model.aggregate(countPipeline);
+  const total = countResult.length > 0 ? countResult[0].total : 0;
+
+  // Add pagination
+  pipeline.push({ $skip: skip });
+  pipeline.push({ $limit: limit });
+
+  // Add class field back
+  pipeline.push({
+    $addFields: {
+      class: "$classInfo"
+    }
+  });
+
+  // Remove classInfo field
+  pipeline.push({
+    $unset: "classInfo"
+  });
+
+  const data = await model.aggregate(pipeline);
+
+  return {
+    data,
+    meta: {
+      total,
+      page,
+      totalPages: Math.ceil(total / limit),
+      limit,
+    },
+  };
+}
+
 //  Extract query options from NextRequest
 export function getQueryOptions(
   req: NextRequest,

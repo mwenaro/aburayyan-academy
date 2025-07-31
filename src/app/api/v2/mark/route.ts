@@ -111,7 +111,7 @@ export async function POST(req: NextRequest) {
       // grade will be auto-calculated by middleware
     };
 
-    // Add mark to testing area
+    // Add mark to testing area and update status to DONE when mark is added
     const updatedExam = await Exam.findOneAndUpdate(
       { 
         _id: examId, 
@@ -120,7 +120,11 @@ export async function POST(req: NextRequest) {
       { 
         $push: { 
           "testingAreas.$.marks": markData 
-        } 
+        },
+        $set: {
+          "testingAreas.$.status": "DONE",
+          "testingAreas.$.dateDone": new Date()
+        }
       },
       { new: true, runValidators: true }
     ).populate("testingAreas.marks.student", "firstName lastName admissionNumber");
@@ -191,7 +195,7 @@ export async function PATCH(req: NextRequest) {
       // grade will be auto-calculated by middleware
     }));
 
-    // Add all marks to testing area
+    // Add all marks to testing area and update status to DONE when marks are added
     const updatedExam = await Exam.findOneAndUpdate(
       { 
         _id: examId, 
@@ -200,7 +204,11 @@ export async function PATCH(req: NextRequest) {
       { 
         $push: { 
           "testingAreas.$.marks": { $each: marksData }
-        } 
+        },
+        $set: {
+          "testingAreas.$.status": "DONE",
+          "testingAreas.$.dateDone": new Date()
+        }
       },
       { new: true, runValidators: true }
     ).populate("testingAreas.marks.student", "firstName lastName admissionNumber");

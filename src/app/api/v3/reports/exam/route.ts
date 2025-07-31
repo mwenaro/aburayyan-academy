@@ -81,8 +81,13 @@ export async function GET(req: NextRequest) {
         const passedStudents = marks.filter(mark => (mark.score / testingArea.outOf) * 100 >= 50).length;
         const passRate = totalStudents > 0 ? (passedStudents / totalStudents) * 100 : 0;
 
-        // Grade distribution
+        // Grade distribution - Updated for new grading system (.E suffix)
         const gradeDistribution = {
+          "E.E": marks.filter(mark => mark.grade?.name === "E.E").length,
+          "M.E": marks.filter(mark => mark.grade?.name === "M.E").length,
+          "A.E": marks.filter(mark => mark.grade?.name === "A.E").length,
+          "B.E": marks.filter(mark => mark.grade?.name === "B.E").length,
+          // Legacy grades for backward compatibility
           E: marks.filter(mark => mark.grade?.name === "E").length,
           M: marks.filter(mark => mark.grade?.name === "M").length,
           A: marks.filter(mark => mark.grade?.name === "A").length,

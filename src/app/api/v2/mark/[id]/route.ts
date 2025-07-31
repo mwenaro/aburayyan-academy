@@ -167,6 +167,7 @@ export async function DELETE(
       );
     }
 
+    // First, remove the mark
     const updatedExam = await Exam.findOneAndUpdate(
       { 
         _id: examId,
@@ -184,6 +185,27 @@ export async function DELETE(
       return NextResponse.json(
         { success: false, error: "Exam or testing area not found" },
         { status: 404 }
+      );
+    }
+
+    // Check if this testing area now has no marks, if so, revert status to PENDING
+    const testingArea = updatedExam.testingAreas.find(ta => ta._id?.toString() === testingAreaId);
+    
+    if (testingArea && testingArea.marks.length === 0) {
+      // Update status back to PENDING and remove dateDone
+      await Exam.findOneAndUpdate(
+        { 
+          _id: examId,
+          "testingAreas._id": testingAreaId
+        },
+        { 
+          $set: {
+            "testingAreas.$.status": "PENDING"
+          },
+          $unset: {
+            "testingAreas.$.dateDone": ""
+          }
+        }
       );
     }
 

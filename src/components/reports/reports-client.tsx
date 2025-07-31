@@ -36,6 +36,11 @@ interface ReportData {
     passedStudents: number;
     passRate: number;
     gradeDistribution: {
+      "E.E": number;
+      "M.E": number;
+      "A.E": number;
+      "B.E": number;
+      // Legacy grades for backward compatibility
       E: number;
       M: number;
       A: number;
