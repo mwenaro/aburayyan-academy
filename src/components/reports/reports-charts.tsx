@@ -43,6 +43,11 @@ interface ReportData {
     passedStudents: number;
     passRate: number;
     gradeDistribution: {
+      "E.E": number;
+      "M.E": number;
+      "A.E": number;
+      "B.E": number;
+      // Legacy grades for backward compatibility
       E: number;
       M: number;
       A: number;
@@ -57,6 +62,12 @@ interface ReportsChartsProps {
 }
 
 const GRADE_COLORS = {
+  // New grading system
+  "E.E": "#22c55e", // green
+  "M.E": "#3b82f6", // blue
+  "A.E": "#f59e0b", // amber
+  "B.E": "#ef4444", // red
+  // Legacy grading system (for backward compatibility)
   E: "#22c55e", // green
   M: "#3b82f6", // blue
   A: "#f59e0b", // amber

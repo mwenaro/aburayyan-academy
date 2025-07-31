@@ -43,6 +43,11 @@ interface ReportData {
     passedStudents: number;
     passRate: number;
     gradeDistribution: {
+      "E.E": number;
+      "M.E": number;
+      "A.E": number;
+      "B.E": number;
+      // Legacy grades for backward compatibility
       E: number;
       M: number;
       A: number;
@@ -72,12 +77,16 @@ export function ReportsTable({ data }: ReportsTableProps) {
   const getGradeBadgeColor = (grade: string) => {
     switch (grade) {
       case "E":
+      case "E.E":
         return "bg-green-100 text-green-800 hover:bg-green-100";
       case "M":
+      case "M.E":
         return "bg-blue-100 text-blue-800 hover:bg-blue-100";
       case "A":
+      case "A.E":
         return "bg-yellow-100 text-yellow-800 hover:bg-yellow-100";
       case "B":
+      case "B.E":
         return "bg-red-100 text-red-800 hover:bg-red-100";
       default:
         return "bg-gray-100 text-gray-800 hover:bg-gray-100";
@@ -258,8 +267,8 @@ export function ReportsTable({ data }: ReportsTableProps) {
                                             </TableCell>
                                             <TableCell>{mark.percentage}%</TableCell>
                                             <TableCell>
-                                              <Badge className={getGradeBadgeColor(mark.grade?.name || "B")}>
-                                                {mark.grade?.name || "B"}
+                                              <Badge className={getGradeBadgeColor(mark.grade?.name || "B.E")}>
+                                                {mark.grade?.name || "B.E"}
                                               </Badge>
                                             </TableCell>
                                             <TableCell className="text-sm text-muted-foreground">

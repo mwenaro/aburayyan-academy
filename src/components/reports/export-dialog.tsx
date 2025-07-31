@@ -42,6 +42,11 @@ interface ReportData {
     passedStudents: number;
     passRate: number;
     gradeDistribution: {
+      "E.E": number;
+      "M.E": number;
+      "A.E": number;
+      "B.E": number;
+      // Legacy grades for backward compatibility
       E: number;
       M: number;
       A: number;
@@ -147,7 +152,7 @@ export function ExportDialog({ open, onOpenChange, data }: ExportDialogProps) {
           mark.student?.admissionNumber || "N/A",
           `${mark.score}/${report.outOf}`,
           `${mark.percentage}%`,
-          mark.grade?.name || "B",
+          mark.grade?.name || "B.E",
           mark.remark || "-"
         ]);
 
@@ -214,7 +219,7 @@ export function ExportDialog({ open, onOpenChange, data }: ExportDialogProps) {
             "Score": mark.score,
             "Out Of": report.outOf,
             "Percentage": mark.percentage,
-            "Grade": mark.grade?.name || "B",
+            "Grade": mark.grade?.name || "B.E",
             "Grade Points": mark.grade?.points || 1,
             "Remark": mark.remark || "",
           }));
