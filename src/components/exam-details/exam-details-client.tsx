@@ -6,13 +6,15 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Heading } from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
-import { Plus, Calendar, Users, BookOpen, Edit, Eye, Trash2 } from "lucide-react";
+import { Plus, Calendar, Users, BookOpen, Edit, Eye, Trash2, RefreshCw } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { IExam, ITestingArea } from "@/models/Exam";
 import { AlertModal } from "@/components/modal/alert-modal";
 import { useToast } from "@/components/ui/use-toast";
 import axios from "axios";
 import { TestingAreaDialog } from "@/components/exam-details/testing-area-dialog";
+import { RegradeDialog } from "@/components/exam-details/regrade-dialog";
+import { getGradingSystemDisplayName } from "@/constants/grading-systems";
 
 interface ExamDetailsClientProps {
   exam: IExam | null;
@@ -28,6 +30,7 @@ export const ExamDetailsClient: React.FC<ExamDetailsClientProps> = ({
   const [testingAreas, setTestingAreas] = useState<ITestingArea[]>(initialTestingAreas || []);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [testingAreaDialogOpen, setTestingAreaDialogOpen] = useState(false);
+  const [regradeDialogOpen, setRegradeDialogOpen] = useState(false);
   const [selectedTestingArea, setSelectedTestingArea] = useState<ITestingArea | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -73,6 +76,14 @@ export const ExamDetailsClient: React.FC<ExamDetailsClientProps> = ({
       setTestingAreas(prev => [...prev, testingArea]);
     }
     setTestingAreaDialogOpen(false);
+    setSelectedTestingArea(null);
+  };
+
+  const handleTestingAreaRegraded = (regradedTestingArea: ITestingArea) => {
+    setTestingAreas(prev => 
+      prev.map(ta => ta._id === regradedTestingArea._id ? regradedTestingArea : ta)
+    );
+    setRegradeDialogOpen(false);
     setSelectedTestingArea(null);
   };
 
@@ -214,6 +225,12 @@ export const ExamDetailsClient: React.FC<ExamDetailsClientProps> = ({
                   </CardHeader>
                   
                   <CardContent className="space-y-3">
+                    <div className="mb-2">
+                      <Badge variant="secondary" className="text-xs">
+                        {getGradingSystemDisplayName(testingArea.gradingSystem || "general")}
+                      </Badge>
+                    </div>
+                    
                     <div className="grid grid-cols-2 gap-4 text-sm">
                       <div>
                         <p className="text-muted-foreground">Due Date</p>
@@ -244,6 +261,17 @@ export const ExamDetailsClient: React.FC<ExamDetailsClientProps> = ({
                       >
                         <Eye className="mr-2 h-3 w-3" />
                         View Details
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={() => {
+                          setSelectedTestingArea(testingArea);
+                          setRegradeDialogOpen(true);
+                        }}
+                        title="Re-grade with different system"
+                      >
+                        <RefreshCw className="h-3 w-3" />
                       </Button>
                       <Button
                         size="sm"
@@ -282,6 +310,17 @@ export const ExamDetailsClient: React.FC<ExamDetailsClientProps> = ({
         testingArea={selectedTestingArea}
         onSaved={handleTestingAreaSaved}
       />
+
+      {/* Regrade Dialog */}
+      {selectedTestingArea && (
+        <RegradeDialog
+          open={regradeDialogOpen}
+          onOpenChange={setRegradeDialogOpen}
+          examId={exam._id?.toString() || ""}
+          testingArea={selectedTestingArea}
+          onRegraded={handleTestingAreaRegraded}
+        />
+      )}
 
       {/* Delete Confirmation */}
       <AlertModal

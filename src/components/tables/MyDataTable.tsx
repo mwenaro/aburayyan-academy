@@ -44,6 +44,7 @@ interface MyDataTableProps<TData, TValue> {
   searchParams?: {
     [key: string]: string | string[] | undefined;
   };
+  hideSearch?: boolean; // New prop to hide search input
 }
 
 export function MyDataTable<TData, TValue>({
@@ -52,6 +53,7 @@ export function MyDataTable<TData, TValue>({
   searchKey,
   pageCount,
   pageSizeOptions = [10, 20, 30, 40, 50],
+  hideSearch = false, // Default to false
 }: MyDataTableProps<TData, TValue>) {
   const router = useRouter();
   const pathname = usePathname();
@@ -184,14 +186,16 @@ export function MyDataTable<TData, TValue>({
 
   return (
     <>
-      <Input
-        placeholder={`Search ${searchKey}...`}
-        value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ""}
-        onChange={(event) =>
-          table.getColumn(searchKey)?.setFilterValue(event.target.value)
-        }
-        className="w-full md:max-w-sm"
-      />
+      {!hideSearch && (
+        <Input
+          placeholder={`Search ${searchKey}...`}
+          value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ""}
+          onChange={(event) =>
+            table.getColumn(searchKey)?.setFilterValue(event.target.value)
+          }
+          className="w-full md:max-w-sm"
+        />
+      )}
       <ScrollArea className="h-[calc(80vh-220px)] rounded-md border">
         <Table className="relative">
           <TableHeader>
@@ -325,3 +329,4 @@ export function MyDataTable<TData, TValue>({
     </>
   );
 }
+export default MyDataTable

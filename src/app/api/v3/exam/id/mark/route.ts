@@ -122,7 +122,7 @@ export async function POST(
       // grade will be auto-calculated by middleware
     };
 
-    // Add mark to testing area
+    // Add mark to testing area and update status to DONE when mark is added
     const updatedExam = await Exam.findOneAndUpdate(
       { 
         _id: params.id, 
@@ -131,7 +131,11 @@ export async function POST(
       { 
         $push: { 
           "testingAreas.$.marks": markData 
-        } 
+        },
+        $set: {
+          "testingAreas.$.status": "DONE",
+          "testingAreas.$.dateDone": new Date()
+        }
       },
       { new: true, runValidators: true }
     ).populate("testingAreas.marks.student", "firstName lastName admissionNumber");
@@ -205,7 +209,7 @@ export async function PATCH(
       // grade will be auto-calculated by middleware
     }));
 
-    // Add all marks to testing area
+    // Add all marks to testing area and update status to DONE when marks are added
     const updatedExam = await Exam.findOneAndUpdate(
       { 
         _id: params.id, 
@@ -214,7 +218,11 @@ export async function PATCH(
       { 
         $push: { 
           "testingAreas.$.marks": { $each: marksData }
-        } 
+        },
+        $set: {
+          "testingAreas.$.status": "DONE",
+          "testingAreas.$.dateDone": new Date()
+        }
       },
       { new: true, runValidators: true }
     ).populate("testingAreas.marks.student", "firstName lastName admissionNumber");
@@ -341,6 +349,7 @@ export async function DELETE(
       );
     }
 
+    // First, remove the mark
     const updatedExam = await Exam.findOneAndUpdate(
       { 
         _id: params.id,
@@ -358,6 +367,27 @@ export async function DELETE(
       return NextResponse.json(
         { success: false, error: "Exam or testing area not found" },
         { status: 404 }
+      );
+    }
+
+    // Check if this testing area now has no marks, if so, revert status to PENDING
+    const testingArea = updatedExam.testingAreas.find(ta => ta._id?.toString() === testingAreaId);
+    
+    if (testingArea && testingArea.marks.length === 0) {
+      // Update status back to PENDING and remove dateDone
+      await Exam.findOneAndUpdate(
+        { 
+          _id: params.id,
+          "testingAreas._id": testingAreaId
+        },
+        { 
+          $set: {
+            "testingAreas.$.status": "PENDING"
+          },
+          $unset: {
+            "testingAreas.$.dateDone": ""
+          }
+        }
       );
     }
 
