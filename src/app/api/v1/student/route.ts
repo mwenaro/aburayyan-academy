@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
 
     const { searchParams } = new URL(req.url);
     const grade = searchParams.get("grade");
-    const classId = searchParams.get("classId");
+    const classId = searchParams.get("classId") || searchParams.get("class"); // Support both parameters
 
     const queryOptions = getQueryOptions(req, {
       searchableFields: ["name", "contactDetails.phone", "class.name", "regno"],
@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
       populate: ["class"],
     });
 
-    // Enhanced filtering for specific class ID
+    // Enhanced filtering for specific class ID - support both 'class' and 'classId'
     if (classId) {
       queryOptions.filters = {
         ...queryOptions.filters,
