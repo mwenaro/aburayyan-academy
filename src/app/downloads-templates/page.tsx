@@ -47,21 +47,33 @@ export default function DownloadsPage() {
     try {
       setIsLoadingData(true);
       
+      // Use the same endpoints as the main dashboard for consistency
       const [studentsResponse, classesResponse] = await Promise.all([
-        fetch('/api/v1/students/public'),
-        fetch('/api/v1/classes/public')
+        fetch('/api/v1/student?limit=1000&page=1'), // Get all students
+        fetch('/api/v1/students/filter-options') // Get filter options which include classes
       ]);
 
       if (studentsResponse.ok && classesResponse.ok) {
         const studentsData = await studentsResponse.json();
-        const classesData = await classesResponse.json();
+        const filterOptionsData = await classesResponse.json();
         
-        setStudents(studentsData.data || []);
-        setClasses(classesData.data || []);
+        console.log('Template downloads - Students loaded:', studentsData.data?.length);
+        console.log('Template downloads - Filter options loaded:', filterOptionsData.data?.classes?.length);
+        
+        if (studentsData.success && filterOptionsData.success) {
+          setStudents(studentsData.data || []);
+          setClasses(filterOptionsData.data.classes || []);
+        } else {
+          toast({
+            title: "Error",
+            description: "Failed to load student data",
+            variant: "destructive",
+          });
+        }
       } else {
         toast({
           title: "Error",
-          description: "Failed to load student data",
+          description: "Failed to load data from server",
           variant: "destructive",
         });
       }

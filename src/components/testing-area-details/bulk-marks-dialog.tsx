@@ -102,8 +102,19 @@ export const BulkMarksDialog: React.FC<BulkMarksDialogProps> = ({
         ? testingArea.class._id 
         : testingArea.class;
       
-      const response = await axios.get(`/api/v1/student?class=${classId}`);
+      console.log('Bulk marks - Loading students for class:', classId);
+      
+      // Use the same endpoint as the main students page with proper parameters
+      const response = await axios.get(`/api/v1/student`, {
+        params: {
+          class: classId, // Use 'class' parameter instead of 'classId'
+          limit: 1000, // Get all students in the class
+          page: 1
+        }
+      });
+      
       const allStudents: IStudent[] = response.data.data || [];
+      console.log('Bulk marks - All students found for class:', classId, allStudents.length);
       
       // Get students who already have marks in this testing area (use currentMarks instead of testingArea.marks)
       const studentsWithMarks = currentMarks?.map(mark => {
@@ -113,6 +124,8 @@ export const BulkMarksDialog: React.FC<BulkMarksDialogProps> = ({
         return String(studentId);
       }) || [];
       
+      console.log('Bulk marks - Students with marks:', studentsWithMarks.length);
+      
       // Filter out students who already have marks
       const availableStudents = allStudents.filter(student => {
         const studentIdStr = String(student._id);
@@ -120,6 +133,7 @@ export const BulkMarksDialog: React.FC<BulkMarksDialogProps> = ({
         return !hasMarks;
       });
       
+      console.log('Bulk marks - Available students after filtering:', availableStudents.length);
       setStudents(availableStudents);
     } catch (error) {
       console.error("Error loading students:", error);

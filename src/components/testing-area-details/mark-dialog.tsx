@@ -115,8 +115,19 @@ export const MarkDialog: React.FC<MarkDialogProps> = ({
         ? testingArea.class._id 
         : testingArea.class;
       
-      const response = await axios.get(`/api/v1/student?class=${classId}`);
-      const allStudents: IStudent[] = response.data.data || response.data || [];
+      console.log('Loading students for class:', classId);
+      
+      // Use the same endpoint as the main students page with proper parameters
+      const response = await axios.get(`/api/v1/student`, {
+        params: {
+          class: classId, // Use 'class' parameter instead of 'classId'
+          limit: 1000, // Get all students in the class
+          page: 1
+        }
+      });
+      
+      const allStudents: IStudent[] = response.data.data || [];
+      console.log('All students found for class:', classId, allStudents.length);
       
       // Get students who already have marks in this testing area (use currentMarks instead of testingArea.marks)
       const studentsWithMarks = currentMarks?.map(mark => {
@@ -125,6 +136,8 @@ export const MarkDialog: React.FC<MarkDialogProps> = ({
           : mark.student;
         return String(studentId);
       }) || [];
+      
+      console.log('Students with marks:', studentsWithMarks.length);
       
       // If editing a mark, include the current student in available options
       let availableStudents;
@@ -138,6 +151,7 @@ export const MarkDialog: React.FC<MarkDialogProps> = ({
         );
       }
       
+      console.log('Available students:', availableStudents.length);
       setStudents(availableStudents);
     } catch (error) {
       console.error("Error loading students:", error);

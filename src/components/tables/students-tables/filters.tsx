@@ -73,6 +73,9 @@ export const StudentFilters: React.FC<StudentFiltersProps> = ({
       const response = await fetch("/api/v1/students/filter-options");
       const data = await response.json();
       if (data.success) {
+        console.log('Filter options loaded:', data.data);
+        console.log('Classes available:', data.data.classes?.length);
+        console.log('Classes by grade:', data.data.classesByGrade);
         setFilterOptions(data.data);
       }
     } catch (error) {
