@@ -134,6 +134,10 @@ export const BulkMarksDialog: React.FC<BulkMarksDialogProps> = ({
       });
       
       console.log('Bulk marks - Available students after filtering:', availableStudents.length);
+      
+      // Sort students alphabetically by name for consistent display
+      availableStudents.sort((a, b) => a.name.localeCompare(b.name));
+      
       setStudents(availableStudents);
     } catch (error) {
       console.error("Error loading students:", error);

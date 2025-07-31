@@ -89,10 +89,10 @@ export default function DownloadsPage() {
     }
   };
 
-  // Filter students by selected class
-  const filteredStudents = selectedClass && selectedClass !== "all"
+  // Filter students by selected class and sort alphabetically
+  const filteredStudents = (selectedClass && selectedClass !== "all"
     ? students.filter(student => student.class._id === selectedClass)
-    : students;
+    : students).sort((a, b) => a.name.localeCompare(b.name));
 
   const handleDownload = async (type: 'excel' | 'word') => {
     if (!selectedStudent) {
