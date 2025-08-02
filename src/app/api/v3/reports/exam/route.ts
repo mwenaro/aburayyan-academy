@@ -76,8 +76,10 @@ export async function GET(req: NextRequest) {
         const totalStudents = marks.length;
         const totalScore = marks.reduce((sum, mark) => sum + mark.score, 0);
         const averageScore = totalStudents > 0 ? totalScore / totalStudents : 0;
-        const highestScore = Math.max(...marks.map(mark => mark.score), 0);
-        const lowestScore = Math.min(...marks.map(mark => mark.score), 0);
+        const scores = marks.map(mark => mark.score);
+        const percentages = marks.map(mark => (mark.score / testingArea.outOf) * 100);
+        const highestScore = percentages.length > 0 ? Math.round(Math.max(...percentages) * 100) / 100 : 0;
+        const lowestScore = percentages.length > 0 ? Math.round(Math.min(...percentages) * 100) / 100 : 0;
         const passedStudents = marks.filter(mark => (mark.score / testingArea.outOf) * 100 >= 50).length;
         const passRate = totalStudents > 0 ? (passedStudents / totalStudents) * 100 : 0;
 
@@ -121,6 +123,12 @@ export async function GET(req: NextRequest) {
           },
           marks: marks
             .filter(mark => mark.student) // Filter out marks without student data
+            .sort((a, b) => {
+              // Sort marks alphabetically by student name
+              const nameA = (a.student as any)?.name || "Unknown Student";
+              const nameB = (b.student as any)?.name || "Unknown Student";
+              return nameA.localeCompare(nameB);
+            })
             .map(mark => ({
               _id: mark._id,
               student: mark.student,

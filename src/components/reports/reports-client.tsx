@@ -232,10 +232,10 @@ export function ReportsClient() {
 
             <Select value={selectedClass} onValueChange={setSelectedClass}>
               <SelectTrigger>
-                <SelectValue placeholder="Select Class" />
+                <SelectValue placeholder="Select Grade" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Classes</SelectItem>
+                <SelectItem value="all">All Grades</SelectItem>
                 {classes.map((cls) => (
                   <SelectItem key={cls._id} value={cls._id}>
                     {cls.name}
@@ -246,10 +246,10 @@ export function ReportsClient() {
 
             <Select value={selectedSubject} onValueChange={setSelectedSubject}>
               <SelectTrigger>
-                <SelectValue placeholder="Select Subject" />
+                <SelectValue placeholder="Select Testing Area" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Subjects</SelectItem>
+                <SelectItem value="all">All Testing Areas</SelectItem>
                 {subjects.map((subject) => (
                   <SelectItem key={subject._id} value={subject._id}>
                     {subject.name}
@@ -315,7 +315,7 @@ export function ReportsClient() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Total Exams</p>
+                  <p className="text-sm font-medium text-muted-foreground">Total Assessments</p>
                   <p className="text-2xl font-bold">{overallStats.totalExams}</p>
                 </div>
                 <Calendar className="h-8 w-8 text-muted-foreground" />
@@ -339,7 +339,7 @@ export function ReportsClient() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Completed Exams</p>
+                  <p className="text-sm font-medium text-muted-foreground">Completed Assessments</p>
                   <p className="text-2xl font-bold">{overallStats.completedExams}</p>
                 </div>
                 <BarChart3 className="h-8 w-8 text-muted-foreground" />
