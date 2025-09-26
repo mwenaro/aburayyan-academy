@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Senior School Admission Form - Abu Rayyan Academy</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #0066cc;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .form-section {
+            margin-bottom: 25px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+        .form-field {
+            flex: 1;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        .checkbox-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .print-note {
+            background: #f0f8ff;
+            padding: 15px;
+            margin: 20px 0;
+            border-left: 4px solid #0066cc;
+        }
+        @media print {
+            .print-note { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="print-note">
+        <strong>Note:</strong> This is a sample form. In a real implementation, this would be a PDF file. Please print this form and fill it out by hand, or replace with an actual PDF form.
+    </div>
+    
+    <div class="header">
+        <h1>ABU RAYYAN ACADEMY</h1>
+        <h2>SENIOR SCHOOL ADMISSION FORM</h2>
+        <p>Form 1 - Form 4 (Grade 9 - 12)</p>
+        <p>Academic Year: 2025/2026</p>
+    </div>
+
+    <form>
+        <div class="form-section">
+            <h3>STUDENT INFORMATION</h3>
+            <div class="form-row">
+                <div class="form-field">
+                    <label for="firstName">First Name:</label>
+                    <input type="text" id="firstName" name="firstName">
+                </div>
+                <div class="form-field">
+                    <label for="middleName">Middle Name:</label>
+                    <input type="text" id="middleName" name="middleName">
+                </div>
+                <div class="form-field">
+                    <label for="lastName">Last Name:</label>
+                    <input type="text" id="lastName" name="lastName">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-field">
+                    <label for="dob">Date of Birth:</label>
+                    <input type="date" id="dob" name="dob">
+                </div>
+                <div class="form-field">
+                    <label for="gender">Gender:</label>
+                    <select id="gender" name="gender">
+                        <option value="">Select Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+                <div class="form-field">
+                    <label for="nationality">Nationality:</label>
+                    <input type="text" id="nationality" name="nationality">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-field">
+                    <label for="religion">Religion:</label>
+                    <input type="text" id="religion" name="religion">
+                </div>
+                <div class="form-field">
+                    <label for="previousSchool">Previous School:</label>
+                    <input type="text" id="previousSchool" name="previousSchool">
+                </div>
+                <div class="form-field">
+                    <label for="classApplying">Class Applying For:</label>
+                    <select id="classApplying" name="classApplying">
+                        <option value="">Select Class</option>
+                        <option value="form1">Form 1</option>
+                        <option value="form2">Form 2</option>
+                        <option value="form3">Form 3</option>
+                        <option value="form4">Form 4</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>PARENT/GUARDIAN INFORMATION</h3>
+            <div class="form-row">
+                <div class="form-field">
+                    <label for="parentName">Parent/Guardian Full Name:</label>
+                    <input type="text" id="parentName" name="parentName">
+                </div>
+                <div class="form-field">
+                    <label for="relationship">Relationship to Student:</label>
+                    <select id="relationship" name="relationship">
+                        <option value="">Select Relationship</option>
+                        <option value="father">Father</option>
+                        <option value="mother">Mother</option>
+                        <option value="guardian">Guardian</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-field">
+                    <label for="parentPhone">Phone Number:</label>
+                    <input type="tel" id="parentPhone" name="parentPhone">
+                </div>
+                <div class="form-field">
+                    <label for="parentEmail">Email Address:</label>
+                    <input type="email" id="parentEmail" name="parentEmail">
+                </div>
+            </div>
+
+            <div class="form-field">
+                <label for="address">Home Address:</label>
+                <textarea id="address" name="address" rows="3"></textarea>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>ACADEMIC INFORMATION</h3>
+            <div class="form-row">
+                <div class="form-field">
+                    <label for="kcpeMarks">KCPE Marks (if applicable):</label>
+                    <input type="number" id="kcpeMarks" name="kcpeMarks" min="0" max="500">
+                </div>
+                <div class="form-field">
+                    <label for="kcpeYear">KCPE Year:</label>
+                    <input type="number" id="kcpeYear" name="kcpeYear" min="2015" max="2025">
+                </div>
+            </div>
+
+            <div class="form-field">
+                <label>Subjects of Interest (Select applicable):</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="subjects" value="mathematics"> Mathematics</label>
+                    <label><input type="checkbox" name="subjects" value="english"> English</label>
+                    <label><input type="checkbox" name="subjects" value="kiswahili"> Kiswahili</label>
+                    <label><input type="checkbox" name="subjects" value="science"> Science</label>
+                    <label><input type="checkbox" name="subjects" value="history"> History</label>
+                    <label><input type="checkbox" name="subjects" value="geography"> Geography</label>
+                    <label><input type="checkbox" name="subjects" value="cre"> C.R.E</label>
+                    <label><input type="checkbox" name="subjects" value="business"> Business Studies</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>ADDITIONAL SERVICES</h3>
+            <div class="form-field">
+                <label>Services Required (Select applicable):</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="services" value="transport"> School Transport</label>
+                    <label><input type="checkbox" name="services" value="boarding"> Boarding (if available)</label>
+                    <label><input type="checkbox" name="services" value="meals"> School Meals</label>
+                    <label><input type="checkbox" name="services" value="uniform"> School Uniform</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>DECLARATION</h3>
+            <p>I declare that the information provided above is true and accurate to the best of my knowledge.</p>
+            
+            <div style="margin-top: 50px;">
+                <div class="form-row">
+                    <div class="form-field">
+                        <label>Parent/Guardian Signature:</label>
+                        <div style="border-bottom: 1px solid #000; height: 30px; margin-top: 10px;"></div>
+                    </div>
+                    <div class="form-field">
+                        <label>Date:</label>
+                        <div style="border-bottom: 1px solid #000; height: 30px; margin-top: 10px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>FOR OFFICE USE ONLY</h3>
+            <div class="form-row">
+                <div class="form-field">
+                    <label>Application Number:</label>
+                    <div style="border-bottom: 1px solid #000; height: 30px; margin-top: 10px;"></div>
+                </div>
+                <div class="form-field">
+                    <label>Date Received:</label>
+                    <div style="border-bottom: 1px solid #000; height: 30px; margin-top: 10px;"></div>
+                </div>
+            </div>
+            
+            <div class="form-field" style="margin-top: 20px;">
+                <label>Admission Status:</label>
+                <div class="checkbox-group" style="margin-top: 10px;">
+                    <label><input type="checkbox"> Accepted</label>
+                    <label><input type="checkbox"> Pending</label>
+                    <label><input type="checkbox"> Rejected</label>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="print-note">
+        <strong>Instructions:</strong>
+        <ol>
+            <li>Fill out this form completely and legibly</li>
+            <li>Attach copies of: Birth Certificate, KCPE Certificate, Previous School Report</li>
+            <li>Include 2 passport-size photographs</li>
+            <li>Submit to Abu Rayyan Academy Administration Office</li>
+            <li>Pay application fee as specified by the school</li>
+        </ol>
+    </div>
+</body>
+</html>
