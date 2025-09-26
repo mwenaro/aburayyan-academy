@@ -20,7 +20,7 @@ const formDocuments: FormDocument[] = [
   {
     id: "senior-admission",
     title: "Senior School Admission Form",
-    description: "Application form for new students seeking admission to senior school (Form 1-4)",
+    description: "Application form for new students seeking admission to senior school (Grade 10)",
     fileName: "senior-school-admission-form.pdf",
     fileSize: "245 KB",
     lastUpdated: "2025-09-15",
@@ -29,7 +29,7 @@ const formDocuments: FormDocument[] = [
   {
     id: "junior-admission",
     title: "Junior School Admission Form",
-    description: "Application form for students seeking admission to junior school (Grade 1-8)",
+    description: "Application form for students seeking admission to junior school (Grade 7-9)",
     fileName: "junior-school-admission-form.pdf",
     fileSize: "198 KB",
     lastUpdated: "2025-09-15",
