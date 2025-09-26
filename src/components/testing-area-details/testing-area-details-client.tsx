@@ -119,9 +119,10 @@ export const TestingAreaDetailsClient: React.FC<TestingAreaDetailsClientProps> =
     if (marks.length === 0) return { average: 0, highest: 0, lowest: 0, passRate: 0 };
     
     const scores = marks.map(m => m.score);
+    const percentages = marks.map(m => (m.score / testingArea.outOf) * 100);
     const average = scores.reduce((a, b) => a + b, 0) / scores.length;
-    const highest = Math.max(...scores);
-    const lowest = Math.min(...scores);
+    const highest = Math.round(Math.max(...percentages) * 100) / 100;
+    const lowest = Math.round(Math.min(...percentages) * 100) / 100;
     const passRate = (scores.filter(s => s >= (testingArea.outOf * 0.5)).length / scores.length) * 100;
     
     return { average, highest, lowest, passRate };
@@ -243,7 +244,7 @@ export const TestingAreaDetailsClient: React.FC<TestingAreaDetailsClientProps> =
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
-                {stats.highest}/{testingArea.outOf}
+                {stats.highest}%
               </div>
             </CardContent>
           </Card>
@@ -328,7 +329,18 @@ export const TestingAreaDetailsClient: React.FC<TestingAreaDetailsClientProps> =
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {marks.map((mark) => (
+                    {marks
+                      .sort((a, b) => {
+                        // Sort marks alphabetically by student name
+                        const nameA = typeof a.student === 'object' && 'name' in a.student 
+                          ? a.student.name || "Unknown" 
+                          : "Unknown";
+                        const nameB = typeof b.student === 'object' && 'name' in b.student 
+                          ? b.student.name || "Unknown" 
+                          : "Unknown";
+                        return nameA.localeCompare(nameB);
+                      })
+                      .map((mark) => (
                       <TableRow key={mark._id?.toString()}>
                         <TableCell className="font-medium">
                           {typeof mark.student === 'object' && 'name' in mark.student

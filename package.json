@@ -47,6 +47,7 @@
     "docx": "^9.5.1",
     "exceljs": "^4.4.0",
     "framer-motion": "^11.11.17",
+    "jsonwebtoken": "^9.0.2",
     "jspdf": "^3.0.1",
     "jspdf-autotable": "^5.0.2",
     "lucide-react": "^0.390.0",
@@ -80,6 +81,7 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^20.19.9",
     "@types/nodemailer": "^6.4.17",
     "@types/react": "^18",

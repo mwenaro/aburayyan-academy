@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Junior School Admission Form - Abu Rayyan Academy</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #0066cc;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .form-section {
+            margin-bottom: 25px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+        .form-field {
+            flex: 1;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        .checkbox-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .print-note {
+            background: #f0f8ff;
+            padding: 15px;
+            margin: 20px 0;
+            border-left: 4px solid #0066cc;
+        }
+        @media print {
+            .print-note { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="print-note">
+        <strong>Note:</strong> This is a sample form. In a real implementation, this would be a PDF file.
+    </div>
+    
+    <div class="header">
+        <h1>ABU RAYYAN ACADEMY</h1>
+        <h2>JUNIOR SCHOOL ADMISSION FORM</h2>
+        <p>Grade 1 - Grade 8 (Primary School)</p>
+        <p>Academic Year: 2025/2026</p>
+    </div>
+
+    <form>
+        <div class="form-section">
+            <h3>STUDENT INFORMATION</h3>
+            <div class="form-row">
+                <div class="form-field">
+                    <label for="firstName">First Name:</label>
+                    <input type="text" id="firstName" name="firstName">
+                </div>
+                <div class="form-field">
+                    <label for="middleName">Middle Name:</label>
+                    <input type="text" id="middleName" name="middleName">
+                </div>
+                <div class="form-field">
+                    <label for="lastName">Last Name:</label>
+                    <input type="text" id="lastName" name="lastName">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-field">
+                    <label for="dob">Date of Birth:</label>
+                    <input type="date" id="dob" name="dob">
+                </div>
+                <div class="form-field">
+                    <label for="gender">Gender:</label>
+                    <select id="gender" name="gender">
+                        <option value="">Select Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+                <div class="form-field">
+                    <label for="grade">Grade Applying For:</label>
+                    <select id="grade" name="grade">
+                        <option value="">Select Grade</option>
+                        <option value="pp1">PP1 (Pre-Primary 1)</option>
+                        <option value="pp2">PP2 (Pre-Primary 2)</option>
+                        <option value="grade1">Grade 1</option>
+                        <option value="grade2">Grade 2</option>
+                        <option value="grade3">Grade 3</option>
+                        <option value="grade4">Grade 4</option>
+                        <option value="grade5">Grade 5</option>
+                        <option value="grade6">Grade 6</option>
+                        <option value="grade7">Grade 7</option>
+                        <option value="grade8">Grade 8</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-field">
+                    <label for="nationality">Nationality:</label>
+                    <input type="text" id="nationality" name="nationality">
+                </div>
+                <div class="form-field">
+                    <label for="religion">Religion:</label>
+                    <input type="text" id="religion" name="religion">
+                </div>
+                <div class="form-field">
+                    <label for="previousSchool">Previous School/Nursery:</label>
+                    <input type="text" id="previousSchool" name="previousSchool">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>PARENT/GUARDIAN INFORMATION</h3>
+            <h4>Father's Information</h4>
+            <div class="form-row">
+                <div class="form-field">
+                    <label for="fatherName">Father's Full Name:</label>
+                    <input type="text" id="fatherName" name="fatherName">
+                </div>
+                <div class="form-field">
+                    <label for="fatherOccupation">Occupation:</label>
+                    <input type="text" id="fatherOccupation" name="fatherOccupation">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-field">
+                    <label for="fatherPhone">Phone Number:</label>
+                    <input type="tel" id="fatherPhone" name="fatherPhone">
+                </div>
+                <div class="form-field">
+                    <label for="fatherEmail">Email Address:</label>
+                    <input type="email" id="fatherEmail" name="fatherEmail">
+                </div>
+            </div>
+
+            <h4>Mother's Information</h4>
+            <div class="form-row">
+                <div class="form-field">
+                    <label for="motherName">Mother's Full Name:</label>
+                    <input type="text" id="motherName" name="motherName">
+                </div>
+                <div class="form-field">
+                    <label for="motherOccupation">Occupation:</label>
+                    <input type="text" id="motherOccupation" name="motherOccupation">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-field">
+                    <label for="motherPhone">Phone Number:</label>
+                    <input type="tel" id="motherPhone" name="motherPhone">
+                </div>
+                <div class="form-field">
+                    <label for="motherEmail">Email Address:</label>
+                    <input type="email" id="motherEmail" name="motherEmail">
+                </div>
+            </div>
+
+            <div class="form-field">
+                <label for="address">Home Address:</label>
+                <textarea id="address" name="address" rows="3"></textarea>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>EMERGENCY CONTACT</h3>
+            <div class="form-row">
+                <div class="form-field">
+                    <label for="emergencyName">Emergency Contact Name:</label>
+                    <input type="text" id="emergencyName" name="emergencyName">
+                </div>
+                <div class="form-field">
+                    <label for="emergencyRelation">Relationship:</label>
+                    <input type="text" id="emergencyRelation" name="emergencyRelation">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-field">
+                    <label for="emergencyPhone">Phone Number:</label>
+                    <input type="tel" id="emergencyPhone" name="emergencyPhone">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>ADDITIONAL SERVICES</h3>
+            <div class="form-field">
+                <label>Services Required (Select applicable):</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="services" value="transport"> School Transport</label>
+                    <label><input type="checkbox" name="services" value="meals"> School Meals</label>
+                    <label><input type="checkbox" name="services" value="uniform"> School Uniform</label>
+                    <label><input type="checkbox" name="services" value="aftercare"> After School Care</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>DECLARATION</h3>
+            <p>I/We declare that the information provided above is true and accurate to the best of my/our knowledge.</p>
+            
+            <div style="margin-top: 50px;">
+                <div class="form-row">
+                    <div class="form-field">
+                        <label>Parent/Guardian Signature:</label>
+                        <div style="border-bottom: 1px solid #000; height: 30px; margin-top: 10px;"></div>
+                    </div>
+                    <div class="form-field">
+                        <label>Date:</label>
+                        <div style="border-bottom: 1px solid #000; height: 30px; margin-top: 10px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="print-note">
+        <strong>Required Documents:</strong>
+        <ul>
+            <li>Birth Certificate (Copy)</li>
+            <li>Previous School Report (if applicable)</li>
+            <li>2 Passport-size photographs</li>
+            <li>Medical Form (to be completed by a doctor)</li>
+        </ul>
+    </div>
+</body>
+</html>

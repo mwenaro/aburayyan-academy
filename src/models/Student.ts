@@ -1,6 +1,7 @@
 import { strCapitalize } from "@/libs/str_functions";
 import mongoose, { Schema, Document, Model } from "mongoose";
 import { Counter } from "./Counter";
+import { pwdHasher } from "@/libs/bcrypt/password";
 
 // Define the TypeScript interface for a Student document
 export interface IStudent extends Document {
@@ -23,6 +24,14 @@ export interface IStudent extends Document {
   updatedAt?: Date;
   kas?: string;
   birthCertificate?: string;
+  // Authentication fields
+  password?: string;
+  isFirstLogin?: boolean;
+  lastLogin?: Date;
+  passwordResetRequired?: boolean;
+  failedLoginAttempts?: number;
+  accountLocked?: boolean;
+  lockUntil?: Date;
 }
 
 // Define the Mongoose Schema for a Student
@@ -54,6 +63,35 @@ const studentSchema: Schema<IStudent> = new Schema(
     },
     kas: { type: String },
     birthCertificate: { type: String },
+    // Authentication fields
+    password: {
+      type: String,
+      default: function() {
+        return pwdHasher("2025"); // Default password
+      }
+    },
+    isFirstLogin: {
+      type: Boolean,
+      default: true,
+    },
+    lastLogin: {
+      type: Date,
+    },
+    passwordResetRequired: {
+      type: Boolean,
+      default: true,
+    },
+    failedLoginAttempts: {
+      type: Number,
+      default: 0,
+    },
+    accountLocked: {
+      type: Boolean,
+      default: false,
+    },
+    lockUntil: {
+      type: Date,
+    },
   },
   {
     timestamps: true, // Automatically adds createdAt and updatedAt fields

@@ -205,11 +205,11 @@ export function ReportsTable({ data }: ReportsTableProps) {
                               {/* Statistics Cards */}
                               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
                                 <div className="text-center p-3 bg-background rounded-lg">
-                                  <div className="text-2xl font-bold">{report.statistics.highestScore}</div>
+                                  <div className="text-2xl font-bold">{report.statistics.highestScore}%</div>
                                   <div className="text-sm text-muted-foreground">Highest Score</div>
                                 </div>
                                 <div className="text-center p-3 bg-background rounded-lg">
-                                  <div className="text-2xl font-bold">{report.statistics.lowestScore}</div>
+                                  <div className="text-2xl font-bold">{report.statistics.lowestScore}%</div>
                                   <div className="text-sm text-muted-foreground">Lowest Score</div>
                                 </div>
                                 <div className="text-center p-3 bg-background rounded-lg">

@@ -1,15 +1,22 @@
 import { withAuth, NextRequestWithAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 import type { JWT } from "next-auth/jwt";
+import { studentPortalMiddleware } from "./middleware/studentPortalMiddleware";
 
 const ADMIN_API_KEY = process.env.ADMIN_API_KEY || "";
 
 export default withAuth(
-  function middleware(req: NextRequestWithAuth) {
+  async function middleware(req: NextRequestWithAuth) {
     // Type assertions to access NextRequest properties
     const method = (req as any).method;
     const url = (req as any).nextUrl;
     const headers = (req as any).headers;
+    
+    // Handle student portal routes separately
+    if (url.pathname.startsWith("/student-portal") || url.pathname.startsWith("/api/student-portal") || url.pathname.startsWith("/api/student-auth")) {
+      return await studentPortalMiddleware(req as any);
+    }
+    
     const res = NextResponse.next();
     res.headers.set("x-url", url.origin);
     const protectedMethods = ["POST", "PUT", "DELETE"];
@@ -20,7 +27,8 @@ export default withAuth(
     const publicApiEndpoints = [
       "/api/v1/students/public",
       "/api/v1/classes/public", 
-      "/api/v1/downloads/template"
+      "/api/v1/downloads/template",
+      "/api/student-auth/login", // Allow login endpoint
     ];
     const isPublicApiEndpoint = publicApiEndpoints.some(endpoint => url.pathname.startsWith(endpoint));
 
@@ -54,5 +62,5 @@ export default withAuth(
 );
 
 export const config = {
-  matcher: ["/api/:path*", "/dashboard/:path*", "/u-dashboard"],
+  matcher: ["/api/:path*", "/dashboard/:path*", "/u-dashboard", "/student-portal/:path*"],
 };

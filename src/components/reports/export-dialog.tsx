@@ -70,7 +70,7 @@ export function ExportDialog({ open, onOpenChange, data }: ExportDialogProps) {
   const [isExporting, setIsExporting] = useState(false);
 
   const generateFileName = () => {
-    const timestamp = new Date().toISOString().split('T')[0];
+    const timestamp = new Date().toISOString().split("T")[0];
     return `exam-reports-${timestamp}`;
   };
 
@@ -109,18 +109,31 @@ export function ExportDialog({ open, onOpenChange, data }: ExportDialogProps) {
 
       pdf.setFontSize(10);
       pdf.setFont("helvetica", "normal");
-      pdf.text(`Subject: ${report.subject.name} | Class: ${report.class.name} | Term ${report.examTerm} ${report.examYear}`, 20, yPosition);
+      pdf.text(
+        `Subject: ${report.subject.name} | Grade: ${report.class.name} | Term ${report.examTerm} ${report.examYear}`,
+        20,
+        yPosition
+      );
       yPosition += 8;
 
       if (includeStatistics) {
         // Statistics table
         const statsData = [
           ["Total Students", report.statistics.totalStudents.toString()],
-          ["Average Score", `${report.statistics.averageScore}/${report.outOf} (${report.statistics.averagePercentage}%)`],
-          ["Highest Score", report.statistics.highestScore.toString()],
-          ["Lowest Score", report.statistics.lowestScore.toString()],
-          ["Pass Rate", `${report.statistics.passRate}% (${report.statistics.passedStudents}/${report.statistics.totalStudents})`],
-          ["Grade Distribution", `E:${report.statistics.gradeDistribution.E} M:${report.statistics.gradeDistribution.M} A:${report.statistics.gradeDistribution.A} B:${report.statistics.gradeDistribution.B}`],
+          [
+            "Average Score",
+            `${report.statistics.averageScore}/${report.outOf} (${report.statistics.averagePercentage}%)`,
+          ],
+          ["Highest Score", `${report.statistics.highestScore}%`],
+          ["Lowest Score", `${report.statistics.lowestScore}%`],
+          [
+            "Pass Rate",
+            `${report.statistics.passRate}% (${report.statistics.passedStudents}/${report.statistics.totalStudents})`,
+          ],
+          [
+            "Grade Distribution",
+            `E.E:${report.statistics.gradeDistribution["E.E"]} M.E:${report.statistics.gradeDistribution["M.E"]} A.E:${report.statistics.gradeDistribution["A.E"]} B.E:${report.statistics.gradeDistribution["B.E"]}`,
+          ],
         ];
 
         autoTable(pdf, {
@@ -147,18 +160,34 @@ export function ExportDialog({ open, onOpenChange, data }: ExportDialogProps) {
         pdf.text("Student Marks", 20, yPosition);
         yPosition += 8;
 
-        const marksData = report.marks.map(mark => [
+        // Sort marks alphabetically by student name
+        const sortedMarks = [...report.marks].sort((a, b) => {
+          const nameA = a.student?.name || "Unknown Student";
+          const nameB = b.student?.name || "Unknown Student";
+          return nameA.localeCompare(nameB);
+        });
+
+        const marksData = sortedMarks.map((mark) => [
           mark.student?.name || "Unknown Student",
           mark.student?.admissionNumber || "N/A",
           `${mark.score}/${report.outOf}`,
           `${mark.percentage}%`,
           mark.grade?.name || "B.E",
-          mark.remark || "-"
+          mark.remark || "-",
         ]);
 
         autoTable(pdf, {
           startY: yPosition,
-          head: [["Student Name", "Admission No.", "Score", "Percentage", "Grade", "Remark"]],
+          head: [
+            [
+              "Student Name",
+              "Admission No.",
+              "Score",
+              "Percentage",
+              "Grade",
+              "Remark",
+            ],
+          ],
           body: marksData,
           theme: "striped",
           styles: { fontSize: 7 },
@@ -168,7 +197,7 @@ export function ExportDialog({ open, onOpenChange, data }: ExportDialogProps) {
             2: { cellWidth: 20 },
             3: { cellWidth: 20 },
             4: { cellWidth: 15 },
-            5: { cellWidth: 30 }
+            5: { cellWidth: 30 },
           },
         });
 
@@ -183,15 +212,15 @@ export function ExportDialog({ open, onOpenChange, data }: ExportDialogProps) {
     const workbook = XLSX.utils.book_new();
 
     // Summary sheet
-    const summaryData = data.map(report => ({
+    const summaryData = data.map((report) => ({
       "Exam Name": report.examName,
       "Testing Area": report.testingAreaName,
-      "Subject": report.subject.name,
-      "Class": report.class.name,
-      "Teacher": report.teacher?.name || "",
-      "Term": report.examTerm,
-      "Year": report.examYear,
-      "Status": report.status,
+      Subject: report.subject.name,
+      Class: report.class.name,
+      Teacher: report.teacher?.name || "",
+      Term: report.examTerm,
+      Year: report.examYear,
+      Status: report.status,
       "Due Date": new Date(report.dueDate).toLocaleDateString(),
       "Total Students": report.statistics.totalStudents,
       "Average Score": report.statistics.averageScore,
@@ -200,10 +229,10 @@ export function ExportDialog({ open, onOpenChange, data }: ExportDialogProps) {
       "Lowest Score": report.statistics.lowestScore,
       "Pass Rate": report.statistics.passRate,
       "Passed Students": report.statistics.passedStudents,
-      "Grade E": report.statistics.gradeDistribution.E,
-      "Grade M": report.statistics.gradeDistribution.M,
-      "Grade A": report.statistics.gradeDistribution.A,
-      "Grade B": report.statistics.gradeDistribution.B,
+      "Grade E.E": report.statistics.gradeDistribution["E.E"],
+      "Grade M.E": report.statistics.gradeDistribution["M.E"],
+      "Grade A.E": report.statistics.gradeDistribution["A.E"],
+      "Grade B.E": report.statistics.gradeDistribution["B.E"],
     }));
 
     const summarySheet = XLSX.utils.json_to_sheet(summaryData);
@@ -213,19 +242,27 @@ export function ExportDialog({ open, onOpenChange, data }: ExportDialogProps) {
     if (includeStudentMarks) {
       data.forEach((report, index) => {
         if (report.marks.length > 0) {
-          const marksData = report.marks.map(mark => ({
+          // Sort marks alphabetically by student name
+          const sortedMarks = [...report.marks].sort((a, b) => {
+            const nameA = a.student?.name || "Unknown Student";
+            const nameB = b.student?.name || "Unknown Student";
+            return nameA.localeCompare(nameB);
+          });
+
+          const marksData = sortedMarks.map((mark) => ({
             "Student Name": mark.student?.name || "Unknown Student",
             "Admission Number": mark.student?.admissionNumber || "N/A",
-            "Score": mark.score,
+            Score: mark.score,
             "Out Of": report.outOf,
-            "Percentage": mark.percentage,
-            "Grade": mark.grade?.name || "B.E",
+            Percentage: mark.percentage,
+            Grade: mark.grade?.name || "B.E",
             "Grade Points": mark.grade?.points || 1,
-            "Remark": mark.remark || "",
+            Remark: mark.remark || "",
           }));
 
           const marksSheet = XLSX.utils.json_to_sheet(marksData);
-          const sheetName = `${report.subject.shortForm}_${report.class.name}`.substring(0, 31);
+          const sheetName =
+            `${report.subject.shortForm}_${report.class.name}`.substring(0, 31);
           XLSX.utils.book_append_sheet(workbook, marksSheet, sheetName);
         }
       });
@@ -237,13 +274,16 @@ export function ExportDialog({ open, onOpenChange, data }: ExportDialogProps) {
   const exportToCSV = () => {
     console.log("Starting CSV export...");
     let csvContent = "data:text/csv;charset=utf-8,";
-    
+
     // Headers
-    csvContent += "Exam Name,Testing Area,Subject,Class,Teacher,Term,Year,Status,Due Date,Total Students,Average Score,Average Percentage,Highest Score,Lowest Score,Pass Rate,Passed Students,Grade E,Grade M,Grade A,Grade B\n";
-    
+    csvContent +=
+      "Exam Name,Testing Area,Subject,Grade,Teacher,Term,Year,Status,Due Date,Total Students,Average Score,Average Percentage,Highest Score,Lowest Score,Pass Rate,Passed Students,Grade E.E,Grade M.E,Grade A.E,Grade B.E\n";
+
     // Data rows
-    data.forEach(report => {
-      const teacher = report.teacher ? `${report.teacher.firstName} ${report.teacher.lastName}` : "";
+    data.forEach((report) => {
+      const teacher = report.teacher
+        ? `${report.teacher.firstName} ${report.teacher.lastName}`
+        : "";
       const row = [
         report.examName,
         report.testingAreaName,
@@ -261,17 +301,19 @@ export function ExportDialog({ open, onOpenChange, data }: ExportDialogProps) {
         report.statistics.lowestScore,
         report.statistics.passRate,
         report.statistics.passedStudents,
-        report.statistics.gradeDistribution.E,
-        report.statistics.gradeDistribution.M,
-        report.statistics.gradeDistribution.A,
-        report.statistics.gradeDistribution.B,
-      ].map(field => `"${field}"`).join(",");
-      
+        report.statistics.gradeDistribution["E.E"],
+        report.statistics.gradeDistribution["M.E"],
+        report.statistics.gradeDistribution["A.E"],
+        report.statistics.gradeDistribution["B.E"],
+      ]
+        .map((field) => `"${field}"`)
+        .join(",");
+
       csvContent += row + "\n";
     });
 
     console.log("CSV content generated, length:", csvContent.length);
-    
+
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
@@ -279,7 +321,7 @@ export function ExportDialog({ open, onOpenChange, data }: ExportDialogProps) {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    
+
     console.log("CSV download triggered");
   };
 
@@ -287,9 +329,9 @@ export function ExportDialog({ open, onOpenChange, data }: ExportDialogProps) {
     console.log("Export button clicked");
     console.log("Export format:", exportFormat);
     console.log("Data length:", data.length);
-    
+
     setIsExporting(true);
-    
+
     try {
       switch (exportFormat) {
         case "pdf":
@@ -304,7 +346,7 @@ export function ExportDialog({ open, onOpenChange, data }: ExportDialogProps) {
         default:
           console.log("Unknown export format:", exportFormat);
       }
-      
+
       console.log("Export completed successfully");
       onOpenChange(false);
     } catch (error: any) {
@@ -369,7 +411,9 @@ export function ExportDialog({ open, onOpenChange, data }: ExportDialogProps) {
                 <Checkbox
                   id="marks"
                   checked={includeStudentMarks}
-                  onCheckedChange={(checked) => setIncludeStudentMarks(!!checked)}
+                  onCheckedChange={(checked) =>
+                    setIncludeStudentMarks(!!checked)
+                  }
                 />
                 <Label htmlFor="marks" className="text-sm">
                   Individual Student Marks
@@ -383,7 +427,10 @@ export function ExportDialog({ open, onOpenChange, data }: ExportDialogProps) {
                     onCheckedChange={(checked) => setIncludeCharts(!!checked)}
                     disabled
                   />
-                  <Label htmlFor="charts" className="text-sm text-muted-foreground">
+                  <Label
+                    htmlFor="charts"
+                    className="text-sm text-muted-foreground"
+                  >
                     Charts & Graphs (Coming Soon)
                   </Label>
                 </div>
@@ -394,7 +441,8 @@ export function ExportDialog({ open, onOpenChange, data }: ExportDialogProps) {
           {/* Preview Info */}
           <div className="bg-muted p-3 rounded-lg">
             <p className="text-sm text-muted-foreground">
-              <strong>Export Preview:</strong> {data.length} report(s) will be exported
+              <strong>Export Preview:</strong> {data.length} report(s) will be
+              exported
               {includeStudentMarks && ` with individual student marks`}
               {includeStatistics && ` and summary statistics`}.
             </p>
