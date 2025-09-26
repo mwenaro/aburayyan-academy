@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Information Form - Abu Rayyan Academy</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; line-height: 1.6; }
+        .header { text-align: center; border-bottom: 2px solid #0066cc; padding-bottom: 20px; margin-bottom: 30px; }
+        .form-section { margin-bottom: 25px; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .form-row { display: flex; gap: 20px; margin-bottom: 15px; }
+        .form-field { flex: 1; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select, textarea { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 3px; }
+        .checkbox-group { display: flex; gap: 15px; flex-wrap: wrap; }
+        .print-note { background: #f0f8ff; padding: 15px; margin: 20px 0; border-left: 4px solid #0066cc; }
+        @media print { .print-note { display: none; } }
+    </style>
+</head>
+<body>
+    <div class="print-note">
+        <strong>Note:</strong> This medical form should be completed by a qualified medical practitioner.
+    </div>
+    
+    <div class="header">
+        <h1>ABU RAYYAN ACADEMY</h1>
+        <h2>MEDICAL INFORMATION FORM</h2>
+        <p>To be completed by parent/guardian and doctor</p>
+    </div>
+
+    <form>
+        <div class="form-section">
+            <h3>STUDENT INFORMATION</h3>
+            <div class="form-row">
+                <div class="form-field">
+                    <label for="studentName">Student Full Name:</label>
+                    <input type="text" id="studentName" name="studentName">
+                </div>
+                <div class="form-field">
+                    <label for="dob">Date of Birth:</label>
+                    <input type="date" id="dob" name="dob">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>MEDICAL HISTORY</h3>
+            <div class="form-field">
+                <label>Known Allergies (Select all that apply):</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="allergies" value="food"> Food Allergies</label>
+                    <label><input type="checkbox" name="allergies" value="medication"> Medication Allergies</label>
+                    <label><input type="checkbox" name="allergies" value="environmental"> Environmental Allergies</label>
+                    <label><input type="checkbox" name="allergies" value="none"> None Known</label>
+                </div>
+            </div>
+
+            <div class="form-field">
+                <label for="medications">Current Medications:</label>
+                <textarea id="medications" name="medications" rows="3"></textarea>
+            </div>
+
+            <div class="form-field">
+                <label for="conditions">Medical Conditions:</label>
+                <textarea id="conditions" name="conditions" rows="3"></textarea>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>DOCTOR'S CERTIFICATION</h3>
+            <p>I certify that the above student is medically fit to attend school.</p>
+            
+            <div style="margin-top: 50px;">
+                <div class="form-row">
+                    <div class="form-field">
+                        <label>Doctor's Name:</label>
+                        <div style="border-bottom: 1px solid #000; height: 30px; margin-top: 10px;"></div>
+                    </div>
+                    <div class="form-field">
+                        <label>Signature & Stamp:</label>
+                        <div style="border-bottom: 1px solid #000; height: 30px; margin-top: 10px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
