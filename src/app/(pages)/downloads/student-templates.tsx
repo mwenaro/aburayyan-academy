@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -36,12 +36,7 @@ export default function DownloadsPage() {
   const [isLoadingData, setIsLoadingData] = useState(true);
   const { toast } = useToast();
 
-  // Fetch students and classes on component mount
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       setIsLoadingData(true);
       
@@ -73,7 +68,12 @@ export default function DownloadsPage() {
     } finally {
       setIsLoadingData(false);
     }
-  };
+  }, [toast]);
+
+  // Fetch students and classes on component mount
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   // Filter students by selected class
   const filteredStudents = selectedClass 

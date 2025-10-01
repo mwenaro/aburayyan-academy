@@ -18,32 +18,50 @@ interface FeeDocument {
 
 const feeDocuments: FeeDocument[] = [
   {
-    id: "fee-structure-2025",
-    title: "Fee Structure 2025/2026",
-    description: "Complete fee structure for all grades for academic year 2025/2026",
-    fileName: "fee-structure-2025-2026.pdf",
-    fileSize: "187 KB",
-    lastUpdated: "2025-09-01",
+    id: "pre-primary-primary-junior-fee",
+    title: "Pre-Primary, Primary & Junior School Fee Structure",
+    description: "Complete fee structure for Pre-Primary, Primary and Junior school levels",
+    fileName: "pre-primary,primary-and-junior-school-fee-structure.pdf",
+    fileSize: "606 KB",
+    lastUpdated: "2025-10-01",
     academicYear: "2025/2026"
   },
   {
-    id: "payment-plan",
-    title: "Payment Plan Options",
-    description: "Various payment plan options and installment schedules",
-    fileName: "payment-plan-options.pdf",
-    fileSize: "125 KB",
-    lastUpdated: "2025-08-15",
+    id: "senior-school-fee",
+    title: "Senior School Fee Structure",
+    description: "Fee structure for senior school levels (Form 1-4)",
+    fileName: "senior-school-fee-structure.pdf",
+    fileSize: "420 KB",
+    lastUpdated: "2025-10-01",
     academicYear: "2025/2026"
   },
-  {
-    id: "additional-fees",
-    title: "Additional Fees & Services",
-    description: "Fees for extra-curricular activities, transport, and other services",
-    fileName: "additional-fees-services.pdf",
-    fileSize: "98 KB",
-    lastUpdated: "2025-08-10",
-    academicYear: "2025/2026"
-  }
+  // {
+  //   id: "fee-structure-2025",
+  //   title: "Fee Structure 2025/2026",
+  //   description: "Complete fee structure for all grades for academic year 2025/2026",
+  //   fileName: "fee-structure-2025-2026.pdf",
+  //   fileSize: "187 KB",
+  //   lastUpdated: "2025-09-01",
+  //   academicYear: "2025/2026"
+  // },
+  // {
+  //   id: "payment-plan",
+  //   title: "Payment Plan Options",
+  //   description: "Various payment plan options and installment schedules",
+  //   fileName: "payment-plan-options.pdf",
+  //   fileSize: "125 KB",
+  //   lastUpdated: "2025-08-15",
+  //   academicYear: "2025/2026"
+  // },
+  // {
+  //   id: "additional-fees",
+  //   title: "Additional Fees & Services",
+  //   description: "Fees for extra-curricular activities, transport, and other services",
+  //   fileName: "additional-fees-services.pdf",
+  //   fileSize: "98 KB",
+  //   lastUpdated: "2025-08-10",
+  //   academicYear: "2025/2026"
+  // }
 ];
 
 export default function FeeStructurePage() {
@@ -180,12 +198,17 @@ export default function FeeStructurePage() {
                 </div>
                 <div className="flex items-center gap-3 p-3 bg-green-50 rounded-lg">
                   <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                  <span className="text-gray-700">Direct Bank Deposit</span>
+                </div>
+                {/*
+                  <div className="flex items-center gap-3 p-3 bg-green-50 rounded-lg">
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                   <span className="text-gray-700">M-Pesa Payments</span>
                 </div>
-                <div className="flex items-center gap-3 p-3 bg-purple-50 rounded-lg">
+                 <div className="flex items-center gap-3 p-3 bg-purple-50 rounded-lg">
                   <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
                   <span className="text-gray-700">Cash Payments (School Office)</span>
-                </div>
+                </div> */}
                 <div className="flex items-center gap-3 p-3 bg-orange-50 rounded-lg">
                   <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
                   <span className="text-gray-700">Cheque Payments</span>
@@ -204,11 +227,11 @@ export default function FeeStructurePage() {
             <CardContent>
               <div className="space-y-3 text-sm text-gray-600">
                 <p>• Fees should be paid at the beginning of each term</p>
-                <p>• Late payment may incur additional charges</p>
+                {/* <p>• Late payment may incur additional charges</p> */}
                 <p>• Payment plans are available - contact the accounts office</p>
-                <p>• All payments should include the student's name and class</p>
+                <p>• All payments should include the student&apos;s name and grade</p>
                 <p>• Fee receipts should be kept for records</p>
-                <p>• Scholarships and bursaries are available for qualifying students</p>
+                {/* <p>• Scholarships and bursaries are available for qualifying students</p> */}
               </div>
             </CardContent>
           </Card>
@@ -223,14 +246,14 @@ export default function FeeStructurePage() {
             <div className="grid md:grid-cols-2 gap-6">
               <div>
                 <h4 className="font-semibold text-gray-900 mb-2">Office Hours</h4>
-                <p className="text-gray-600 text-sm mb-1">Monday - Friday: 8:00 AM - 4:00 PM</p>
+                <p className="text-gray-600 text-sm mb-1">Monday - Friday: 7:00 AM - 5:00 PM</p>
                 <p className="text-gray-600 text-sm mb-1">Saturday: 8:00 AM - 12:00 PM</p>
                 <p className="text-gray-600 text-sm">Sunday: Closed</p>
               </div>
               <div>
                 <h4 className="font-semibold text-gray-900 mb-2">Contact Details</h4>
-                <p className="text-gray-600 text-sm mb-1">Phone: +254 XXX XXX XXX</p>
-                <p className="text-gray-600 text-sm mb-1">Email: accounts@aburayyanacademy.ac.ke</p>
+                <p className="text-gray-600 text-sm mb-1">Phone: 0722299287 / 0723755108</p>
+                <p className="text-gray-600 text-sm mb-1">Email: info@aburayyanacademy.com</p>
                 <p className="text-gray-600 text-sm">Office: Ground Floor, Administration Block</p>
               </div>
             </div>
@@ -238,9 +261,9 @@ export default function FeeStructurePage() {
         </Card>
 
         {/* Footer */}
-        <div className="text-center mt-12 text-gray-500">
+        {/* <div className="text-center mt-12 text-gray-500">
           <p>&copy; 2025 Abu Rayyan Academy. All rights reserved.</p>
-        </div>
+        </div> */}
       </div>
     </div>
   );
