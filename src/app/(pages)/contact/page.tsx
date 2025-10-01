@@ -60,7 +60,50 @@ const ContactPage: React.FC = () => {
 
       {/* Content Section */}
       <div className="p-10">
+        {/* Contact Information */}
+        <div className="mt-8 grid md:grid-cols-2 gap-8">
+          {/* Contact Details */}
+          <div>
+            <h2 className="text-xl font-semibold mb-4">Get in Touch:</h2>
+            <div className="space-y-3">
+              <div>
+                <h3 className="font-semibold">Phone Numbers:</h3>
+                <p>0722299287 / 0723755108</p>
+              </div>
+              <div>
+                <h3 className="font-semibold">Email:</h3>
+                <p>info@aburayyanacademy.com</p>
+              </div>
+              <div>
+                <h3 className="font-semibold">Postal Address:</h3>
+                <p>P.O. BOX 86845 – 80100, MOMBASA</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Office Hours & Additional Info */}
+          <div>
+            <h2 className="text-xl font-semibold mb-4">Visit Us:</h2>
+            <div className="space-y-3">
+              <div>
+                <h3 className="font-semibold">Location:</h3>
+                <p>Along Ronald Ngala Road, opposite Petro Gas Station, Mombasa</p>
+              </div>
+              {/* <div>
+                <h3 className="font-semibold">Head of Institution:</h3>
+                <p>Mr. Duke Okioga</p>
+              </div> */}
+              <div>
+                <h3 className="font-semibold">Banking Details:</h3>
+                <p>Gulf Bank, Mombasa Branch<br/>Account Number: 1700006102<br/><em>Note: Cash payments not accepted</em></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Contact Form */}
+        <div className="mt-8">
+          <h2 className="text-xl font-semibold mb-4">Send us a Message:</h2>
         <form onSubmit={handleSubmit} className="mt-6 space-y-4">
           <div>
             <input
@@ -117,16 +160,19 @@ const ContactPage: React.FC = () => {
             Send Message
           </Button>
         </form>
+        </div>
 
         {/* Physical Address */}
         <div className="mt-8">
-          <h2 className="text-xl font-semibold">Visit Us:</h2>
-          <p className="mt-2">Sabasaba, Mombasa, Kenya</p>
+          <h2 className="text-xl font-semibold">Our Location:</h2>
+          <p className="mt-2">Along Ronald Ngala Road, opposite Petro Gas Station, Mombasa, Kenya</p>
+          <p className="mt-1 text-gray-600">P.O. BOX 86845 – 80100, MOMBASA</p>
         </div>
 
         {/* Map */}
         <div className="mt-6">
-          <h2 className="text-xl font-semibold">Our Location:</h2>
+          <h2 className="text-xl font-semibold">Find Us on the Map:</h2>
+          <p className="mt-2 text-gray-600 mb-2">Abu-Rayyan Academy - Ronald Ngala Road, opposite Petro Gas Station</p>
           <iframe
             className="w-full h-64 mt-2"
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d836.6690269640336!2d39.659403010462604!3d-4.042651684181943!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x184012b6536946a3%3A0xf121aa4ab5a0a1cc!2sAbu-Rayyan%20Academy!5e0!3m2!1sen!2ske!4v1736515654476!5m2!1sen!2ske"

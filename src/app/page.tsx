@@ -25,8 +25,9 @@ const LandingPage: React.FC = () => (
           Welcome to Abu-Rayyan Academy
         </h1>
         <p className="text-lg mb-8">
-          Empowering learners today to become the leaders of tomorrow with a
-          blend of CBC, ICT, swimming, and Islamic education.
+          Learners Today … Leaders Tomorrow. Experience quality education that blends
+          CBE, ICT, Islamic studies, and co-curricular activities. Serving over 300 students (by Jan 2025)
+          since 2017 with excellence in education.
         </p>
         <MyShimmerButton shimmerSize="0.5em" shimmerColor="purple">
           <Link
@@ -54,13 +55,13 @@ const LandingPage: React.FC = () => (
             className="mx-auto mb-4 w-full h-auto"
           />
           <h3 className="text-xl font-semibold mb-4">
-            Competency-Based Curriculum (CBC)
+            Competency-Based Education (CBE)
           </h3>
           <p className="max-w-3xl text-thin text-justify px-2 py-1 text-wrap">
-            We offer a CBC curriculum that nurtures critical thinking,
-            creativity, and problem-solving in students across various levels:
-            Pre-primary (PP1, PP2), Lower Primary (Grade 1-3), Upper Primary
-            (Grade 4-6), and Junior Secondary (Grade 7-9).
+            We follow the Competency-Based Education (CBE) system that nurtures critical thinking,
+            creativity, and problem-solving skills. Our programs cover Nursery & Lower Primary
+            (Baby Class, PP1, PP2, Grades 1–3), Upper Primary (Grades 4–6), Junior Secondary
+            (Grades 7–9), and Senior Secondary (Grades 10–12).
           </p>
         </MyShineBorder>
         <MyShineBorder className="bg-white px-2 py-1 shadow rounded">
@@ -76,9 +77,9 @@ const LandingPage: React.FC = () => (
             Integrated ICT Learning
           </h3>
           <p className="max-w-3xl text-thin text-justify px-2 py-1 text-wrap">
-            Our ICT programs provide students with essential digital skills that
-            are integrated into our CBC curriculum, preparing them for success
-            in a technology-driven world.
+            Our comprehensive ICT programs provide students with essential digital skills
+            integrated into the CBE curriculum. We have a dedicated ICT lab and offer
+            specialized ICT programs to prepare students for the digital world.
           </p>
         </MyShineBorder>
         <MyShineBorder className="bg-white px-2 py-1 shadow rounded">
@@ -93,8 +94,9 @@ const LandingPage: React.FC = () => (
             Strong Islamic Foundation
           </h3>
           <p className="max-w-3xl text-thin text-justify px-2 py-1 text-wrap">
-            We blend academics with Islamic teachings, promoting moral integrity
-            and responsibility among our students.
+            We offer an Islamic Integrated Program and Tahfidh Program that blend
+            academics with Islamic teachings, promoting moral integrity, responsibility,
+            and strong Islamic values among our students.
           </p>
         </MyShineBorder>
       </div>
@@ -115,12 +117,12 @@ const LandingPage: React.FC = () => (
             className="rounded mb-4 w-full"
           />
           <h3 className="text-xl font-semibold mb-4">
-            Early Childhood Education (PP1, PP2)
+            Nursery & Lower Primary (Baby Class, PP1, PP2, Grades 1–3)
           </h3>
           <p className="max-w-3xl text-thin text-justify px-2 py-1 text-wrap">
-            Our pre-primary programs offer a nurturing environment where young
-            learners grow and explore through play-based and structured
-            activities.
+            Our early childhood and lower primary programs provide a nurturing environment
+            where young learners develop foundational skills through play-based learning
+            and structured CBE activities.
           </p>
         </MyMagicCard>
         <MyMagicCard>
@@ -132,12 +134,12 @@ const LandingPage: React.FC = () => (
             className="rounded mb-4 h-[70%] w-auto"
           />
           <h3 className="text-xl font-semibold mb-4">
-            Primary School (Grade 1-6)
+            Upper Primary (Grades 4–6)
           </h3>
           <p className="max-w-3xl text-thin text-justify px-2 py-1 text-wrap">
-            Our primary school curriculum blends CBC, ICT, and Islamic studies
-            to provide a comprehensive education that fosters holistic
-            development.
+            Our upper primary curriculum strengthens academic foundations with
+            comprehensive CBE, ICT integration, and Islamic studies to prepare
+            students for secondary education.
           </p>
         </MyMagicCard>
         <MyMagicCard>
@@ -149,12 +151,12 @@ const LandingPage: React.FC = () => (
             className="rounded mb-4 h-[70%] w-auto"
           />
           <h3 className="text-xl font-semibold mb-4">
-            Junior Secondary (Grade 7-9)
+            Junior & Senior Secondary (Grades 7–12)
           </h3>
           <p className="max-w-3xl text-thin text-justify px-2 py-1 text-wrap">
-            We provide a robust academic program for junior secondary students,
-            emphasizing critical thinking, ICT skills, and Islamic values to
-            prepare them for further education and life challenges.
+            We provide robust academic programs for secondary students, emphasizing
+            critical thinking, advanced ICT skills, and Islamic values to prepare
+            them for higher education and future careers.
           </p>
         </MyMagicCard>
         <MyMagicCard>
@@ -165,10 +167,11 @@ const LandingPage: React.FC = () => (
             height={2400}
             className="rounded mb-4 w-full"
           />
-          <h3 className="text-xl font-semibold mb-4">Co-curricular Activities</h3>
+          <h3 className="text-xl font-semibold mb-4">Special Programs</h3>
           <p className="max-w-3xl text-thin text-justify px-2 py-1 text-wrap">
-            We offer enrichment activities including swimming, Scouting,Guiding & Counseling,
-            and Quran memorization to enhance student skills and knowledge.
+            We offer specialized programs including Islamic
+            Integrated Program, Tahfidh Program, Swimming Program, ICT Program, and Tuition Program
+            to cater to diverse learning needs.
           </p>
         </MyMagicCard>
       </div>
