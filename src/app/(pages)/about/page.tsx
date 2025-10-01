@@ -38,30 +38,87 @@ const AboutPage: React.FC = () => (
       <div className="mt-8">
         <h2 className="text-xl font-semibold">Our History:</h2>
         <p className="mt-2">
-          Aburayan Academy was established in 2017 with a vision to provide
-          quality education that integrates modern learning techniques with
-          Islamic values. Starting with a single classroom and just a handful of
-          students, the academy has grown exponentially over the years, now
-          serving hundreds of learners across various age groups.
+          Abu-Rayyan Academy was established in January 2017 by Directors Dr. Abdirazack Yussuf Abdinur 
+          and Madam Salatha Mohammed with a vision to provide quality education that integrates modern 
+          learning techniques with Islamic values. Starting with just 3 students in our first location 
+          in Nyali, Mombasa, the academy has grown exponentially over the years.
         </p>
         <p className="mt-2">
-          From humble beginnings, we have become a trusted educational
-          institution in Mombasa, offering competency-based curriculum (CBC)
-          seamlessly integrated with ICT and Islamic studies. Our commitment to
-          holistic education has earned us a reputation for nurturing both
-          academic excellence and moral integrity.
+          Our first graduation ceremony was held in December 2017 with 3 graduates. From these humble 
+          beginnings, we have become a trusted educational institution in Mombasa, now serving over 300 
+          students at our current location along Ronald Ngala Road, opposite Petro Gas Station. We offer 
+          Competency-Based Education (CBE) seamlessly integrated with ICT and Islamic studies, with over 
+          25 teaching and non-teaching staff members dedicated to excellence in education.
         </p>
+      </div>
+
+      {/* Leadership */}
+      <div className="mt-8">
+        <h2 className="text-xl font-semibold">Our Leadership:</h2>
+        <p className="mt-2">
+          <strong>Directors:</strong> Dr. Abdirazack Yussuf Abdinur & Madam Salatha Mohammed<br/>
+          <strong>Head of Institution:</strong> Mr. Duke Okioga
+        </p>
+      </div>
+
+      {/* School Sections */}
+      <div className="mt-8">
+        <h2 className="text-xl font-semibold">School Sections:</h2>
+        <ul className="mt-2 list-disc pl-5 space-y-1">
+          <li><strong>Nursery & Lower Primary:</strong> Baby Class, PP1, PP2, Grades 1–3</li>
+          <li><strong>Upper Primary:</strong> Grades 4–6</li>
+          <li><strong>Junior Secondary:</strong> Grades 7–9</li>
+          <li><strong>Senior Secondary:</strong> Grades 10–12</li>
+        </ul>
+      </div>
+
+      {/* Programs */}
+      <div className="mt-8">
+        <h2 className="text-xl font-semibold">Programs Offered:</h2>
+        <ul className="mt-2 list-disc pl-5 space-y-1">
+          <li>Formal School (CBE – formerly CBC)</li>
+          <li>Islamic Integrated Program</li>
+          <li>Tahfidh Program</li>
+          <li>ICT Program</li>
+          <li>Tuition Program</li>
+        </ul>
+      </div>
+
+      {/* Facilities */}
+      <div className="mt-8">
+        <h2 className="text-xl font-semibold">Our Facilities:</h2>
+        <ul className="mt-2 list-disc pl-5 space-y-1">
+          <li>Spacious classrooms</li>
+          <li>Assembly hall</li>
+          <li>Multi-purpose hall</li>
+          <li>ICT lab</li>
+          <li>Science lab</li>
+          <li>School canteen</li>
+        </ul>
+      </div>
+
+      {/* Co-curricular Activities */}
+      <div className="mt-8">
+        <h2 className="text-xl font-semibold">Co-curricular Activities:</h2>
+        <ul className="mt-2 list-disc pl-5 space-y-1">
+          <li>Swimming</li>
+          <li>Sports (football, basketball, athletics, volleyball)</li>
+          <li>Scouting</li>
+          <li>Debate & Mjadala</li>
+          <li>Guidance & Counselling</li>
+          <li>ICT</li>
+          <li>Journalism clubs</li>
+        </ul>
       </div>
 
       {/* Mission */}
       <div className="mt-8">
         <h2 className="text-xl font-semibold">Our Mission:</h2>
         <p className="mt-2">
-          Our mission is to empower learners with knowledge, skills, and values
-          to become competent, responsible, and innovative leaders of tomorrow.
-          We strive to create a learning environment that fosters curiosity,
-          creativity, and critical thinking while remaining rooted in moral and
-          ethical teachings.
+          Our mission is to empower learners with knowledge, skills, and values to become competent, 
+          responsible, and innovative leaders of tomorrow. We strive to create a learning environment 
+          that fosters curiosity, creativity, and critical thinking while remaining rooted in moral 
+          and ethical teachings through our integrated approach to education.
         </p>
       </div>
 
@@ -69,9 +126,9 @@ const AboutPage: React.FC = () => (
       <div className="mt-8">
         <h2 className="text-xl font-semibold">Our Vision:</h2>
         <p className="mt-2">
-          To be a beacon of educational excellence in Mombasa, inspiring
-          students to achieve their full potential and contribute positively to
-          society through leadership and service.
+          To be a beacon of educational excellence in Mombasa and beyond, inspiring students to 
+          achieve their full potential and contribute positively to society through leadership, 
+          service, and strong moral character rooted in Islamic values.
         </p>
       </div>
 
@@ -80,10 +137,24 @@ const AboutPage: React.FC = () => (
         <h2 className="text-xl font-semibold">Our Core Values:</h2>
         <ul className="mt-2 list-disc pl-5 space-y-2">
           <li>Excellence in education and character development</li>
-          <li>Commitment to integrating modern and Islamic education</li>
-          <li>Respect for diversity and inclusion</li>
-          <li>Innovation in teaching and learning methods</li>
-          <li>Accountability and integrity in all we do</li>
+          <li>Commitment to integrating modern CBE curriculum with Islamic education</li>
+          <li>Respect for diversity and inclusion in our learning community</li>
+          <li>Innovation in teaching and learning methods with ICT integration</li>
+          <li>Accountability and integrity in all our educational practices</li>
+          <li>Holistic development of learners as future leaders</li>
+        </ul>
+      </div>
+
+      {/* Additional Information */}
+      <div className="mt-8">
+        <h2 className="text-xl font-semibold">Why Choose Abu-Rayyan Academy:</h2>
+        <ul className="mt-2 list-disc pl-5 space-y-2">
+          <li>Over 300 students enrolled and growing</li>
+          <li>Experienced team of over 25 teaching and non-teaching staff</li>
+          <li>Modern facilities including ICT and science laboratories</li>
+          <li>Comprehensive co-curricular activities program</li>
+          <li>Strong track record since establishment in 2017</li>
+          <li>Convenient location along Ronald Ngala Road, Mombasa</li>
         </ul>
       </div>
     </div>
