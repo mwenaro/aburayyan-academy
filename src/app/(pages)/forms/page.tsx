@@ -18,24 +18,33 @@ interface FormDocument {
 
 const formDocuments: FormDocument[] = [
   {
-    id: "senior-admission",
-    title: "Senior School Admission Form",
-    description: "Application form for new students seeking admission to senior school (Form 1-4)",
-    fileName: "senior-school-admission-form.pdf",
-    fileSize: "245 KB",
-    lastUpdated: "2025-09-15",
-    category: "Admission"
+    id: "pre-primary-admission",
+    title: "Pre-Primary, Primary & Junior School Admission Form",
+    description: "Comprehensive admission form for Pre-Primary, Primary and Junior school levels",
+    fileName: "pre-primary, primary-and-junior-school-admission-form.pdf",
+    fileSize: "280 KB",
+    lastUpdated: "2025-09-20",
+    category: "Pre-Primary & Primary"
   },
   {
     id: "junior-admission",
     title: "Junior School Admission Form",
-    description: "Application form for students seeking admission to junior school (Grade 1-8)",
+    description: "Application form for students seeking admission to junior school (Grade 7-9)",
     fileName: "junior-school-admission-form.pdf",
     fileSize: "198 KB",
     lastUpdated: "2025-09-15",
-    category: "Admission"
+    category: "Junior School"
   },
   {
+    id: "senior-admission",
+    title: "Senior School Admission Form",
+    description: "Application form for new students seeking admission to senior school (Grade 10-12)",
+    fileName: "senior-school-admission-form.pdf",
+    fileSize: "245 KB",
+    lastUpdated: "2025-09-15",
+    category: "Senior School"
+  },
+    {
     id: "transfer-form",
     title: "Student Transfer Form",
     description: "Required form for students transferring from other institutions",
@@ -66,10 +75,12 @@ const formDocuments: FormDocument[] = [
 
 const categories = [
   { name: "All", count: formDocuments.length },
-  { name: "Admission", count: formDocuments.filter(f => f.category === "Admission").length },
-  { name: "Transfer", count: formDocuments.filter(f => f.category === "Transfer").length },
-  { name: "Health", count: formDocuments.filter(f => f.category === "Health").length },
-  { name: "Transport", count: formDocuments.filter(f => f.category === "Transport").length },
+  { name: "Pre-Primary & Primary", count: formDocuments.filter(f => f.category === "Pre-Primary & Primary").length },
+  { name: "Junior School", count: formDocuments.filter(f => f.category === "Junior School").length },
+  { name: "Senior School", count: formDocuments.filter(f => f.category === "Senior School").length },
+  // { name: "Transfer", count: formDocuments.filter(f => f.category === "Transfer").length },
+  // { name: "Health", count: formDocuments.filter(f => f.category === "Health").length },
+  // { name: "Transport", count: formDocuments.filter(f => f.category === "Transport").length },
 ];
 
 export default function FormsPage() {
@@ -127,14 +138,14 @@ export default function FormsPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-4">
               {categories.map((category) => (
                 <div
                   key={category.name}
                   className="p-3 bg-blue-50 rounded-lg border border-blue-200 text-center hover:bg-blue-100 transition-colors"
                 >
-                  <div className="font-semibold text-blue-900">{category.name}</div>
-                  <div className="text-sm text-blue-600">{category.count} form{category.count !== 1 ? 's' : ''}</div>
+                  <div className="font-semibold text-blue-900 text-sm">{category.name}</div>
+                  <div className="text-xs text-blue-600">{category.count} form{category.count !== 1 ? 's' : ''}</div>
                 </div>
               ))}
             </div>
@@ -247,13 +258,13 @@ export default function FormsPage() {
               <div>
                 <h4 className="font-semibold text-gray-900 mb-2">School Office</h4>
                 <p className="text-gray-600 text-sm mb-1">Visit us during office hours:</p>
-                <p className="text-gray-600 text-sm mb-1">Monday - Friday: 8:00 AM - 4:00 PM</p>
+                <p className="text-gray-600 text-sm mb-1">Monday - Friday: 7:00 AM - 5:00 PM</p>
                 <p className="text-gray-600 text-sm">Saturday: 8:00 AM - 12:00 PM</p>
               </div>
               <div>
                 <h4 className="font-semibold text-gray-900 mb-2">Contact Information</h4>
-                <p className="text-gray-600 text-sm mb-1">Phone: +254 XXX XXX XXX</p>
-                <p className="text-gray-600 text-sm mb-1">Email: info@aburayyanacademy.ac.ke</p>
+                <p className="text-gray-600 text-sm mb-1">Phone: 0722299287 / 0723755108</p>
+                <p className="text-gray-600 text-sm mb-1">Email: info@aburayyanacademy.com</p>
                 <p className="text-gray-600 text-sm">Address: Mombasa, Kenya</p>
               </div>
             </div>
@@ -261,9 +272,9 @@ export default function FormsPage() {
         </Card>
 
         {/* Footer */}
-        <div className="text-center mt-12 text-gray-500">
+        {/* <div className="text-center mt-12 text-gray-500">
           <p>&copy; 2025 Abu Rayyan Academy. All rights reserved.</p>
-        </div>
+        </div> */}
       </div>
     </div>
   );

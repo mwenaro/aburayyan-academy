@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -43,17 +43,17 @@ const downloadCategories: DownloadCategory[] = [
     title: "Forms",
     description: "School admission forms, application forms, and other official documents",
     icon: <FileText className="h-8 w-8" />,
-    href: "/downloads/forms",
+    href: "/forms",
+    itemCount: 7,
+  },
+  {
+    id: "fee-structure",
+    title: "Fee Structure",
+    description: "School fee schedules, payment plans, and financial information",
+    icon: <DollarSign className="h-8 w-8" />,
+    href: "/fee-structure",
     itemCount: 5,
   },
-  // {
-  //   id: "fee-structure",
-  //   title: "Fee Structure",
-  //   description: "School fee schedules, payment plans, and financial information",
-  //   icon: <DollarSign className="h-8 w-8" />,
-  //   href: "/fee-structure",
-  //   itemCount: 3,
-  // },
   {
     id: "student-templates",
     title: "Student Templates",
@@ -73,12 +73,7 @@ export default function DownloadsPage() {
   const [isLoadingData, setIsLoadingData] = useState(true);
   const { toast } = useToast();
 
-  // Fetch students and classes on component mount
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       setIsLoadingData(true);
       
@@ -110,7 +105,12 @@ export default function DownloadsPage() {
     } finally {
       setIsLoadingData(false);
     }
-  };
+  }, [toast]);
+
+  // Fetch students and classes on component mount
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   // Filter students by selected class
   const filteredStudents = selectedClass 
@@ -339,9 +339,9 @@ export default function DownloadsPage() {
         </Card>
 
         {/* Footer */}
-        <div className="text-center mt-12 text-gray-500">
+        {/* <div className="text-center mt-12 text-gray-500">
           <p>&copy; 2025 Abu Rayyan Academy. All rights reserved.</p>
-        </div>
+        </div> */}
       </div>
     </div>
   );
