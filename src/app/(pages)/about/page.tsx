@@ -5,7 +5,7 @@ const AboutPage: React.FC = () => (
   <div>
     {/* Hero Section */}
     <div
-    className="relative min-h-96 h-full w-full bg-cover bg-center "
+      className="relative min-h-96 h-full w-full bg-cover bg-center "
     // style={{
     //   backgroundImage: `url('/school/about-us-hero-image.jpg')`, // Replace with your image URL
     // }}
@@ -24,8 +24,8 @@ const AboutPage: React.FC = () => (
 
     {/* Content Section */}
     <div className="py-4 px-2 ">
-    <h1 className="text-4xl font-bold text-black ">About Us</h1>
- 
+      <h1 className="text-4xl font-bold text-black ">About Us</h1>
+
       {/* Motto */}
       <div className="mt-6">
         <h2 className="text-xl font-semibold">Our Motto:</h2>
@@ -38,16 +38,16 @@ const AboutPage: React.FC = () => (
       <div className="mt-8">
         <h2 className="text-xl font-semibold">Our History:</h2>
         <p className="mt-2">
-          Abu-Rayyan Academy was established in January 2017 by Directors Dr. Abdirazack Yussuf Abdinur 
-          and Madam Salatha Mohammed with a vision to provide quality education that integrates modern 
-          learning techniques with Islamic values. Starting with just 3 students in our first location 
+          Abu-Rayyan Academy was established in January 2017 by Directors Dr. Abdirazack Yussuf Abdinur
+          and Madam Salatha Mohammed with a vision to provide quality education that integrates modern
+          learning techniques with Islamic values. Starting with just 3 students in our first location
           in Nyali, Mombasa, the academy has grown exponentially over the years.
         </p>
         <p className="mt-2">
-          Our first graduation ceremony was held in December 2017 with 3 graduates. From these humble 
-          beginnings, we have become a trusted educational institution in Mombasa, now serving over 300 
-          students at our current location along Ronald Ngala Road, opposite Petro Gas Station. We offer 
-          Competency-Based Education (CBE) seamlessly integrated with ICT and Islamic studies, with over 
+          Our first graduation ceremony was held in December 2017 with 3 graduates. From these humble
+          beginnings, we have become a trusted educational institution in Mombasa, now serving over 300
+          students at our current location along Ronald Ngala Road, opposite Petro Gas Station. We offer
+          Competency-Based Education (CBE) seamlessly integrated with ICT and Islamic studies, with over
           25 teaching and non-teaching staff members dedicated to excellence in education.
         </p>
       </div>
@@ -56,7 +56,7 @@ const AboutPage: React.FC = () => (
       <div className="mt-8">
         <h2 className="text-xl font-semibold">Our Leadership:</h2>
         <p className="mt-2">
-          <strong>Directors:</strong> Dr. Abdirazack Yussuf Abdinur & Madam Salatha Mohammed<br/>
+          <strong>Directors:</strong> Dr. Abdirazack Yussuf Abdinur & Madam Salatha Mohammed<br />
           <strong>Head of Institution:</strong> Mr. Duke Okioga
         </p>
       </div>
@@ -115,9 +115,9 @@ const AboutPage: React.FC = () => (
       <div className="mt-8">
         <h2 className="text-xl font-semibold">Our Mission:</h2>
         <p className="mt-2">
-          Our mission is to empower learners with knowledge, skills, and values to become competent, 
-          responsible, and innovative leaders of tomorrow. We strive to create a learning environment 
-          that fosters curiosity, creativity, and critical thinking while remaining rooted in moral 
+          Our mission is to empower learners with knowledge, skills, and values to become competent,
+          responsible, and innovative leaders of tomorrow. We strive to create a learning environment
+          that fosters curiosity, creativity, and critical thinking while remaining rooted in moral
           and ethical teachings through our integrated approach to education.
         </p>
       </div>
@@ -126,8 +126,8 @@ const AboutPage: React.FC = () => (
       <div className="mt-8">
         <h2 className="text-xl font-semibold">Our Vision:</h2>
         <p className="mt-2">
-          To be a beacon of educational excellence in Mombasa and beyond, inspiring students to 
-          achieve their full potential and contribute positively to society through leadership, 
+          To be a beacon of educational excellence in Mombasa and beyond, inspiring students to
+          achieve their full potential and contribute positively to society through leadership,
           service, and strong moral character rooted in Islamic values.
         </p>
       </div>
