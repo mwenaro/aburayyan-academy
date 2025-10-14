@@ -122,7 +122,7 @@ const LeadershipTeamPage: React.FC = () => {
             </Badge>
             <h1 className="text-5xl md:text-6xl font-bold">Leadership Team</h1>
             <p className="text-xl md:text-2xl">
-              Dedicated educators committed to your child's success and development
+              Dedicated educators committed to your child&apos;s success and development
             </p>
           </div>
         </div>
@@ -137,7 +137,7 @@ const LeadershipTeamPage: React.FC = () => {
           <p className="text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
             Our experienced leadership team combines decades of educational expertise with a deep 
             commitment to Islamic values. Each leader brings unique skills and perspectives that 
-            contribute to our school's excellence in academic and character development.
+            contribute to our school&apos;s excellence in academic and character development.
           </p>
         </div>
 
@@ -259,7 +259,7 @@ const LeadershipTeamPage: React.FC = () => {
             Connect with Our Leadership
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-            Our leadership team is always available to discuss your child's education and answer 
+            Our leadership team is always available to discuss your child&apos;s education and answer
             any questions about our programs and approach.
           </p>
           <div className="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto">
@@ -274,7 +274,7 @@ const LeadershipTeamPage: React.FC = () => {
               <CardContent className="p-6 text-center space-y-4">
                 <Mail className="w-8 h-8 mx-auto text-green-600" />
                 <h3 className="text-lg font-semibold">Email</h3>
-                <p className="text-gray-600 dark:text-gray-400">info@aburayyanacademy.ac.ke</p>
+                <p className="text-gray-600 dark:text-gray-400">info@aburayyanacademy.com</p>
               </CardContent>
             </Card>
           </div>

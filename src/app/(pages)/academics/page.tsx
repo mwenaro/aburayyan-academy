@@ -258,7 +258,7 @@ const AcademicsPage: React.FC = () => {
               Academic Performance
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-              Our commitment to excellence is reflected in our students' outstanding academic achievements
+              Our commitment to excellence is reflected in our students&apos; outstanding academic achievements
             </p>
           </div>
           

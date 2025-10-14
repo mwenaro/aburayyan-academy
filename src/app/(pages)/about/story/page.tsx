@@ -38,7 +38,7 @@ const OurStoryPage: React.FC = () => {
             <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
               Abu Rayyan Academy was founded in 2010 with a vision to provide world-class education 
               rooted in Islamic values. What started as a small community initiative in Mombasa has 
-              grown into one of Kenya's most respected educational institutions.
+              grown into one of Kenya&apos;s most respected educational institutions.
             </p>
             <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
               Our founders recognized the need for an educational environment that would nurture both 
