@@ -44,7 +44,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="en" suppressHydrationWarning>
       <body className={cn("min-h-screen bg-background font-sans antialiased")}>
         <Header />
-        <main className="min-h-screen mt-20 max-w-7xl mx-auto">
+        <main className="min-h-screen pt-14 sm:pt-16 lg:pt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Toaster />
           <Providers session={session}>{children}</Providers>
         </main>

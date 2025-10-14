@@ -1,11 +1,14 @@
-import { Navbar } from "./Navbar";
+import { ModernHeader } from "./ModernHeader";
 
 export const Header: React.FC = () => (
-  <header className="">
-    <Navbar>
-      <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold z-50">
-        Abu-Rayyan Academy
-      </h2>
-    </Navbar>
-  </header>
+  <ModernHeader>
+    <div>
+      <h1 className="font-bold text-lg lg:text-xl transition-colors">
+        Abu Rayyan Academy
+      </h1>
+      <p className="text-xs lg:text-sm transition-colors">
+        Excellence in Education
+      </p>
+    </div>
+  </ModernHeader>
 );
