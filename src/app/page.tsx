@@ -259,13 +259,12 @@ const LandingPage: React.FC = () => (
       <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
         <div className="bg-white p-6 shadow-lg rounded-lg hover:shadow-xl transition-shadow">
           <div className="text-sm text-blue-600 font-semibold mb-2">📅 Upcoming Event</div>
-          <h3 className="text-xl font-bold mb-3">Open Day 2025</h3>
+          <h3 className="text-xl font-bold mb-3">Graduation Ceremony 2025</h3>
           <p className="text-gray-600 mb-4">
-            Join us for our annual Open Day! Tour our facilities, meet our teachers, 
-            and learn about our programs. January 15, 2025.
+            Join us on <strong>8th November, 2025</strong> for our annual graduation ceremony, celebrating PP2, Grade 6, and Grade 9 students as they transition to their next academic levels. Note: Senior School (Grade 10) begins January 2026 under CBE.
           </p>
           <Link href="/contact" className="text-blue-600 font-semibold hover:underline">
-            Register Now →
+            RSVP for Graduation →
           </Link>
         </div>
         <div className="bg-white p-6 shadow-lg rounded-lg hover:shadow-xl transition-shadow">
@@ -453,23 +452,6 @@ const LandingPage: React.FC = () => (
           Download Prospectus
         </Link>
       </div>
-    </div>
-
-    {/* Call to Action */}
-    <div className="bg-blue-300 text-white py-16 text-center">
-      <h2 className="text-3xl font-bold mb-4">
-        Join Abu-Rayyan Academy Today!
-      </h2>
-      <p className="text-lg mb-8">
-        Give your child the opportunity to excel academically and morally.
-        Enroll now!
-      </p>
-      <Link
-        href="/contact"
-        className="px-6 py-3 bg-white text-blue-600 font-semibold rounded hover:bg-gray-200"
-      >
-        Contact Us
-      </Link>
     </div>
   </div>
 );
