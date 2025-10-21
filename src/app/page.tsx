@@ -278,14 +278,13 @@ const LandingPage: React.FC = () => (
           </Link>
         </div>
         <div className="bg-white p-6 shadow-lg rounded-lg hover:shadow-xl transition-shadow">
-          <div className="text-sm text-purple-600 font-semibold mb-2">💡 New Program</div>
-          <h3 className="text-xl font-bold mb-3">Advanced ICT Labs</h3>
+          <div className="text-sm text-purple-600 font-semibold mb-2">🧪 Modern Facilities</div>
+          <h3 className="text-xl font-bold mb-3">Computer & Science Labs</h3>
           <p className="text-gray-600 mb-4">
-            New computer labs with latest technology now available. Enhanced 
-            digital learning for all grades starting this term.
+            Our state-of-the-art computer and science labs empower students with hands-on learning, digital skills, and scientific exploration. These vibrant spaces foster curiosity, creativity, and practical experience for all grades—making technology and science an everyday part of school life.
           </p>
           <Link href="/programs" className="text-blue-600 font-semibold hover:underline">
-            Learn More →
+            Explore Our Labs →
           </Link>
         </div>
       </div>
