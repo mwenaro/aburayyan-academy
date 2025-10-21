@@ -94,7 +94,7 @@ const LandingPage: React.FC = () => (
         <MyShineBorder className="bg-white px-2 py-1 shadow rounded">
           <Image
             src="/school/home/cbc-students.jpg"
-            alt="CBC Curriculum"
+            alt="CBE Curriculum"
             width={2050}
             height={2050}
             className="mx-auto mb-4 w-full h-auto"
@@ -170,8 +170,8 @@ const LandingPage: React.FC = () => (
         </div>
         <div className="text-center p-4">
           <div className="text-4xl mb-3">📚</div>
-          <h4 className="font-semibold mb-2">CBC Compliant</h4>
-          <p className="text-sm text-gray-600">Fully aligned with Kenya CBC curriculum</p>
+          <h4 className="font-semibold mb-2">CBE Compliant</h4>
+          <p className="text-sm text-gray-600">Fully aligned with Kenya CBE curriculum</p>
         </div>
       </div>
     </div>
@@ -270,7 +270,7 @@ const LandingPage: React.FC = () => (
         </div>
         <div className="bg-white p-6 shadow-lg rounded-lg hover:shadow-xl transition-shadow">
           <div className="text-sm text-green-600 font-semibold mb-2">🎉 Achievement</div>
-          <h3 className="text-xl font-bold mb-3">100% CBC Transition</h3>
+          <h3 className="text-xl font-bold mb-3">100% CBE Transition</h3>
           <p className="text-gray-600 mb-4">
             Proud to announce 100% of our Grade 6 students successfully 
             transitioned to Junior Secondary with excellent results!
@@ -312,7 +312,7 @@ const LandingPage: React.FC = () => (
           <div className="text-yellow-400 mb-3">⭐⭐⭐⭐⭐</div>
           <p className="italic text-gray-700">
             &quot;Abu-Rayyan Academy has transformed my child&apos;s learning
-            experience. The CBC approach combined with ICT and Islamic studies
+            experience. The CBE approach combined with ICT and Islamic studies
             is exceptional! My daughter loves coming to school every day.&quot;
           </p>
         </div>
@@ -376,7 +376,7 @@ const LandingPage: React.FC = () => (
               What curriculum do you follow?
             </AccordionTrigger>
             <AccordionContent>
-              We follow the Kenyan Competency-Based Education (CBC) curriculum, fully integrated 
+              We follow the Kenyan Competency-Based Education (CBE) curriculum, fully integrated 
               with ICT programs and Islamic studies. Our approach nurtures critical thinking, 
               creativity, and problem-solving skills while maintaining strong Islamic values.
             </AccordionContent>
@@ -398,7 +398,7 @@ const LandingPage: React.FC = () => (
               What makes Abu-Rayyan Academy different?
             </AccordionTrigger>
             <AccordionContent>
-              We offer a unique blend of academic excellence through CBC, comprehensive ICT integration, 
+              We offer a unique blend of academic excellence through CBE, comprehensive ICT integration, 
               strong Islamic foundation with Tahfidh programs, qualified and caring teachers, modern 
               facilities, and a safe learning environment. We&apos;ve been serving the community with 
               excellence since 2017.
