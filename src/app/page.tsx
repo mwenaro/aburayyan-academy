@@ -261,7 +261,7 @@ const LandingPage: React.FC = () => (
           <div className="text-sm text-blue-600 font-semibold mb-2">📅 Upcoming Event</div>
           <h3 className="text-xl font-bold mb-3">Graduation Ceremony 2025</h3>
           <p className="text-gray-600 mb-4">
-            Join us on <strong>8th November, 2025</strong> for our annual graduation ceremony, celebrating PP2, Grade 6, and Grade 9 students as they transition to their next academic levels. Note: Senior School (Grade 10) begins January 2026 under CBE.
+            Join us on <strong>8th November, 2025</strong> for our annual graduation ceremony, celebrating all graduating classes—PP2, Grade 6, and Grade 9—as they transition to their next academic levels. Note: Senior School (Grade 10) begins January 2026 under CBE.
           </p>
           <Link href="/contact" className="text-blue-600 font-semibold hover:underline">
             RSVP for Graduation →
