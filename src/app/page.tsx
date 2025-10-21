@@ -4,6 +4,12 @@ import { MyShineBorder } from "@/components/custom/MyShinyBorder";
 import { MyMagicCard } from "@/components/custom/MyMagicCard";
 import { MyShimmerButton } from "@/components/custom/MyShimmerButton";
 import Image from "next/image";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const LandingPage: React.FC = () => (
   <div className="bg-gray-100">
@@ -29,14 +35,53 @@ const LandingPage: React.FC = () => (
           CBE, ICT, Islamic studies, and co-curricular activities. Serving over 300 students (by Jan 2025)
           since 2017 with excellence in education.
         </p>
-        <MyShimmerButton shimmerSize="0.5em" shimmerColor="purple">
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <MyShimmerButton shimmerSize="0.5em" shimmerColor="purple">
+            <Link
+              href="/about"
+              className="bg-white text-blue-600 px-6 py-3 font-semibold rounded hover:bg-gray-200"
+            >
+              Learn More About Us
+            </Link>
+          </MyShimmerButton>
           <Link
-            href="/about"
-            className="bg-white text-blue-600 font-semibold rounded hover:bg-gray-200"
+            href="/contact"
+            className="px-6 py-3 bg-green-500 text-white font-semibold rounded hover:bg-green-600 transition-colors"
           >
-            Learn More About Us
+            Schedule a Visit
           </Link>
-        </MyShimmerButton>
+        </div>
+      </div>
+    </div>
+
+    {/* Statistics Section */}
+    <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16 px-10">
+      <div className="max-w-6xl mx-auto">
+        <h2 className="text-3xl font-bold text-center mb-12">
+          Abu-Rayyan Academy by the Numbers
+        </h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="text-center">
+            <div className="text-5xl font-bold mb-2">8+</div>
+            <div className="text-xl">Years of Excellence</div>
+            <div className="text-sm opacity-80">Since 2017</div>
+          </div>
+          <div className="text-center">
+            <div className="text-5xl font-bold mb-2">300+</div>
+            <div className="text-xl">Students</div>
+            <div className="text-sm opacity-80">By January 2025</div>
+          </div>
+          <div className="text-center">
+            <div className="text-5xl font-bold mb-2">95%</div>
+            <div className="text-xl">Success Rate</div>
+            <div className="text-sm opacity-80">Academic Excellence</div>
+          </div>
+          <div className="text-center">
+            <div className="text-5xl font-bold mb-2">30+</div>
+            <div className="text-xl">Qualified Teachers</div>
+            <div className="text-sm opacity-80">Dedicated Staff</div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -99,6 +144,35 @@ const LandingPage: React.FC = () => (
             and strong Islamic values among our students.
           </p>
         </MyShineBorder>
+      </div>
+    </div>
+
+    {/* Trust Indicators Section */}
+    <div className="py-16 px-10 bg-white">
+      <h2 className="text-3xl font-bold text-blue-600 text-center mb-6">
+        Accreditations & Achievements
+      </h2>
+      <div className="grid md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+        <div className="text-center p-4">
+          <div className="text-4xl mb-3">🏆</div>
+          <h4 className="font-semibold mb-2">MoE Registered</h4>
+          <p className="text-sm text-gray-600">Fully accredited by Kenya Ministry of Education</p>
+        </div>
+        <div className="text-center p-4">
+          <div className="text-4xl mb-3">🔒</div>
+          <h4 className="font-semibold mb-2">Safe Environment</h4>
+          <p className="text-sm text-gray-600">CCTV monitored campus with trained security</p>
+        </div>
+        <div className="text-center p-4">
+          <div className="text-4xl mb-3">💻</div>
+          <h4 className="font-semibold mb-2">Modern Facilities</h4>
+          <p className="text-sm text-gray-600">State-of-the-art ICT labs and equipment</p>
+        </div>
+        <div className="text-center p-4">
+          <div className="text-4xl mb-3">📚</div>
+          <h4 className="font-semibold mb-2">CBC Compliant</h4>
+          <p className="text-sm text-gray-600">Fully aligned with Kenya CBC curriculum</p>
+        </div>
       </div>
     </div>
 
@@ -177,43 +251,209 @@ const LandingPage: React.FC = () => (
       </div>
     </div>
 
-    {/* Testimonials Section */}
-    {/* <div className="py-16 px-10 bg-white">
+    {/* News & Events Section */}
+    <div className="py-16 px-10 bg-gradient-to-br from-blue-50 to-purple-50">
       <h2 className="text-3xl font-bold text-blue-600 text-center mb-6">
-        What Parents Say
+        Latest News & Events
       </h2>
-      <div className="grid md:grid-cols-2 gap-8">
-        <div className="bg-gray-100 p-6 shadow rounded text-center">
-          <Image
-            src="/images/parent1.jpg"
-            alt="Parent Testimonial"
-            width={2050}
-            height={2050}
-            className="rounded-full mx-auto mb-4 w-full h-auto"
-          />
-          <p className="italic">
-            &quot;Abu-Rayyan Academy has transformed my child&apos;s learning
-            experience. The CBC approach combined with ICT and Islamic studies
-            is exceptional!&quot;
+      <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        <div className="bg-white p-6 shadow-lg rounded-lg hover:shadow-xl transition-shadow">
+          <div className="text-sm text-blue-600 font-semibold mb-2">📅 Upcoming Event</div>
+          <h3 className="text-xl font-bold mb-3">Open Day 2025</h3>
+          <p className="text-gray-600 mb-4">
+            Join us for our annual Open Day! Tour our facilities, meet our teachers, 
+            and learn about our programs. January 15, 2025.
           </p>
-          <p className="text-right mt-4 font-bold">- Aisha Ahmed</p>
+          <Link href="/contact" className="text-blue-600 font-semibold hover:underline">
+            Register Now →
+          </Link>
         </div>
-        <div className="bg-gray-100 p-6 shadow rounded text-center">
-          <Image
-            src="/images/parent2.jpg"
-            alt="Parent Testimonial"
-            width={2050}
-            height={2050}
-            className="rounded-full mx-auto mb-4 w-full h-auto"
-          />
-          <p className="italic">
-            &quot;The balance between academics and Islamic values has made this
-            school stand out. My child is thriving here!&quot;
+        <div className="bg-white p-6 shadow-lg rounded-lg hover:shadow-xl transition-shadow">
+          <div className="text-sm text-green-600 font-semibold mb-2">🎉 Achievement</div>
+          <h3 className="text-xl font-bold mb-3">100% CBC Transition</h3>
+          <p className="text-gray-600 mb-4">
+            Proud to announce 100% of our Grade 6 students successfully 
+            transitioned to Junior Secondary with excellent results!
           </p>
-          <p className="text-right mt-4 font-bold">- Yusuf Hassan</p>
+          <Link href="/about" className="text-blue-600 font-semibold hover:underline">
+            Read More →
+          </Link>
+        </div>
+        <div className="bg-white p-6 shadow-lg rounded-lg hover:shadow-xl transition-shadow">
+          <div className="text-sm text-purple-600 font-semibold mb-2">💡 New Program</div>
+          <h3 className="text-xl font-bold mb-3">Advanced ICT Labs</h3>
+          <p className="text-gray-600 mb-4">
+            New computer labs with latest technology now available. Enhanced 
+            digital learning for all grades starting this term.
+          </p>
+          <Link href="/programs" className="text-blue-600 font-semibold hover:underline">
+            Learn More →
+          </Link>
         </div>
       </div>
-    </div> */}
+    </div>
+
+    {/* Testimonials Section */}
+    <div className="py-16 px-10 bg-white">
+      <h2 className="text-3xl font-bold text-blue-600 text-center mb-6">
+        What Parents Say About Us
+      </h2>
+      <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="bg-gray-50 p-6 shadow-lg rounded-lg border-l-4 border-blue-500">
+          <div className="flex items-center mb-4">
+            <div className="w-12 h-12 bg-blue-200 rounded-full flex items-center justify-center text-blue-600 font-bold text-xl">
+              A
+            </div>
+            <div className="ml-3">
+              <p className="font-bold">Aisha Ahmed</p>
+              <p className="text-sm text-gray-500">Parent, Grade 5</p>
+            </div>
+          </div>
+          <div className="text-yellow-400 mb-3">⭐⭐⭐⭐⭐</div>
+          <p className="italic text-gray-700">
+            &quot;Abu-Rayyan Academy has transformed my child&apos;s learning
+            experience. The CBC approach combined with ICT and Islamic studies
+            is exceptional! My daughter loves coming to school every day.&quot;
+          </p>
+        </div>
+        <div className="bg-gray-50 p-6 shadow-lg rounded-lg border-l-4 border-green-500">
+          <div className="flex items-center mb-4">
+            <div className="w-12 h-12 bg-green-200 rounded-full flex items-center justify-center text-green-600 font-bold text-xl">
+              Y
+            </div>
+            <div className="ml-3">
+              <p className="font-bold">Yusuf Hassan</p>
+              <p className="text-sm text-gray-500">Parent, Grade 8</p>
+            </div>
+          </div>
+          <div className="text-yellow-400 mb-3">⭐⭐⭐⭐⭐</div>
+          <p className="italic text-gray-700">
+            &quot;The balance between academics and Islamic values has made this
+            school stand out. My son is thriving here and the teachers are very
+            dedicated and caring!&quot;
+          </p>
+        </div>
+        <div className="bg-gray-50 p-6 shadow-lg rounded-lg border-l-4 border-purple-500">
+          <div className="flex items-center mb-4">
+            <div className="w-12 h-12 bg-purple-200 rounded-full flex items-center justify-center text-purple-600 font-bold text-xl">
+              F
+            </div>
+            <div className="ml-3">
+              <p className="font-bold">Fatma Ali</p>
+              <p className="text-sm text-gray-500">Parent, PP2</p>
+            </div>
+          </div>
+          <div className="text-yellow-400 mb-3">⭐⭐⭐⭐⭐</div>
+          <p className="italic text-gray-700">
+            &quot;The early childhood program is outstanding! My child has developed
+            confidence and foundational skills. The ICT integration even at this
+            level is impressive.&quot;
+          </p>
+        </div>
+      </div>
+    </div>
+
+    {/* FAQ Section */}
+    <div className="py-16 px-10 bg-gray-50">
+      <h2 className="text-3xl font-bold text-blue-600 text-center mb-6">
+        Frequently Asked Questions
+      </h2>
+      <div className="max-w-3xl mx-auto">
+        <Accordion type="single" collapsible className="w-full">
+          <AccordionItem value="item-1">
+            <AccordionTrigger className="text-left font-semibold">
+              What age groups do you accept?
+            </AccordionTrigger>
+            <AccordionContent>
+              We accept students from Baby Class (age 3) through Senior Secondary (Grade 12). 
+              Our programs include Nursery & Lower Primary (Baby Class, PP1, PP2, Grades 1–3), 
+              Upper Primary (Grades 4–6), and Junior & Senior Secondary (Grades 7–12).
+            </AccordionContent>
+          </AccordionItem>
+
+          <AccordionItem value="item-2">
+            <AccordionTrigger className="text-left font-semibold">
+              What curriculum do you follow?
+            </AccordionTrigger>
+            <AccordionContent>
+              We follow the Kenyan Competency-Based Education (CBC) curriculum, fully integrated 
+              with ICT programs and Islamic studies. Our approach nurtures critical thinking, 
+              creativity, and problem-solving skills while maintaining strong Islamic values.
+            </AccordionContent>
+          </AccordionItem>
+
+          <AccordionItem value="item-3">
+            <AccordionTrigger className="text-left font-semibold">
+              How do I enroll my child?
+            </AccordionTrigger>
+            <AccordionContent>
+              You can start by contacting us through our contact page or visiting our campus. 
+              We recommend scheduling a tour to meet our staff, see our facilities, and learn 
+              more about our programs. Our admissions team will guide you through the enrollment process.
+            </AccordionContent>
+          </AccordionItem>
+
+          <AccordionItem value="item-4">
+            <AccordionTrigger className="text-left font-semibold">
+              What makes Abu-Rayyan Academy different?
+            </AccordionTrigger>
+            <AccordionContent>
+              We offer a unique blend of academic excellence through CBC, comprehensive ICT integration, 
+              strong Islamic foundation with Tahfidh programs, qualified and caring teachers, modern 
+              facilities, and a safe learning environment. We&apos;ve been serving the community with 
+              excellence since 2017.
+            </AccordionContent>
+          </AccordionItem>
+
+          <AccordionItem value="item-5">
+            <AccordionTrigger className="text-left font-semibold">
+              Do you offer transportation and meals?
+            </AccordionTrigger>
+            <AccordionContent>
+              Yes, we offer school transportation services covering various routes in Mombasa. 
+              We also provide nutritious meals and snacks as part of our comprehensive care for students. 
+              Contact us for specific details about routes and meal plans.
+            </AccordionContent>
+          </AccordionItem>
+
+          <AccordionItem value="item-6">
+            <AccordionTrigger className="text-left font-semibold">
+              What are your class sizes?
+            </AccordionTrigger>
+            <AccordionContent>
+              We maintain small class sizes to ensure personalized attention for each student. 
+              Our teacher-to-student ratio allows for effective learning, individual support, 
+              and strong relationships between teachers and students.
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      </div>
+    </div>
+
+    {/* Mid-page CTA */}
+    <div className="bg-gradient-to-r from-green-500 to-blue-500 text-white py-12 px-10 text-center">
+      <h3 className="text-2xl font-bold mb-4">
+        Ready to Give Your Child the Best Education?
+      </h3>
+      <p className="mb-6 max-w-2xl mx-auto">
+        Join hundreds of satisfied parents who have chosen Abu-Rayyan Academy for 
+        academic excellence and moral development.
+      </p>
+      <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <Link
+          href="/contact"
+          className="px-8 py-3 bg-white text-blue-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors"
+        >
+          Enroll Now
+        </Link>
+        <Link
+          href="/about"
+          className="px-8 py-3 bg-transparent border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-blue-600 transition-colors"
+        >
+          Download Prospectus
+        </Link>
+      </div>
+    </div>
 
     {/* Call to Action */}
     <div className="bg-blue-300 text-white py-16 text-center">
