@@ -271,8 +271,7 @@ const LandingPage: React.FC = () => (
           <div className="text-sm text-green-600 font-semibold mb-2">🎉 Achievement</div>
           <h3 className="text-xl font-bold mb-3">100% CBE Transition</h3>
           <p className="text-gray-600 mb-4">
-            Proud to announce 100% of our Grade 6 students successfully 
-            transitioned to Junior Secondary with excellent results!
+            Proud to announce 100% successful transition for all our graduating classes—PP2, Grade 6, and Grade 9—moving up to their next academic levels under CBE, with excellent results!
           </p>
           <Link href="/about" className="text-blue-600 font-semibold hover:underline">
             Read More →
