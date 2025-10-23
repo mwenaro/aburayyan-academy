@@ -205,12 +205,12 @@ export default function DownloadsPage() {
                 <Filter className="h-4 w-4" />
                 Filter by Grade (Optional)
               </label>
-              <Select value={selectedClass} onValueChange={handleClassFilter}>
+              <Select value={selectedClass || 'none'} onValueChange={(v) => handleClassFilter(v === 'none' ? '' : v)}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="All Grades" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Grades</SelectItem>
+                  <SelectItem value="none">All Grades</SelectItem>
                   {classes.map((cls) => (
                     <SelectItem key={cls._id} value={cls._id}>
                       {cls.name}
@@ -226,15 +226,15 @@ export default function DownloadsPage() {
                 Select Your Name
               </label>
               <Select 
-                value={selectedStudent?._id || ""} 
-                onValueChange={handleStudentSelect}
+                value={selectedStudent?._id || 'none'} 
+                onValueChange={(v) => handleStudentSelect(v === 'none' ? '' : v)}
               >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Choose your name from the list" />
                 </SelectTrigger>
                 <SelectContent>
                   {filteredStudents.length === 0 ? (
-                    <SelectItem value="" disabled>
+                    <SelectItem value="none" disabled>
                       No students found for selected grade
                     </SelectItem>
                   ) : (

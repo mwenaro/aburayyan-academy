@@ -56,6 +56,8 @@ export default function DownloadsPage() {
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
   const [selectedClass, setSelectedClass] = useState<string>("all");
   const [includeHeader, setIncludeHeader] = useState<boolean>(false);
+  const [selectedTerm, setSelectedTerm] = useState<string>("");
+  const [selectedYear, setSelectedYear] = useState<string>(new Date().getFullYear().toString());
   
   // Uploaded templates states
   const [uploadedTemplates, setUploadedTemplates] = useState<Template[]>([]);
@@ -234,7 +236,10 @@ export default function DownloadsPage() {
           grade: selectedStudent.class.name,
           regno: selectedStudent.regno,
           type: type,
-          includeHeader: includeHeader
+          includeHeader: includeHeader,
+          // include term/year so backend can use them if supported
+          term: selectedTerm || undefined,
+          year: selectedYear || undefined
         }),
       });
 
@@ -254,8 +259,15 @@ export default function DownloadsPage() {
         const a = document.createElement('a');
         a.style.display = 'none';
         a.href = url;
-        
-        const fileName = `${selectedStudent.name.replace(/[^a-zA-Z0-9\s]/g, '').trim()}-${selectedStudent.class.name}-exam-${type === 'excel' ? 'excel' : 'word'}.${type === 'excel' ? 'xlsx' : 'docx'}`;
+  // Build filename with optional term and year
+  const sanitize = (s: string) => s.replace(/[^a-zA-Z0-9\s]/g, '').trim().replace(/\s+/g, '_');
+  const studentNameSafe = sanitize(selectedStudent.name);
+  const gradeSafe = sanitize(selectedStudent.class.name);
+  const termPart = selectedTerm ? `-T${selectedTerm}` : '';
+  const yearPart = selectedYear ? `-${selectedYear}` : `-${new Date().getFullYear()}`;
+  const fileTypeLabel = type === 'excel' ? 'excel' : 'word';
+  const fileExt = type === 'excel' ? 'xlsx' : 'docx';
+  const fileName = `${studentNameSafe}-${gradeSafe}-exam${termPart}${yearPart}-${fileTypeLabel}.${fileExt}`;
         a.download = fileName;
         
         document.body.appendChild(a);
@@ -319,7 +331,16 @@ export default function DownloadsPage() {
         a.href = url;
         
         const contentDisposition = response.headers.get('Content-Disposition');
-        const filename = contentDisposition?.match(/filename="([^"]+)"/)?.[1] || `${templateTitle}.pdf`;
+        // If server provides filename via Content-Disposition, use it. Otherwise
+        // construct a fallback filename. For exam templates, include term/year if selected.
+        const dispositionName = contentDisposition?.match(/filename="([^"]+)"/)?.[1];
+        const sanitize = (s: string) => s.replace(/[^a-zA-Z0-9\s]/g, '').trim().replace(/\s+/g, '_');
+        let filename = dispositionName || `${sanitize(templateTitle)}.pdf`;
+        if (!dispositionName && templateCategory === 'exam') {
+          const termPart = selectedTerm ? `-T${selectedTerm}` : '';
+          const yearPart = selectedYear ? `-${selectedYear}` : `-${new Date().getFullYear()}`;
+          filename = `${sanitize(templateTitle)}${termPart}${yearPart}.pdf`;
+        }
         a.download = filename;
         
         document.body.appendChild(a);
@@ -488,6 +509,27 @@ export default function DownloadsPage() {
                       </div>
                       <div>
                         <span className="font-medium">Grade:</span> {selectedStudent.class.name}
+                      </div>
+                    </div>
+                    {/* Term & Year selectors (optional) */}
+                    <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <Label>Term (optional)</Label>
+                        <Select value={selectedTerm || 'none'} onValueChange={(v) => setSelectedTerm(v === 'none' ? '' : v)}>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select term (optional)" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="none">-- none --</SelectItem>
+                            <SelectItem value="1">Term 1</SelectItem>
+                            <SelectItem value="2">Term 2</SelectItem>
+                            <SelectItem value="3">Term 3</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div>
+                        <Label>Year</Label>
+                        <Input value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)} />
                       </div>
                     </div>
                   </div>

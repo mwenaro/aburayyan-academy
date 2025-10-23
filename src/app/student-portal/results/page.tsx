@@ -243,12 +243,12 @@ export default function StudentResultsPage() {
 
               <div>
                 <Label>Year</Label>
-                <Select value={filters.year} onValueChange={(value) => handleFilterChange("year", value)}>
+                <Select value={filters.year || 'none'} onValueChange={(value) => handleFilterChange("year", value === 'none' ? '' : value)}>
                   <SelectTrigger>
                     <SelectValue placeholder="All years" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All years</SelectItem>
+                    <SelectItem value="none">All years</SelectItem>
                     {years.map((year) => (
                       <SelectItem key={year} value={year.toString()}>
                         {year}
@@ -260,12 +260,12 @@ export default function StudentResultsPage() {
 
               <div>
                 <Label>Term</Label>
-                <Select value={filters.term} onValueChange={(value) => handleFilterChange("term", value)}>
+                <Select value={filters.term || 'none'} onValueChange={(value) => handleFilterChange("term", value === 'none' ? '' : value)}>
                   <SelectTrigger>
                     <SelectValue placeholder="All terms" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All terms</SelectItem>
+                    <SelectItem value="none">All terms</SelectItem>
                     <SelectItem value="1">Term 1</SelectItem>
                     <SelectItem value="2">Term 2</SelectItem>
                     <SelectItem value="3">Term 3</SelectItem>
@@ -275,12 +275,12 @@ export default function StudentResultsPage() {
 
               <div>
                 <Label>Subject</Label>
-                <Select value={filters.subject} onValueChange={(value) => handleFilterChange("subject", value)}>
+                <Select value={filters.subject || 'none'} onValueChange={(value) => handleFilterChange("subject", value === 'none' ? '' : value)}>
                   <SelectTrigger>
                     <SelectValue placeholder="All subjects" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All subjects</SelectItem>
+                    <SelectItem value="none">All subjects</SelectItem>
                     {subjects.map((subject) => (
                       <SelectItem key={subject} value={subject}>
                         {subject}
