@@ -1,7 +1,10 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import Link from "next/link";
+import { FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
 import React, { useState } from "react";
+import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 import { z } from "zod";
 
 const contactSchema = z.object({
@@ -17,6 +20,7 @@ const ContactPage: React.FC = () => {
     message: "",
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -39,16 +43,30 @@ const ContactPage: React.FC = () => {
       setErrors(validationErrors);
     } else {
       setErrors({});
-      console.log("Form submitted:", formData);
+      setShowSuccess(true);
+      setTimeout(() => setShowSuccess(false), 3000);
       // Handle successful submission (e.g., send data to API)
     }
   };
 
   return (
     <div>
+      <style>{`
+        .fade-in {
+          opacity: 0;
+          transform: translateY(20px);
+          animation: fadeInUp 0.8s forwards;
+        }
+        @keyframes fadeInUp {
+          to {
+            opacity: 1;
+            transform: none;
+          }
+        }
+      `}</style>
       {/* Hero Section */}
       <div
-        className="relative h-64 w-full bg-cover bg-center"
+        className="relative h-64 w-full bg-cover bg-center fade-in"
         style={{
           backgroundImage: `url('/school/about-hero-image.jpg')`, // Replace with your image URL
         }}
@@ -59,24 +77,24 @@ const ContactPage: React.FC = () => {
       </div>
 
       {/* Content Section */}
-      <div className="p-10">
+  <div className="p-10 fade-in" style={{ animationDelay: '0.2s' }}>
         {/* Contact Information */}
-        <div className="mt-8 grid md:grid-cols-2 gap-8">
+  <div className="mt-8 grid md:grid-cols-2 gap-8 fade-in" style={{ animationDelay: '0.4s' }}>
           {/* Contact Details */}
           <div>
             <h2 className="text-xl font-semibold mb-4">Get in Touch:</h2>
             <div className="space-y-3">
               <div>
-                <h3 className="font-semibold">Phone Numbers:</h3>
-                <p>0722299287 / 0723755108</p>
+             <h3 className="font-semibold flex items-center gap-2"><FaPhoneAlt className="inline-block text-blue-500" /> Phone Numbers:</h3>
+             <p>0722299287 / 0723755108</p>
               </div>
               <div>
-                <h3 className="font-semibold">Email:</h3>
-                <p>info@aburayyanacademy.com</p>
+             <h3 className="font-semibold flex items-center gap-2"><FaEnvelope className="inline-block text-blue-500" /> Email:</h3>
+             <p>info@aburayyanacademy.com</p>
               </div>
               <div>
-                <h3 className="font-semibold">Postal Address:</h3>
-                <p>P.O. BOX 86845 – 80100, MOMBASA</p>
+             <h3 className="font-semibold flex items-center gap-2"><FaMapMarkerAlt className="inline-block text-blue-500" /> Postal Address:</h3>
+             <p>P.O. BOX 86845 – 80100, MOMBASA</p>
               </div>
             </div>
           </div>
@@ -102,9 +120,17 @@ const ContactPage: React.FC = () => {
         </div>
 
         {/* Contact Form */}
-        <div className="mt-8">
+  <div className="mt-8 fade-in" style={{ animationDelay: '0.6s' }}>
           <h2 className="text-xl font-semibold mb-4">Send us a Message:</h2>
-        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+        {showSuccess && (
+          <Alert className="mb-4">
+            <AlertTitle>Message Sent!</AlertTitle>
+            <AlertDescription>
+              Thank you for reaching out. We will get back to you soon.
+            </AlertDescription>
+          </Alert>
+        )}
+        <form onSubmit={handleSubmit} className="mt-6 space-y-4 fade-in" style={{ animationDelay: '0.8s' }}>
           <div>
             <input
               type="text"
@@ -163,14 +189,14 @@ const ContactPage: React.FC = () => {
         </div>
 
         {/* Physical Address */}
-        <div className="mt-8">
+  <div className="mt-8 fade-in" style={{ animationDelay: '1s' }}>
           <h2 className="text-xl font-semibold">Our Location:</h2>
           <p className="mt-2">Along Ronald Ngala Road, opposite Petro Gas Station, Mombasa, Kenya</p>
           <p className="mt-1 text-gray-600">P.O. BOX 86845 – 80100, MOMBASA</p>
         </div>
 
         {/* Map */}
-        <div className="mt-6">
+  <div className="mt-6 fade-in" style={{ animationDelay: '1.2s' }}>
           <h2 className="text-xl font-semibold">Find Us on the Map:</h2>
           <p className="mt-2 text-gray-600 mb-2">Abu-Rayyan Academy - Ronald Ngala Road, opposite Petro Gas Station</p>
           <iframe
@@ -184,30 +210,18 @@ const ContactPage: React.FC = () => {
         </div>
 
         {/* Social Media */}
-        <div className="mt-8">
+  <div className="mt-8 fade-in" style={{ animationDelay: '1.4s' }}>
           <h2 className="text-xl font-semibold">Follow Us:</h2>
           <div className="flex space-x-4 mt-2">
-            <Link
-              href="https://facebook.com/aburayyanacademy"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span className="text-blue-600 cursor-pointer">Facebook</span>
-            </Link>
-            <Link
-              href="https://twitter.com/aburayyanacademy"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span className="text-blue-400 cursor-pointer">Twitter</span>
-            </Link>
-            <Link
-              href="https://instagram.com/aburayyanacademy"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span className="text-pink-500 cursor-pointer">Instagram</span>
-            </Link>
+              <Link href="https://facebook.com/aburayyanacademy" target="_blank" rel="noopener noreferrer">
+                <FaFacebook className="text-2xl text-blue-600 hover:scale-110 transition-transform cursor-pointer" title="Facebook" />
+              </Link>
+              <Link href="https://twitter.com/aburayyanacademy" target="_blank" rel="noopener noreferrer">
+                <FaTwitter className="text-2xl text-blue-400 hover:scale-110 transition-transform cursor-pointer" title="Twitter" />
+              </Link>
+              <Link href="https://instagram.com/aburayyanacademy" target="_blank" rel="noopener noreferrer">
+                <FaInstagram className="text-2xl text-pink-500 hover:scale-110 transition-transform cursor-pointer" title="Instagram" />
+              </Link>
           </div>
         </div>
       </div>

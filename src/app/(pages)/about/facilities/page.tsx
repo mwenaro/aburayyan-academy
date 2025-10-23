@@ -24,7 +24,7 @@ const FacilitiesPage: React.FC = () => {
       icon: <BookOpen className="w-8 h-8" />,
       image: "/school/computer-lesson.jpg",
       description: "Spacious, well-ventilated classrooms equipped with modern teaching aids and comfortable furniture designed for optimal learning.",
-      features: ["Interactive whiteboards", "Air conditioning", "Natural lighting", "Ergonomic furniture"],
+      features: ["Interactive whiteboards",  "Natural lighting", "Ergonomic furniture"],
       capacity: "25-30 students per class"
     },
     {
@@ -32,7 +32,7 @@ const FacilitiesPage: React.FC = () => {
       icon: <Monitor className="w-8 h-8" />,
       image: "/school/computer-lab.jpg",
       description: "State-of-the-art computer lab with latest technology for digital literacy and programming education.",
-      features: ["30+ modern computers", "High-speed internet", "Programming software", "Digital projectors"],
+      features: ["30+ modern computers", "High-speed internet", "Programming software", "Technical support"], //"Digital projectors"
       capacity: "30 students"
     },
     {
@@ -43,39 +43,39 @@ const FacilitiesPage: React.FC = () => {
       features: ["Safety equipment", "Modern instruments", "Chemical storage", "Demonstration area"],
       capacity: "25 students"
     },
-    {
-      name: "Library & Resource Center",
-      icon: <BookOpen className="w-8 h-8" />,
-      image: "/school/computer-lab2.jpg",
-      description: "Comprehensive library with extensive collection of books, digital resources, and quiet study areas.",
-      features: ["5000+ books", "Digital resources", "Study carrels", "Reading lounges"],
-      capacity: "50 students"
-    },
+    // {
+    //   name: "Library & Resource Center",
+    //   icon: <BookOpen className="w-8 h-8" />,
+    //   image: "/school/computer-lab2.jpg",
+    //   description: "Comprehensive library with extensive collection of books, digital resources, and quiet study areas.",
+    //   features: ["5000+ books", "Digital resources", "Study carrels", "Reading lounges"],
+    //   capacity: "50 students"
+    // },
     {
       name: "Multi-Purpose Hall",
       icon: <Users className="w-8 h-8" />,
       image: "/school/about-hero-image.jpg",
       description: "Spacious hall for assemblies, performances, meetings, and special events with modern audio-visual equipment.",
-      features: ["Sound system", "Stage lighting", "Seating for 300", "Air conditioning"],
+      features: ["Sound system", "Stage lighting", "Seating for 300"],
       capacity: "300 people"
     },
-    {
-      name: "Playground & Sports",
-      icon: <Gamepad2 className="w-8 h-8" />,
-      image: "/school/school-image.jpg",
-      description: "Safe and well-maintained playground areas for physical education and recreational activities.",
-      features: ["Football field", "Basketball court", "Play equipment", "Running track"],
-      capacity: "All students"
-    }
+    // {
+    //   name: "Playground & Sports",
+    //   icon: <Gamepad2 className="w-8 h-8" />,
+    //   image: "/school/school-image.jpg",
+    //   description: "Safe and well-maintained playground areas for physical education and recreational activities.",
+    //   features: ["Football field", "Basketball court", "Play equipment", "Running track"],
+    //   capacity: "All students"
+    // }
   ];
 
   const supportFacilities = [
-    {
-      name: "Cafeteria",
-      icon: <Utensils className="w-6 h-6" />,
-      description: "Clean, hygienic dining area serving nutritious halal meals and snacks.",
-      features: ["Halal certified", "Nutritious menus", "Clean environment", "Affordable prices"]
-    },
+    // {
+    //   name: "Cafeteria",
+    //   icon: <Utensils className="w-6 h-6" />,
+    //   description: "Clean, hygienic dining area serving nutritious halal meals and snacks.",
+    //   features: ["Halal certified", "Nutritious menus", "Clean environment", "Affordable prices"]
+    // },
     {
       name: "Transportation",
       icon: <Car className="w-6 h-6" />,
@@ -88,24 +88,24 @@ const FacilitiesPage: React.FC = () => {
       description: "Comprehensive security system ensuring student and staff safety.",
       features: ["CCTV surveillance", "Security guards", "Access control", "Emergency protocols"]
     },
-    {
-      name: "Health Center",
-      icon: <Heart className="w-6 h-6" />,
-      description: "On-site medical facility with qualified nurse for health emergencies.",
-      features: ["First aid", "Health monitoring", "Emergency care", "Health education"]
-    },
-    {
-      name: "WiFi Network",
-      icon: <Wifi className="w-6 h-6" />,
-      description: "High-speed internet connectivity throughout the campus for digital learning.",
-      features: ["Campus-wide coverage", "Filtered content", "High bandwidth", "Reliable connection"]
-    },
-    {
-      name: "Backup Power",
-      icon: <Zap className="w-6 h-6" />,
-      description: "Uninterrupted power supply ensuring continuous learning environment.",
-      features: ["Generator backup", "UPS systems", "Power management", "Energy efficiency"]
-    }
+    // {
+    //   name: "Health Center",
+    //   icon: <Heart className="w-6 h-6" />,
+    //   description: "On-site medical facility with qualified nurse for health emergencies.",
+    //   features: ["First aid", "Health monitoring", "Emergency care", "Health education"]
+    // },
+    // {
+    //   name: "WiFi Network",
+    //   icon: <Wifi className="w-6 h-6" />,
+    //   description: "High-speed internet connectivity throughout the campus for digital learning.",
+    //   features: ["Campus-wide coverage", "Filtered content", "High bandwidth", "Reliable connection"]
+    // },
+    // {
+    //   name: "Backup Power",
+    //   icon: <Zap className="w-6 h-6" />,
+    //   description: "Uninterrupted power supply ensuring continuous learning environment.",
+    //   features: ["Generator backup", "UPS systems", "Power management", "Energy efficiency"]
+    // }
   ];
 
   const safetyFeatures = [
