@@ -36,14 +36,10 @@ const OurStoryPage: React.FC = () => {
               The Beginning
             </h2>
             <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-              Abu Rayyan Academy was founded in 2010 with a vision to provide world-class education 
-              rooted in Islamic values. What started as a small community initiative in Mombasa has 
-              grown into one of Kenya&apos;s most respected educational institutions.
+              Abu-Rayyan Academy was established in January 2017 by Directors Dr. Abdirazack Yussuf Abdinur and Madam Salatha Mohammed with a vision to provide quality education that integrates modern learning techniques with Islamic values. Starting with just 3 students in our first location in Nyali, Mombasa, the academy has grown exponentially over the years.
             </p>
             <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-              Our founders recognized the need for an educational environment that would nurture both 
-              academic excellence and strong moral character, creating future leaders who would 
-              contribute positively to society.
+              Our first graduation ceremony was held in December 2017 with 3 graduates. From these humble beginnings, we have become a trusted educational institution in Mombasa, now serving over 300 students at our current location along Ronald Ngala Road, opposite Petro Gas Station. We offer Competency-Based Education (CBE) seamlessly integrated with ICT and Islamic studies, with over 25 teaching and non-teaching staff members dedicated to excellence in education.
             </p>
           </div>
           <div className="relative h-96 rounded-lg overflow-hidden shadow-xl">
@@ -66,11 +62,11 @@ const OurStoryPage: React.FC = () => {
             <Card className="hover:shadow-lg transition-shadow">
               <CardContent className="p-6 space-y-4">
                 <Badge className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
-                  2010
+                  2017
                 </Badge>
-                <h3 className="text-xl font-semibold">Foundation</h3>
+                <h3 className="text-xl font-semibold">Establishment</h3>
                 <p className="text-gray-600 dark:text-gray-400">
-                  Abu Rayyan Academy was established with just 50 students and a passionate team of educators.
+                  Abu-Rayyan Academy is established in January 2017 by Dr. Abdirazack Yussuf Abdinur and Madam Salatha Mohammed, starting with just 3 students in Nyali, Mombasa.
                 </p>
               </CardContent>
             </Card>
@@ -78,11 +74,11 @@ const OurStoryPage: React.FC = () => {
             <Card className="hover:shadow-lg transition-shadow">
               <CardContent className="p-6 space-y-4">
                 <Badge className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
-                  2013
+                  2017
                 </Badge>
                 <h3 className="text-xl font-semibold">First Graduation</h3>
                 <p className="text-gray-600 dark:text-gray-400">
-                  Our first class of students graduated with outstanding KCPE results, setting the standard for excellence.
+                  The first graduation ceremony is held in December 2017 with 3 graduates, marking the beginning of a tradition of excellence.
                 </p>
               </CardContent>
             </Card>
@@ -90,11 +86,11 @@ const OurStoryPage: React.FC = () => {
             <Card className="hover:shadow-lg transition-shadow">
               <CardContent className="p-6 space-y-4">
                 <Badge className="bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200">
-                  2015
+                  2018–2022
                 </Badge>
-                <h3 className="text-xl font-semibold">Campus Expansion</h3>
+                <h3 className="text-xl font-semibold">Growth & Relocation</h3>
                 <p className="text-gray-600 dark:text-gray-400">
-                  New facilities including science laboratories and a computer lab were added to enhance learning.
+                  The academy grows rapidly, expanding its student body and staff, and relocates to Ronald Ngala Road, opposite Petro Gas Station, to accommodate increasing enrollment.
                 </p>
               </CardContent>
             </Card>
@@ -102,23 +98,11 @@ const OurStoryPage: React.FC = () => {
             <Card className="hover:shadow-lg transition-shadow">
               <CardContent className="p-6 space-y-4">
                 <Badge className="bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200">
-                  2018
+                  2023
                 </Badge>
-                <h3 className="text-xl font-semibold">ICT Integration</h3>
+                <h3 className="text-xl font-semibold">Modern Facilities</h3>
                 <p className="text-gray-600 dark:text-gray-400">
-                  Digital learning tools and coding programs were introduced to prepare students for the modern world.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="hover:shadow-lg transition-shadow">
-              <CardContent className="p-6 space-y-4">
-                <Badge className="bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">
-                  2020
-                </Badge>
-                <h3 className="text-xl font-semibold">Digital Transition</h3>
-                <p className="text-gray-600 dark:text-gray-400">
-                  Successfully transitioned to online learning during the pandemic, ensuring uninterrupted education.
+                  Introduction of modern facilities including ICT and science labs, multi-purpose halls, and a canteen, supporting holistic education.
                 </p>
               </CardContent>
             </Card>
@@ -128,9 +112,9 @@ const OurStoryPage: React.FC = () => {
                 <Badge className="bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-200">
                   2024
                 </Badge>
-                <h3 className="text-xl font-semibold">Excellence Recognition</h3>
+                <h3 className="text-xl font-semibold">Current Status</h3>
                 <p className="text-gray-600 dark:text-gray-400">
-                  Recognized as one of the top performing schools in Mombasa County with multiple awards.
+                  Now serving over 300 students with 25+ staff, Abu-Rayyan Academy is recognized for its commitment to quality education, Islamic values, and innovation in Mombasa.
                 </p>
               </CardContent>
             </Card>
@@ -144,10 +128,10 @@ const OurStoryPage: React.FC = () => {
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="space-y-4">
-              <div className="text-4xl font-bold text-blue-600">1000+</div>
-              <div className="text-lg font-semibold">Students Graduated</div>
+              <div className="text-4xl font-bold text-blue-600">300+</div>
+              <div className="text-lg font-semibold">Learners</div>
               <p className="text-gray-600 dark:text-gray-400">
-                Alumni making positive contributions across various fields
+                Over 300 learners currently enrolled and growing
               </p>
             </div>
             <div className="space-y-4">
@@ -158,10 +142,10 @@ const OurStoryPage: React.FC = () => {
               </p>
             </div>
             <div className="space-y-4">
-              <div className="text-4xl font-bold text-purple-600">50+</div>
-              <div className="text-lg font-semibold">Expert Educators</div>
+              <div className="text-4xl font-bold text-purple-600">20+</div>
+              <div className="text-lg font-semibold">Educators</div>
               <p className="text-gray-600 dark:text-gray-400">
-                Dedicated teachers committed to student success
+                Over 20 dedicated teaching and non-teaching staff members
               </p>
             </div>
           </div>

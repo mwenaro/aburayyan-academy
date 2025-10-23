@@ -3,58 +3,30 @@ import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
-  Target,
-  Eye,
-  Heart,
-  Users,
-  BookOpen,
-  Star,
-  Globe,
-  Lightbulb,
-  Shield,
-  Award,
+  Target, 
+  Eye, 
+  BookOpen, 
+  Star, 
+  Heart, 
+  Users, 
+  Lightbulb, 
+  Shield, 
+  Globe, 
+  Award 
 } from "lucide-react";
+import { mission, vision, values as coreValues, philosophy } from "../aboutData";
 
 const MissionVisionPage: React.FC = () => {
-  const coreValues = [
-    {
-      icon: <Heart className="w-8 h-8" />,
-      title: "Islamic Values",
-      description:
-        "Integrating Islamic principles in all aspects of education and character development",
-    },
-    {
-      icon: <BookOpen className="w-8 h-8" />,
-      title: "Academic Excellence",
-      description:
-        "Pursuing the highest standards in teaching, learning, and student achievement",
-    },
-    {
-      icon: <Users className="w-8 h-8" />,
-      title: "Community",
-      description:
-        "Building strong relationships within our school community and broader society",
-    },
-    {
-      icon: <Lightbulb className="w-8 h-8" />,
-      title: "Innovation",
-      description:
-        "Embracing modern teaching methods and technology to enhance learning experiences",
-    },
-    {
-      icon: <Shield className="w-8 h-8" />,
-      title: "Integrity",
-      description:
-        "Upholding honesty, transparency, and ethical behavior in all our interactions",
-    },
-    {
-      icon: <Globe className="w-8 h-8" />,
-      title: "Global Citizenship",
-      description:
-        "Preparing students to be responsible citizens who contribute to global well-being",
-    },
-  ];
-
+  // Updated core values as provided
+  // Use icons for values
+  const valueIcons: Record<string, JSX.Element> = {
+    Excellence: <Star className="w-8 h-8" />,
+    Compassion: <Heart className="w-8 h-8" />,
+    Integrity: <Shield className="w-8 h-8" />,
+    Respect: <Users className="w-8 h-8" />,
+    Passion: <Lightbulb className="w-8 h-8" />,
+    Unity: <Globe className="w-8 h-8" />,
+  };
   const objectives = [
     {
       icon: <Star className="w-6 h-6" />,
@@ -119,17 +91,13 @@ const MissionVisionPage: React.FC = () => {
             </div>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">
-            Our Mission
+            Mission Statement
           </h2>
           <div className="max-w-4xl mx-auto">
             <Card className="bg-gradient-to-r from-blue-50 to-green-50 dark:from-blue-950 dark:to-green-950 border-none shadow-lg">
               <CardContent className="p-12">
                 <p className="text-xl md:text-2xl text-gray-800 dark:text-gray-200 leading-relaxed text-center font-medium">
-                  &quot;To provide exceptional Islamic education that nurtures
-                  academic excellence, moral character, and spiritual growth,
-                  preparing students to become confident, compassionate, and
-                  responsible global citizens who contribute positively to
-                  society.&quot;
+                  {mission}
                 </p>
               </CardContent>
             </Card>
@@ -144,17 +112,33 @@ const MissionVisionPage: React.FC = () => {
             </div>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">
-            Our Vision
+            Vision Statement
           </h2>
           <div className="max-w-4xl mx-auto">
             <Card className="bg-gradient-to-r from-green-50 to-purple-50 dark:from-green-950 dark:to-purple-950 border-none shadow-lg">
               <CardContent className="p-12">
                 <p className="text-xl md:text-2xl text-gray-800 dark:text-gray-200 leading-relaxed text-center font-medium">
-                  &quot;To be the leading Islamic educational institution in
-                  East Africa, recognized for academic excellence, innovative
-                  teaching methods, and graduates who exemplify Islamic values
-                  while making meaningful contributions to the global
-                  community.&quot;
+                  {vision}
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+        {/* School Philosophy */}
+        <div className="text-center space-y-8">
+          <div className="flex justify-center">
+            <div className="bg-purple-100 dark:bg-purple-900 p-4 rounded-full">
+              <BookOpen className="w-12 h-12 text-purple-600 dark:text-purple-300" />
+            </div>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">
+            School Philosophy
+          </h2>
+          <div className="max-w-4xl mx-auto">
+            <Card className="bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-950 dark:to-blue-950 border-none shadow-lg">
+              <CardContent className="p-12">
+                <p className="text-xl md:text-2xl text-gray-800 dark:text-gray-200 leading-relaxed text-center font-medium">
+                  We respect the dignity and worth of all the learners under our care. We believe that all learners can be nurtured to achieve their full potential within a school environment that is both caring and challenging. We expect all learners to be respectful and responsible and to rise to the challenges of life.
                 </p>
               </CardContent>
             </Card>
@@ -174,7 +158,7 @@ const MissionVisionPage: React.FC = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {coreValues.map((value, index) => (
+            {coreValues.map((value: { title: string; description: string }, index: number) => (
               <Card
                 key={index}
                 className="hover:shadow-lg transition-all duration-300 hover:scale-105"
@@ -182,7 +166,7 @@ const MissionVisionPage: React.FC = () => {
                 <CardHeader className="text-center space-y-4">
                   <div className="flex justify-center">
                     <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded-full text-blue-600 dark:text-blue-300">
-                      {value.icon}
+                      {valueIcons[value.title]}
                     </div>
                   </div>
                   <CardTitle className="text-xl font-semibold">
@@ -196,6 +180,7 @@ const MissionVisionPage: React.FC = () => {
                 </CardContent>
               </Card>
             ))}
+          </div>
           </div>
         </div>
 
@@ -261,6 +246,7 @@ const MissionVisionPage: React.FC = () => {
             </div>
             <div className="grid grid-cols-2 gap-4 pt-4">
               <div className="text-center">
+
                 <div className="text-3xl font-bold text-blue-600">14+</div>
                 <div className="text-sm font-medium text-gray-600 dark:text-gray-400">
                   Years of Excellence
@@ -284,8 +270,6 @@ const MissionVisionPage: React.FC = () => {
           </div>
         </div>
       </div>
-    </div>
-  );
-};
-
+    );
+}
 export default MissionVisionPage;
