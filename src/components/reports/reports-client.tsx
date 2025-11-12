@@ -179,7 +179,7 @@ export function ReportsClient() {
             View and export detailed exam performance reports
           </p>
         </div>
-        <div className="flex gap-2">
+          <div className="flex gap-2">
           <Button
             variant="outline"
             onClick={() => {
@@ -191,6 +191,12 @@ export function ReportsClient() {
           >
             <FileDown className="h-4 w-4 mr-2" />
             Export {reportData.length > 0 && `(${reportData.length})`}
+          </Button>
+          {/* Link to Class Report page */}
+          <Button asChild>
+            <a href="/dashboard/reports/class-report" title="Generate Class Exam Report">
+              Class Report
+            </a>
           </Button>
           {/* Test button for export functionality */}
           <Button
